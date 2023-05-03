@@ -10,23 +10,15 @@ import com.example.casaya.R
 
 class PropertyDetailFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = PropertyDetailFragment()
-    }
-
     private lateinit var viewModel: PropertyDetailViewModel
+    lateinit var v: View
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_property_detail, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(PropertyDetailViewModel::class.java)
-        // TODO: Use the ViewModel
+        v = inflater.inflate(R.layout.fragment_property_detail, container, false)
+        return v
     }
 
 }

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardProperty"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="15dp"
+    app:cardElevation="10dp">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- Imagen de la propiedad -->
+        <ImageView
+            android:id="@+id/imageListView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintDimensionRatio="16:9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        <TextView
+            android:id="@+id/titleListTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="Excelente 2 ambientes en Belgrano"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageListView" />
+
+        <TextView
+            android:id="@+id/tagTimePublicationListTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Publicado hace"
+            android:textStyle="italic"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleListTextView" />
+
+        <TextView
+            android:id="@+id/valueTimePublicationListTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="15"
+            android:textStyle="bold"
+
+            app:layout_constraintBottom_toBottomOf="@id/tagTimePublicationListTextView"
+            app:layout_constraintStart_toEndOf="@id/tagTimePublicationListTextView"
+            app:layout_constraintTop_toTopOf="@id/tagTimePublicationListTextView"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <TextView
+            android:id="@+id/tagDaysTimePublicationListTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="dias"
+            android:textStyle="italic"
+
+            app:layout_constraintBottom_toBottomOf="@id/valueTimePublicationListTextView"
+            app:layout_constraintStart_toEndOf="@id/valueTimePublicationListTextView"
+            app:layout_constraintTop_toTopOf="@id/valueTimePublicationListTextView" />
+
+        <TextView
+            android:id="@+id/priceRentListTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="50dp"
+            android:text="$120.000"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/tagDaysTimePublicationListTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tagDaysTimePublicationListTextView"
+            app:layout_constraintTop_toTopOf="@id/tagDaysTimePublicationListTextView" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Titulo de la propiedad -->
+
+    <!-- Detalle del tiempo de la Publicacion -->
+
+    <!-- Precio del Alquiler -->
+
+</androidx.cardview.widget.CardView>
