@@ -38,7 +38,7 @@ class PropertiesListFragment : Fragment() {
         super.onStart()
         adapterProperty = PropertyAdapter(repository.getProperties()) { position ->
             //Snackbar.make(v, "Click en ${repository.getProperties()[position].getTitle()}", Snackbar.LENGTH_SHORT).show()
-            //val action = PropertiesListFragmentDirections.actionPropertiesListFragmentToPropertyDetailFragment()
+            val action = PropertiesListFragmentDirections.actionPropertiesListFragmentToPropertyDetailFragment()
             findNavController().navigate(R.id.action_propertiesListFragment_to_propertyDetailFragment)
         }
         //Configuro la forma en que se visualizara el RecyclerView
