@@ -2,4 +2,8 @@
     <string name="app_name">CasaYa</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Representa el valor inicial que se mostrara en la lista desplegable -->
+    <string name="prompt_property">Seleccione un tipo de propiedad</string>
+
 </resources>
