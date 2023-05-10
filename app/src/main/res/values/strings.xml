@@ -6,4 +6,29 @@
     <!-- Representa el valor inicial que se mostrara en la lista desplegable -->
     <string name="prompt_property">Seleccione un tipo de propiedad</string>
 
+    <!-- Lista estatica del Spinner, SOLO PARA PROBAR -->
+    <string-array name="opciones_spinner_typeProperty">
+        <item>Departamento</item>
+        <item>Casa</item>
+        <item>PH</item>
+    </string-array>
+
+    <!-- Lista estatica del Spinner, SOLO PARA PROBAR -->
+    <string-array name="opciones_spinner_province">
+        <item>Buenos Aires</item>
+        <item>Catamarca</item>
+        <item>Chaco</item>
+        <item>Chubut</item>
+        <item>Córdoba</item>
+        <item>Corrientes</item>
+        <item>Entre Ríos</item>
+        <item>Formosa</item>
+        <item>Jujuy</item>
+        <item>La Pampa</item>
+        <item>La Rioja</item>
+        <item>Mendoza</item>
+        <item>Misiones</item>
+        <item>Neuquén</item>
+    </string-array>
+
 </resources>

@@ -1,5 +1,6 @@
 package com.example.casaya.adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,12 +19,23 @@ class PropertyAdapter(
 ) : RecyclerView.Adapter<PropertyAdapter.PropertyHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PropertyHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.property_item, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.property_item, parent, false)
         return (PropertyHolder(view))
     }
 
     override fun getItemCount(): Int {
         return properties.size
+    }
+
+    fun addNewProperties(newProperties: List<Property>) {
+        Log.d("Property Adapter", "Entrando al notificador del adapter")
+        if (newProperties.isNotEmpty()) {
+            properties.clear()
+            properties.addAll(newProperties)
+            notifyDataSetChanged()
+        }
+
     }
 
     override fun onBindViewHolder(holder: PropertyHolder, position: Int) {
@@ -38,6 +50,7 @@ class PropertyAdapter(
 
     class PropertyHolder(v: View) : RecyclerView.ViewHolder(v) {
         private var view: View
+
         init {
             this.view = v
         }
@@ -52,7 +65,8 @@ class PropertyAdapter(
         }
 
         fun setPublicationDays(days: Long) {
-            val txtDayPublicationItem: TextView = view.findViewById(R.id.valueTimePublicationListTextView)
+            val txtDayPublicationItem: TextView =
+                view.findViewById(R.id.valueTimePublicationListTextView)
             txtDayPublicationItem.text = days.toString()
         }
 
@@ -61,7 +75,7 @@ class PropertyAdapter(
             txtPriceItem.text = "$" + price.toString()
         }
 
-        fun getCard() : CardView {
+        fun getCard(): CardView {
             return view.findViewById(R.id.cardProperty)
         }
     }

@@ -9,14 +9,32 @@
         android:id="@+id/propertiesListFragment"
         android:name="com.example.casaya.fragments.PropertiesListFragment"
         android:label="fragment_properties_list"
-        tools:layout="@layout/fragment_properties_list" >
+        tools:layout="@layout/fragment_properties_list">
         <action
             android:id="@+id/action_propertiesListFragment_to_propertyDetailFragment"
             app:destination="@id/propertyDetailFragment" />
+        <action
+            android:id="@+id/action_propertiesListFragment_to_publishPropertyFragment"
+            app:destination="@id/publishPropertyFragment" />
+
     </fragment>
+
     <fragment
         android:id="@+id/propertyDetailFragment"
         android:name="com.example.casaya.fragments.PropertyDetailFragment"
         android:label="fragment_property_detail"
         tools:layout="@layout/fragment_property_detail" />
+
+    <fragment
+        android:id="@+id/publishPropertyFragment"
+        android:name="com.example.casaya.fragments.PublishPropertyFragment"
+        android:label="fragment_publish_property"
+        tools:layout="@layout/fragment_publish_property">
+        <action
+            android:id="@+id/action_publishPropertyFragment_to_propertiesListFragment"
+            app:destination="@id/propertiesListFragment">
+
+        </action>
+    </fragment>
+
 </navigation>

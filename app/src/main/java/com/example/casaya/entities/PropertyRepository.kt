@@ -1,5 +1,6 @@
 package com.example.casaya.entities
 
+import android.util.Log
 import java.time.LocalDate
 
 class PropertyRepository(){
@@ -14,11 +15,11 @@ class PropertyRepository(){
 
     private fun initializeList() {
 
-        val prop1 = Property(1, "Apartment_1", "Hermoso depto", "Buenos Aires", 3, 2, 2, 120000.0, 15000.0, true, PropertyType.DEPARTAMENTO, LocalDate.of(2023, 4, 1))
-        val prop2 = Property(2, "Apartment_2", "Hermoso depto", "Buenos Aires", 3, 2, 2, 130000.0, 16000.0, true, PropertyType.DEPARTAMENTO, LocalDate.now())
-        val prop3 = Property(3, "Apartment_3", "Hermoso depto", "Buenos Aires", 3, 2, 2, 140000.0, 17000.0, true, PropertyType.DEPARTAMENTO, LocalDate.of(2023, 1, 1))
-        val prop4 = Property(4, "Apartment_4", "Hermoso depto", "Buenos Aires", 3, 2, 2, 150000.0, 18000.0, true, PropertyType.DEPARTAMENTO, LocalDate.now())
-        val prop5 = Property(5, "Apartment_5", "Hermoso depto", "Buenos Aires", 3, 2, 2, 160000.0, 19000.0, true, PropertyType.DEPARTAMENTO, LocalDate.of(2023, 2, 10))
+        val prop1 = Property( "Apartment_1", "Hermoso depto", 45.0, 3, 2, 25000.0, 120000.0, true, "Departamento", "Alquiler", "BUenos Aires", 2051, "Junin y Ayacucho", "Junin y Ayacucho")
+        val prop2 = Property( "Apartment_2", "Hermoso depto", 50.0, 2, 2, 65000.0, 130000.0, true, "Departamento", "Alquiler", "BUenos Aires", 2051, "Junin y Ayacucho", "Junin y Ayacucho")
+        val prop3 = Property( "Apartment_3", "Hermoso depto", 55.0, 5, 2, 75000.0, 140000.0, false, "Casa", "Alquiler", "BUenos Aires", 2051, "Junin y Ayacucho", "Junin y Ayacucho")
+        val prop4 = Property( "Apartment_4", "Hermoso depto", 60.0, 6, 2, 80000.0, 150000.0, false, "Departamento", "Alquiler", "BUenos Aires", 2051, "Junin y Ayacucho", "Junin y Ayacucho")
+        val prop5 = Property( "Apartment_5", "Hermoso depto", 65.0, 1, 2, 95000.0, 160000.0, true, "PH", "Alquiler", "BUenos Aires", 2051, "Junin y Ayacucho", "Junin y Ayacucho")
 
         properties.add(prop1)
         properties.add(prop2)
@@ -30,5 +31,13 @@ class PropertyRepository(){
 
     fun getProperties() : MutableList<Property> {
         return this.properties
+    }
+
+    fun saveProperty(newProperty: Property) {
+        Log.d("Saving Property", "Guardando la nueva Property")
+        Log.d("Tamaño ArrayList ANTES", "El tamaño es ${properties.size}")
+        properties.add(newProperty)
+        Log.d("Nueva Property", "El titulo de la propiedad es: ${properties.get(properties.lastIndex).getTitle()}")
+        Log.d("Tamaño ArrayList DESPUES", "El tamaño es ${properties.size}")
     }
 }

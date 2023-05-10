@@ -1,220 +1,332 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout3"
+    android:id="@+id/scrollView"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".fragments.PublishPropertyFragment">
+    android:layout_height="match_parent">
 
-    <!-- Nombre de la Formulario -->
-    <TextView
-        android:id="@+id/titleFormTextView"
-        android:layout_width="0dp"
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+        android:id="@+id/frameLayout3"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Publica tu Propiedad"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- Campo: Titulo de la Publicacion -->
-    <EditText
-        android:id="@+id/publicationTitleEditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:hint="Titulo de la Publicacion"
-        android:inputType="text"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textStyle="italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleFormTextView" />
-
-    <!-- Campo: lista desplegable para Tipo de Propiedad -->
-    <Spinner
-        android:id="@+id/propertyTypeSpinner"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:prompt="@string/prompt_property"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/publicationTitleEditText" />
-
-    <!-- Campo: Descripcion de Propiedad -->
-    <TextView
-        android:id="@+id/descriptionPropTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Descripcion de la propiedad"
-        android:textAlignment="textStart"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/propertyTypeSpinner" />
-
-    <EditText
-        android:id="@+id/descriptionPropEditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:hint="Ingrese los detalles/descripcion de la propiedad"
-        android:inputType="textMultiLine"
-        android:textSize="14sp"
-        android:textStyle="italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionPropTextView" />
-
-    <!-- Campo: Precio de Alquiler de la Propiedad -->
-    <EditText
-        android:id="@+id/priceRentEditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:hint="Precio de alquiler"
-        android:inputType="number"
-        android:textSize="14sp"
-        android:textStyle="italic"
-
-        app:layout_constraintEnd_toStartOf="@+id/expensesEditText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/descriptionPropEditText" />
-
-    <!-- Campo: Expensas de la Propiedad -->
-    <EditText
-        android:id="@+id/expensesEditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:hint="Precio de las expensas"
-        android:inputType="number"
-        android:textSize="14sp"
-        android:textStyle="italic"
-        app:layout_constraintBottom_toBottomOf="@id/priceRentEditText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/priceRentEditText"
-        app:layout_constraintTop_toTopOf="@id/priceRentEditText" />
-
-    <!-- Campo: Ubicacion de la Propiedad -->
-    <TextView
-        android:id="@+id/ubicationPropTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Ubicacion de la propiedad"
-        android:textAlignment="textStart"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/priceRentEditText" />
-
-    <!-- Campo: lista desplegable para Provincia -->
-    <Spinner
-        android:id="@+id/provinceSpinner"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:prompt="@string/prompt_property"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ubicationPropTextView" />
-
-    <!-- Campo: Calle -->
-    <EditText
-        android:id="@+id/streetEditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
         android:padding="16dp"
-        android:text="Calle"
-        android:textSize="14sp"
-        android:textStyle="italic"
-        app:layout_constraintEnd_toStartOf="@+id/heightEditText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/provinceSpinner" />
+        tools:context=".fragments.PublishPropertyFragment">
 
-    <!-- Campo: Altura -->
-    <EditText
-        android:id="@+id/heightEditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:padding="16dp"
-        android:text="Altura"
-        android:textSize="14sp"
-        android:textStyle="italic"
-        app:layout_constraintBottom_toBottomOf="@id/streetEditText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/streetEditText"
-        app:layout_constraintTop_toTopOf="@id/streetEditText" />
+        <!-- Nombre de la Formulario -->
+        <TextView
+            android:id="@+id/titleFormTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Publica tu Propiedad"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Campo: Entre Calles -->
-    <EditText
-        android:id="@+id/betweenStreetsEditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:padding="16dp"
-        android:text="Entre Calles"
-        android:textSize="14sp"
-        android:textStyle="italic"
-        app:layout_constraintEnd_toStartOf="@+id/postalCodeEditText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/streetEditText" />
+        <!-- Campo: Titulo de la Publicacion -->
+        <EditText
+            android:id="@+id/publicationTitleEditText"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Titulo de la Publicacion"
+            android:inputType="text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/titleFormTextView" />
 
-    <!-- Campo: Codigo Postal -->
-    <EditText
-        android:id="@+id/postalCodeEditText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:padding="16dp"
-        android:text="Codigo Postal"
-        android:textSize="14sp"
-        android:textStyle="italic"
-        app:layout_constraintBottom_toBottomOf="@id/betweenStreetsEditText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/betweenStreetsEditText"
-        app:layout_constraintTop_toTopOf="@id/betweenStreetsEditText" />
+        <!-- Campo: Tipo de Operacion para la propiedad -->
+        <TextView
+            android:id="@+id/operationTypeTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            android:text="Tipo de operacion"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toStartOf="@+id/radioGroupOperationType"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/publicationTitleEditText" />
 
-    <!-- Boton para publicar la propiedad -->
-    <Button
-        android:id="@+id/publishButton"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:background="@drawable/btn_rounded"
-        android:text="Publicar"
-        android:textColor="@android:color/white"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        <RadioGroup
+            android:id="@+id/radioGroupOperationType"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="@id/operationTypeTitleTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/operationTypeTitleTextView"
+            app:layout_constraintTop_toTopOf="@id/operationTypeTitleTextView">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            <RadioButton
+                android:id="@+id/rentRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alquiler" />
+
+            <RadioButton
+                android:id="@+id/saleRadioButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Venta" />
+
+        </RadioGroup>
+
+        <!-- Campo: lista desplegable para Tipo de Propiedad -->
+        <Spinner
+            android:id="@+id/propertyTypeSpinner"
+            style="@style/SpinnerStyle"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:entries="@array/opciones_spinner_typeProperty"
+            android:prompt="@string/prompt_property"
+            android:spinnerMode="dropdown"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/radioGroupOperationType" />
+
+        <!-- Campo: Descripcion de Propiedad -->
+        <TextView
+            android:id="@+id/descriptionPropTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Descripcion de la propiedad"
+            android:textAlignment="textStart"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/propertyTypeSpinner" />
+
+        <EditText
+            android:id="@+id/descriptionPropEditText"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Ingrese los detalles/descripcion de la propiedad"
+            android:inputType="textMultiLine"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/descriptionPropTextView" />
+
+        <!-- Campo: Precio de Alquiler de la Propiedad -->
+        <EditText
+            android:id="@+id/priceRentEditText"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Precio de alquiler"
+            android:inputType="number"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toStartOf="@+id/expensesEditText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/descriptionPropEditText" />
+
+        <!-- Campo: Expensas de la Propiedad -->
+        <EditText
+            android:id="@+id/expensesEditText"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:hint="Precio de las expensas"
+            android:inputType="number"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="@id/priceRentEditText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/priceRentEditText"
+            app:layout_constraintTop_toTopOf="@id/priceRentEditText" />
+
+        <!-- Campo: Area/Superficie de la Propiedad -->
+        <EditText
+            android:id="@+id/areaEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="10dp"
+            android:hint="Area o superficie [m2]"
+            android:inputType="numberDecimal"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toStartOf="@+id/expensesEditText"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/priceRentEditText" />
+
+        <!-- Campo: Habitaciones de la Propiedad -->
+        <EditText
+            android:id="@+id/bedRoomsEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:hint="Cant. Habitaciones"
+            android:inputType="number"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="@id/areaEditText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.081"
+            app:layout_constraintStart_toEndOf="@id/areaEditText"
+            app:layout_constraintTop_toTopOf="@id/areaEditText"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <!-- Campo: Baños de la Propiedad -->
+        <EditText
+            android:id="@+id/bathRoomsEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:hint="Cant. Baños"
+            android:inputType="number"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="@id/bedRoomsEditText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/bedRoomsEditText"
+            app:layout_constraintTop_toTopOf="@id/bedRoomsEditText" />
+
+        <!-- Campo: Ubicacion de la Propiedad -->
+        <TextView
+            android:id="@+id/ubicationPropTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Ubicacion de la propiedad"
+            android:textAlignment="textStart"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/areaEditText" />
+
+        <!-- Campo: lista desplegable para Provincia -->
+        <Spinner
+            android:id="@+id/provinceSpinner"
+            style="@style/SpinnerStyle"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:entries="@array/opciones_spinner_province"
+            android:prompt="@string/prompt_property"
+            android:spinnerMode="dropdown"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ubicationPropTextView" />
+
+        <!-- Campo: Calle -->
+        <EditText
+            android:id="@+id/streetEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:inputType="text"
+            android:padding="16dp"
+            android:text="Calle"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toStartOf="@+id/heightEditText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/provinceSpinner" />
+
+        <!-- Campo: Altura -->
+        <EditText
+            android:id="@+id/heightEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:inputType="number"
+            android:padding="16dp"
+            android:text="Altura"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="@id/streetEditText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/streetEditText"
+            app:layout_constraintTop_toTopOf="@id/streetEditText" />
+
+        <!-- Campo: Entre Calles -->
+        <EditText
+            android:id="@+id/betweenStreetsEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:inputType="text"
+            android:padding="16dp"
+            android:text="Entre Calles"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toStartOf="@+id/postalCodeEditText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/streetEditText" />
+
+        <!-- Campo: Codigo Postal -->
+        <EditText
+            android:id="@+id/postalCodeEditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:inputType="text"
+            android:padding="16dp"
+            android:text="Codigo Postal"
+            android:textSize="14sp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="@id/betweenStreetsEditText"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/betweenStreetsEditText"
+            app:layout_constraintTop_toTopOf="@id/betweenStreetsEditText" />
+
+        <!-- Boton para publicar la propiedad -->
+        <Button
+            android:id="@+id/publishButton"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:background="@drawable/btn_rounded"
+            android:text="Publicar"
+            android:textColor="@android:color/white"
+            android:textSize="15sp"
+            app:layout_constraintTop_toBottomOf="@id/betweenStreetsEditText"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
