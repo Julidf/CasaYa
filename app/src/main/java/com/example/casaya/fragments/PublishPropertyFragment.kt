@@ -11,6 +11,7 @@ import android.widget.EditText
 import android.widget.RadioGroup
 import android.widget.Spinner
 import androidx.core.os.bundleOf
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.casaya.R
@@ -22,8 +23,7 @@ class PublishPropertyFragment : Fragment() {
         fun newInstance() = PublishPropertyFragment()
     }
 
-    private val viewModel: PublishPropertyViewModel by viewModels()
-    private val viewModelPropertiesList: PropertiesListViewModel by viewModels()
+    private val viewModelPropertiesList: PropertiesListViewModel by activityViewModels()
     private lateinit var view: View
 
     /**

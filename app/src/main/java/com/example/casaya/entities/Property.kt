@@ -19,7 +19,7 @@ data class Property(
     private var height: Int,
     private var betweenStreets: String,
     private var postalCode: String
-
+    
 ) {
 
     private var publicationDate: LocalDate
