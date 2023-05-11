@@ -29,12 +29,7 @@ class PropertiesListFragment : Fragment() {
     lateinit var v: View
     lateinit var recyclerProperties: RecyclerView
     private var propertiesList: MutableList<Property> = repositoryProperties.getProperties()
-
     lateinit var adapterProperty: PropertyAdapter
-
-    //Prueba para agregar un boton y probar el fomulario de creacion de propiedades
-    lateinit var publishPropButton: Button
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,7 +37,6 @@ class PropertiesListFragment : Fragment() {
     ): View? {
         v = inflater.inflate(R.layout.fragment_properties_list, container, false)
         recyclerProperties = v.findViewById(R.id.recyclerProperties)
-        publishPropButton = v.findViewById(R.id.publishPropButton)
 
         return v
     }
@@ -72,15 +66,6 @@ class PropertiesListFragment : Fragment() {
         //Configuro la forma en que se visualizara el RecyclerView
         recyclerProperties.layoutManager = LinearLayoutManager(context)
         recyclerProperties.adapter = adapterProperty
-
-        //Prueba: se escucha click en el button Publicar propiedad
-        publishPropButton.setOnClickListener {
-            val action =
-                PropertiesListFragmentDirections.actionPropertiesListFragmentToPublishPropertyFragment()
-            findNavController().navigate(action)
-
-
-        }
     }
 
 }
