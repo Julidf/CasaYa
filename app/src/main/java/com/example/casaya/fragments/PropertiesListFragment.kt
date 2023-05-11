@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,7 +25,7 @@ import com.example.casaya.entities.Property
 
 class PropertiesListFragment : Fragment() {
 
-    private val viewModelPropertiesList: PropertiesListViewModel by viewModels()
+    private val viewModelPropertiesList: PropertiesListViewModel by activityViewModels()
     private var repositoryProperties = PropertyRepository()
     lateinit var v: View
     lateinit var recyclerProperties: RecyclerView
