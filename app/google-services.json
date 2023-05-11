@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "6178814772",
+    "project_id": "casaya-backend",
+    "storage_bucket": "casaya-backend.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:6178814772:android:a0bfeba1f939e2bbab8361",
+        "android_client_info": {
+          "package_name": "com.example.casaya.database"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "6178814772-40mdcqgtngs774a5q2ufb2l3k4vh1gv5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlXYMVVDf2VOrkeVu3qf4Boh4TSH5x-4E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "6178814772-40mdcqgtngs774a5q2ufb2l3k4vh1gv5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
