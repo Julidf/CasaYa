@@ -6,14 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.casaya.entities.Property
 import com.example.casaya.entities.PropertyRepository
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class PropertiesListViewModel : ViewModel() {
     private val repositoryProperty: PropertyRepository = PropertyRepository()
-
-    private var properties = MutableLiveData<MutableList<Property>>()
-
-    private var mutableListProperties: MutableList<Property> = mutableListOf()
-    private var property = MutableLiveData<Property>()
 
     fun publishProperty(
         title: String,
@@ -47,23 +44,13 @@ class PropertiesListViewModel : ViewModel() {
             betweenStreets,
             postalCode
         )
-        properties.value?.add(newProperty)
-        properties = properties
 
         repositoryProperty.saveProperty(newProperty)
     }
 
-    fun getProperties(): LiveData<MutableList<Property>> {
-        return this.properties
+    fun getProperties(): MutableList<Property> {
+        return repositoryProperty.getAllProperties()
     }
 
-    fun getMutableList(): MutableList<Property> {
-        properties.value?.let { mutableListProperties.addAll(it) }
-        return mutableListProperties
-    }
-
-    fun getProperty(): LiveData<Property> {
-        return this.property
-    }
 
 }

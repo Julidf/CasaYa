@@ -28,20 +28,10 @@ class PropertyAdapter(
         return properties.size
     }
 
-    fun addNewProperties(newProperties: List<Property>) {
-        Log.d("Property Adapter", "Entrando al notificador del adapter")
-        if (newProperties.isNotEmpty()) {
-            properties.clear()
-            properties.addAll(newProperties)
-            notifyDataSetChanged()
-        }
-
-    }
-
     override fun onBindViewHolder(holder: PropertyHolder, position: Int) {
         holder.setTitle(properties[position].getTitle())
         holder.setPrice(properties[position].getPrice())
-        holder.setPublicationDays(properties[position].getPublicationDays())
+        holder.setPublicationDays(15)
         holder.getCard().setOnClickListener {
             //Cuando escucha un click, le envia a la funcion 'onClick' el valor de la posicion del item
             onClick(position)

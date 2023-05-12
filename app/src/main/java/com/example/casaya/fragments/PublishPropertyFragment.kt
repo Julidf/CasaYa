@@ -63,6 +63,7 @@ class PublishPropertyFragment : Fragment() {
 
         //capturo el evento del boton
         publishButton.setOnClickListener {
+
             //Envio la informacion del formulario al ViewModel
             submitDataForm()
 

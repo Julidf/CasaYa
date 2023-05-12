@@ -29,7 +29,7 @@ class PropertiesListFragment : Fragment() {
     private var repositoryProperties = PropertyRepository()
     lateinit var v: View
     lateinit var recyclerProperties: RecyclerView
-    private var propertiesList: MutableList<Property> = repositoryProperties.getProperties()
+    private var propertiesList: MutableList<Property> = repositoryProperties.getAllProperties()
     lateinit var adapterProperty: PropertyAdapter
 
     override fun onCreateView(
@@ -55,7 +55,9 @@ class PropertiesListFragment : Fragment() {
             }
         )
 
+        Log.d("Properties List", "Detalle de la lista ${propertiesList}")
 
+        /*
         // Observar la lista de elementos en el ViewModel y actualiza el adaptador
         Log.d("Observer Adapter", "Entrando al observer del adapter")
         viewModelPropertiesList.getProperties().observe(viewLifecycleOwner) { properties ->
@@ -63,6 +65,8 @@ class PropertiesListFragment : Fragment() {
             adapterProperty.addNewProperties(repositoryProperties.getProperties())
             adapterProperty.notifyItemInserted(properties.size - 1)
         }
+
+         */
 
         //Configuro la forma en que se visualizara el RecyclerView
         recyclerProperties.layoutManager = LinearLayoutManager(context)

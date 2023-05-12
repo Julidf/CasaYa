@@ -1,9 +1,19 @@
 package com.example.casaya.entities
 
+import android.content.ContentValues.TAG
 import android.util.Log
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
+import java.lang.reflect.TypeVariable
 import java.time.LocalDate
 
 class PropertyRepository(){
+
+    private val COLLECTION: String = "properties"
+
+    //Inicializacion de una instancia de Firestore
+    val db = Firebase.firestore
 
     private var properties: MutableList<Property>
 
@@ -11,6 +21,54 @@ class PropertyRepository(){
         this.properties = mutableListOf()
         initializeList()
     }
+
+    fun saveProperty(newProperty: Property) {
+        db.collection(COLLECTION)
+            .add(newProperty)
+            .addOnSuccessListener { documentReference ->
+                Log.d(TAG, "Se agrego exitosamente el documento con ID ${documentReference.id}")
+            }
+            .addOnFailureListener { e ->
+                Log.w(TAG, "Error agregando el documento", e)
+            }
+    }
+
+    fun getAllProperties() : MutableList<Property> {
+        var propertiesList: MutableList<Property> = arrayListOf()
+        db.collection(COLLECTION)
+            .get()
+            .addOnSuccessListener { snapshot ->
+                if(snapshot != null) {
+                    for (propertyFirebase in snapshot) {
+                        Log.d("Property", "${propertyFirebase.id} => ${propertyFirebase.data}")
+                        val property: Property = propertyFirebase.toObject<Property>()
+                        propertiesList.add(property)
+                    }
+                }
+            }
+        return propertiesList
+    }
+
+    /*
+    fun getAllProperties(callback: (List<Property>?) -> Unit) {
+        db.collection(COLLECTION)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val propertiesList: MutableList<Property> = mutableListOf()
+                    for (propertyFirebase in task.result!!) {
+                        Log.d("Property", "${propertyFirebase.id} => ${propertyFirebase.data}")
+                        val property: Property = propertyFirebase.toObject<Property>()
+                        propertiesList.add(property)
+                    }
+                    callback(propertiesList)
+                } else {
+                    callback(null)
+                }
+            }
+    }
+
+     */
 
 
     private fun initializeList() {
@@ -31,13 +89,5 @@ class PropertyRepository(){
 
     fun getProperties() : MutableList<Property> {
         return this.properties
-    }
-
-    fun saveProperty(newProperty: Property) {
-        Log.d("Saving Property", "Guardando la nueva Property")
-        Log.d("Tamaño ArrayList ANTES", "El tamaño es ${properties.size}")
-        properties.add(newProperty)
-        Log.d("Nueva Property", "El titulo de la propiedad es: ${properties.get(properties.lastIndex).getTitle()}")
-        Log.d("Tamaño ArrayList DESPUES", "El tamaño es ${properties.size}")
     }
 }

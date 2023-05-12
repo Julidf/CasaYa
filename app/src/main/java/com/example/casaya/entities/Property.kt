@@ -20,7 +20,10 @@ data class Property(
     private var betweenStreets: String,
     private var postalCode: String
 
+    //constructor(): this("", "", 0.0, 0, 0, 0.0, 0.0, false, "", "", "", 0, "", "")
 ) {
+
+    constructor(): this("", "", 0.0, 0, 0, 0.0, 0.0, false, "", "", "", 0, "", "")
 
     private var publicationDate: LocalDate
 
