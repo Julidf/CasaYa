@@ -60,7 +60,7 @@
 
     <!-- Detalle del valor del alquiler -->
     <TextView
-        android:id="@+id/tagRentTextView"
+        android:id="@+id/tagOperationTypeTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:padding="16dp"
@@ -70,14 +70,14 @@
         app:layout_constraintVertical_bias="0.5"/>
 
     <TextView
-        android:id="@+id/valueRentTextView"
+        android:id="@+id/valuePriceTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="$120.000"
-        app:layout_constraintStart_toEndOf="@id/tagRentTextView"
+        app:layout_constraintStart_toEndOf="@id/tagOperationTypeTextView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tagRentTextView"
-        app:layout_constraintBottom_toBottomOf="@id/tagRentTextView"/>
+        app:layout_constraintTop_toTopOf="@id/tagOperationTypeTextView"
+        app:layout_constraintBottom_toBottomOf="@id/tagOperationTypeTextView"/>
 
     <!-- Detalle del valor de la expensa -->
     <TextView
@@ -87,7 +87,7 @@
         android:padding="16dp"
         android:text="Expensas"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tagRentTextView"
+        app:layout_constraintTop_toBottomOf="@id/valuePriceTextView"
         app:layout_constraintVertical_bias="0.5" />
 
     <TextView

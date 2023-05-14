@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout2"
+    android:id="@+id/propertiesList"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.PropertiesListFragment" >
@@ -12,6 +12,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:layout_marginBottom="20dp"
+        android:paddingBottom="10dp"
         android:elevation="15dp"
         android:iconifiedByDefault="false"
         android:queryHint="Buscar"
@@ -19,13 +21,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <!-- Boton para publicar una propiedad -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerProperties"
         android:layout_width="409dp"
         android:layout_height="729dp"
         android:layout_marginEnd="1dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

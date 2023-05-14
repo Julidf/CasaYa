@@ -23,7 +23,9 @@
         android:id="@+id/propertyDetailFragment"
         android:name="com.example.casaya.fragments.PropertyDetailFragment"
         android:label="fragment_property_detail"
-        tools:layout="@layout/fragment_property_detail" />
+        tools:layout="@layout/fragment_property_detail" >
+
+    </fragment>
 
     <fragment
         android:id="@+id/publishPropertyFragment"

@@ -49,7 +49,7 @@ class PropertyAdapter(
 
         }
 
-        fun setTitle(title: String) {
+        fun setTitle(title: String?) {
             val txtTitleItem: TextView = view.findViewById(R.id.titleListTextView)
             txtTitleItem.text = title
         }

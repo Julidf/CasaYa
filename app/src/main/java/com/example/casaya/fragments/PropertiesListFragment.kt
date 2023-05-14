@@ -1,26 +1,18 @@
 package com.example.casaya.fragments
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.casaya.R
 import com.example.casaya.adapters.PropertyAdapter
 import com.example.casaya.entities.PropertyRepository
-import com.google.android.material.snackbar.Snackbar
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.example.casaya.entities.Property
 
 class PropertiesListFragment : Fragment() {
@@ -49,24 +41,24 @@ class PropertiesListFragment : Fragment() {
             properties = propertiesList,
             onClick = { position ->
                 //Snackbar.make(v, "Click en ${repository.getProperties()[position].getTitle()}", Snackbar.LENGTH_SHORT).show()
+
+                /*
+                val propertyClicked = propertiesList[position]
+                val bundle = Bundle()
+                bundle.putParcelable("propertyClicked", propertyClicked)
+
+                 */
+
                 val action =
                     PropertiesListFragmentDirections.actionPropertiesListFragmentToPropertyDetailFragment()
                 findNavController().navigate(R.id.action_propertiesListFragment_to_propertyDetailFragment)
+                //findNavController().navigate(action)
+                //view.findNavController().navigate(action)
             }
         )
 
         Log.d("Properties List", "Detalle de la lista ${propertiesList}")
 
-        /*
-        // Observar la lista de elementos en el ViewModel y actualiza el adaptador
-        Log.d("Observer Adapter", "Entrando al observer del adapter")
-        viewModelPropertiesList.getProperties().observe(viewLifecycleOwner) { properties ->
-            Log.d("Observer Adapter", "Dentro al observer del adapter")
-            adapterProperty.addNewProperties(repositoryProperties.getProperties())
-            adapterProperty.notifyItemInserted(properties.size - 1)
-        }
-
-         */
 
         //Configuro la forma en que se visualizara el RecyclerView
         recyclerProperties.layoutManager = LinearLayoutManager(context)

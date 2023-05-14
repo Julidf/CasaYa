@@ -58,18 +58,187 @@ class PublishPropertyFragment : Fragment() {
         return view
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        publicationTitleEditText.apply {
+            error = null
+            setText("")
+        }
+
+        descriptionPropEditText.apply {
+            error = null
+            setText("")
+        }
+
+        priceRentEditText.apply {
+            error = null
+            setText("")
+        }
+
+        expensesEditText.apply {
+            error = null
+            setText("")
+        }
+
+        areaEditText.apply {
+            error = null
+            setText("")
+        }
+
+        bedRoomsEditText.apply {
+            error = null
+            setText("")
+        }
+
+        bathRoomsEditText.apply {
+            error = null
+            setText("")
+        }
+
+        streetEditText.apply {
+            error = null
+            setText("")
+        }
+
+        heightEditText.apply {
+            error = null
+            setText("")
+        }
+
+        betweenStreetsEditText.apply {
+            error = null
+            setText("")
+        }
+
+        postalCodeEditText.apply {
+            error = null
+            setText("")
+        }
+    }
+
     override fun onStart() {
         super.onStart()
 
         //capturo el evento del boton
         publishButton.setOnClickListener {
 
-            //Envio la informacion del formulario al ViewModel
-            submitDataForm()
+            //Verifico si los datos cargados en el form son validos
+            if (formIsValid()) {
+                //Envio la informacion del formulario al ViewModel
+                submitDataForm()
 
-            val action = PublishPropertyFragmentDirections.actionPublishPropertyFragmentToPropertiesListFragment()
-            findNavController().navigate(action)
+                val action =
+                    PublishPropertyFragmentDirections.actionPublishPropertyFragmentToPropertiesListFragment()
+                findNavController().navigate(action)
+            }
         }
+    }
+
+    private fun formIsValid(): Boolean {
+        var isValid = true
+
+        val publicationTitle = publicationTitleEditText.text.toString().trim()
+        val descriptionProp = descriptionPropEditText.text.toString().trim()
+        val priceRent = priceRentEditText.text.toString().trim()
+        val expenses = expensesEditText.text.toString().trim()
+        val area = areaEditText.text.toString().trim()
+        val bedRooms = bedRoomsEditText.text.toString().trim()
+        val bathRooms = bathRoomsEditText.text.toString().trim()
+        val street = streetEditText.text.toString().trim()
+        val height = heightEditText.text.toString().trim()
+        val betweenStreets = betweenStreetsEditText.text.toString().trim()
+        val postalCode = postalCodeEditText.text.toString().trim()
+
+        /**
+         * Valida el Campo Titulo de la publicacion
+         */
+        if (publicationTitle.isEmpty()) {
+            publicationTitleEditText.error = "Por favor, complete el titulo de la publicacion"
+            isValid = false
+        }
+
+        /**
+         * Valida el Campo Descripcion de la publicacion
+         */
+        if (descriptionProp.isEmpty()) {
+            descriptionPropEditText.error = "Por favor, complete la descripcion de la publicacion"
+            isValid = false
+        }
+
+        /**
+         * Valida el Campo Precio de la publicacion
+         */
+        if (priceRent.isEmpty()) {
+            priceRentEditText.error = "Por favor, complete el precio de Alquiler/Venta de la propiedad"
+            isValid = false
+        }
+
+        /**
+         * Valida el Campo Expensa de la publicacion
+         */
+        if (expenses.isEmpty()) {
+            expensesEditText.error = "Por favor, complete el valor de las expensas de Alquiler/Venta de la propiedad"
+            isValid = false
+        }
+
+        /**
+         * Valida el Campo Area de la publicacion
+         */
+        if (area.isEmpty()) {
+            areaEditText.error = "Por favor, complete el valor del area de la propiedad"
+            isValid = false
+        }
+
+        /**
+         * Valida el Campo Cantidad de Habitacion de la publicacion
+         */
+        if (bedRooms.isEmpty()) {
+            bedRoomsEditText.error = "Por favor, complete el valor de la cantidad de habitaciones de la propiedad"
+            isValid = false
+        }
+
+        /**
+         * Valida el Campo Cantidad de Baños de la publicacion
+         */
+        if (bathRooms.isEmpty()) {
+            bathRoomsEditText.error = "Por favor, complete el valor de la cantidad de baños de la propiedad"
+            isValid = false
+        }
+
+        /**
+         * Valida el Campo Calle de la publicacion
+         */
+        if (street.isEmpty()) {
+            streetEditText.error = "Por favor, complete el nombre de la calle de la direccion de la propiedad"
+            isValid = false
+        }
+
+        /**
+         * Valida el Campo Altura de la Calle de la publicacion
+         */
+        if (height.isEmpty() || height.toInt() <= 0) {
+            heightEditText.error = "Por favor, complete y/o agregue un valor valido para la altura de la calle"
+            isValid = false
+        }
+
+        /**
+         * Valida el Campo Entre Calles de la publicacion
+         */
+        if (betweenStreets.isEmpty()) {
+            betweenStreetsEditText.error = "Por favor, complete el nombre de las calles de referencia de la propiedad"
+            isValid = false
+        }
+
+        /**
+         * Valida el Campo Codigo Postal de la publicacion
+         */
+        if (postalCode.isEmpty()) {
+            postalCodeEditText.error = "Por favor, complete el codigo postal de la ubicacion de la propiedad"
+            isValid = false
+        }
+
+        return isValid
     }
 
     /**
@@ -91,7 +260,22 @@ class PublishPropertyFragment : Fragment() {
         val betweenStreets = betweenStreetsEditText.text.toString()
         val postalCode = postalCodeEditText.text.toString()
 
-        viewModelPropertiesList.publishProperty(title, description, area, bedRoomsNumber, bathRoomsNumber, price, expense, isRent, propertyType, province, street, height, betweenStreets, postalCode)
+        viewModelPropertiesList.publishProperty(
+            title,
+            description,
+            area,
+            bedRoomsNumber,
+            bathRoomsNumber,
+            price,
+            expense,
+            isRent,
+            propertyType,
+            province,
+            street,
+            height,
+            betweenStreets,
+            postalCode
+        )
 
     }
 
@@ -99,7 +283,7 @@ class PublishPropertyFragment : Fragment() {
      * Obtiene el valor boolean del grupo de radio buttons en relacion al tipo de
      * operacion: Alquiler o Venta
      */
-    private fun isForRent() : Boolean {
+    private fun isForRent(): Boolean {
         return when (radioGroupOperationType.checkedRadioButtonId) {
             R.id.rentRadioButton -> true
             R.id.saleRadioButton -> false

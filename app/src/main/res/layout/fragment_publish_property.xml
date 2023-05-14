@@ -21,7 +21,7 @@
             android:id="@+id/titleFormTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="20dp"
             android:text="Publica tu Propiedad"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -46,6 +46,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/titleFormTextView" />
+
 
         <!-- Campo: Tipo de Operacion para la propiedad -->
         <TextView
@@ -251,9 +252,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:hint="Calle"
             android:inputType="text"
             android:padding="16dp"
-            android:text="Calle"
             android:textSize="14sp"
             android:textStyle="italic"
             app:layout_constraintEnd_toStartOf="@+id/heightEditText"
@@ -267,9 +268,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            android:hint="Altura"
             android:inputType="number"
             android:padding="16dp"
-            android:text="Altura"
             android:textSize="14sp"
             android:textStyle="italic"
             app:layout_constraintBottom_toBottomOf="@id/streetEditText"
@@ -285,9 +286,9 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:hint="Entre calles"
             android:inputType="text"
             android:padding="16dp"
-            android:text="Entre Calles"
             android:textSize="14sp"
             android:textStyle="italic"
             app:layout_constraintEnd_toStartOf="@+id/postalCodeEditText"
@@ -301,9 +302,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
+            android:hint="Codigo Postal"
             android:inputType="text"
             android:padding="16dp"
-            android:text="Codigo Postal"
             android:textSize="14sp"
             android:textStyle="italic"
             app:layout_constraintBottom_toBottomOf="@id/betweenStreetsEditText"
@@ -314,18 +315,19 @@
         <!-- Boton para publicar la propiedad -->
         <Button
             android:id="@+id/publishButton"
-            android:layout_width="250dp"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
             android:layout_marginBottom="32dp"
             android:background="@drawable/btn_rounded"
             android:text="Publicar"
             android:textColor="@android:color/white"
-            android:textSize="15sp"
-            app:layout_constraintTop_toBottomOf="@id/betweenStreetsEditText"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/betweenStreetsEditText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
