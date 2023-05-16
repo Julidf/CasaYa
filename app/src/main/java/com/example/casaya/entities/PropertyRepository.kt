@@ -49,28 +49,6 @@ class PropertyRepository(){
         return propertiesList
     }
 
-    /*
-    fun getAllProperties(callback: (List<Property>?) -> Unit) {
-        db.collection(COLLECTION)
-            .get()
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val propertiesList: MutableList<Property> = mutableListOf()
-                    for (propertyFirebase in task.result!!) {
-                        Log.d("Property", "${propertyFirebase.id} => ${propertyFirebase.data}")
-                        val property: Property = propertyFirebase.toObject<Property>()
-                        propertiesList.add(property)
-                    }
-                    callback(propertiesList)
-                } else {
-                    callback(null)
-                }
-            }
-    }
-
-     */
-
-
     private fun initializeList() {
 
         val prop1 = Property( "Apartment_1", "Hermoso depto", 45.0, 3, 2, 25000.0, 120000.0, true, "Departamento", "Alquiler", "BUenos Aires", 2051, "Junin y Ayacucho", "Junin y Ayacucho")
@@ -87,7 +65,4 @@ class PropertyRepository(){
 
     }
 
-    fun getProperties() : MutableList<Property> {
-        return this.properties
-    }
 }
