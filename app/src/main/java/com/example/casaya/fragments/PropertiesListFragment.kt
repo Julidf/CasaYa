@@ -18,10 +18,8 @@ import com.example.casaya.entities.Property
 class PropertiesListFragment : Fragment() {
 
     private val viewModelPropertiesList: PropertiesListViewModel by activityViewModels()
-    private var repositoryProperties = PropertyRepository()
     lateinit var v: View
     lateinit var recyclerProperties: RecyclerView
-    private var propertiesList: MutableList<Property> = repositoryProperties.getAllProperties()
     lateinit var adapterProperty: PropertyAdapter
 
     override fun onCreateView(
@@ -37,8 +35,13 @@ class PropertiesListFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
+        /**
+         * Obtengo la lista inicial de propiedades para enviar al Adapter
+         */
+        viewModelPropertiesList.getProperties()
+
         adapterProperty = PropertyAdapter(
-            properties = propertiesList,
+            properties = viewModelPropertiesList.propertiesList,
             onClick = { position ->
                 //Snackbar.make(v, "Click en ${repository.getProperties()[position].getTitle()}", Snackbar.LENGTH_SHORT).show()
 
@@ -57,12 +60,25 @@ class PropertiesListFragment : Fragment() {
             }
         )
 
-        Log.d("Properties List", "Detalle de la lista ${propertiesList}")
+
+        //Log.d("Properties List", "Detalle de la lista ${propertiesList}")
 
 
-        //Configuro la forma en que se visualizara el RecyclerView
+        /**
+         * Configuro la forma en que se visualizara el RecyclerView
+         */
         recyclerProperties.layoutManager = LinearLayoutManager(context)
         recyclerProperties.adapter = adapterProperty
+
+        /**
+         * Observo los cambios de la collection Properties de la DB
+         */
+        viewModelPropertiesList.myListLiveData.observe(viewLifecycleOwner) { myList ->
+            adapterProperty.submitList(myList.toMutableList())
+            adapterProperty.notifyDataSetChanged()
+        }
+
+        viewModelPropertiesList.fetchMyList()
     }
 
 }
