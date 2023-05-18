@@ -4,9 +4,11 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.casaya.entities.Property
 import com.example.casaya.entities.PropertyRepository
 import com.example.casaya.entities.PropertyType
+import kotlinx.coroutines.launch
 
 class PublishPropertyViewModel : ViewModel() {
 
@@ -65,7 +67,10 @@ class PublishPropertyViewModel : ViewModel() {
 
         property2 = newProperty
 
-        repositoryProperty.saveProperty(newProperty)
+        viewModelScope.launch {
+            repositoryProperty.saveProperty(newProperty)
+        }
+
     }
 
     fun getProperties() : LiveData<MutableList<Property>> {
