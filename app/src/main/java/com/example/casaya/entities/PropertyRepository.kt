@@ -5,6 +5,7 @@ import android.util.Log
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import java.lang.reflect.TypeVariable
 import java.time.LocalDate
 
@@ -14,6 +15,8 @@ class PropertyRepository(){
 
     //Inicializacion de una instancia de Firestore
     val db = Firebase.firestore
+    //Inicializacion de una instancia de Storage
+    val storage = Firebase.storage
 
     private var properties: MutableList<Property>
 
@@ -47,6 +50,16 @@ class PropertyRepository(){
                 }
             }
         return propertiesList
+    }
+
+    //TO DO
+    fun editProperty (property: Property) : Property {
+        return property;
+    }
+
+    //TO DO
+    fun deleteProperty (property: Property) : Boolean {
+        return true;
     }
 
     private fun initializeList() {
