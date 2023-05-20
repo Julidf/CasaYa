@@ -38,6 +38,10 @@ class PropertyAdapter(
         }
     }
 
+    fun submitList(properties: MutableList<Property>) {
+        this.properties = properties
+    }
+
     class PropertyHolder(v: View) : RecyclerView.ViewHolder(v) {
         private var view: View
 
