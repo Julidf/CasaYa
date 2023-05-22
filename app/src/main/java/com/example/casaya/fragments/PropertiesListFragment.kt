@@ -1,7 +1,6 @@
 package com.example.casaya.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.casaya.R
 import com.example.casaya.adapters.PropertyAdapter
-import com.example.casaya.entities.PropertyRepository
 import androidx.navigation.fragment.findNavController
-import com.example.casaya.entities.Property
+import com.example.casaya.viewmodels.PropertiesListViewModel
 
 class PropertiesListFragment : Fragment() {
 

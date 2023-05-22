@@ -57,7 +57,6 @@
             android:padding="10dp"
             android:text="15"
             android:textStyle="bold"
-
             app:layout_constraintBottom_toBottomOf="@id/tagTimePublicationListTextView"
             app:layout_constraintStart_toEndOf="@id/tagTimePublicationListTextView"
             app:layout_constraintTop_toTopOf="@id/tagTimePublicationListTextView"
@@ -69,7 +68,6 @@
             android:layout_height="wrap_content"
             android:text="dias"
             android:textStyle="italic"
-
             app:layout_constraintBottom_toBottomOf="@id/valueTimePublicationListTextView"
             app:layout_constraintStart_toEndOf="@id/valueTimePublicationListTextView"
             app:layout_constraintTop_toTopOf="@id/valueTimePublicationListTextView" />

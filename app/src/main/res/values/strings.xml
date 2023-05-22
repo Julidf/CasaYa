@@ -6,6 +6,9 @@
     <!-- Representa el valor inicial que se mostrara en la lista desplegable -->
     <string name="prompt_property">Seleccione un tipo de propiedad</string>
 
+    <!-- Representa el valor inicial que se mostrara en la lista desplegable -->
+    <string name="prompt_address">Seleccione una opcion</string>
+
     <!-- Lista estatica del Spinner, SOLO PARA PROBAR -->
     <string-array name="opciones_spinner_typeProperty">
         <item>Departamento</item>
@@ -29,6 +32,21 @@
         <item>Mendoza</item>
         <item>Misiones</item>
         <item>Neuquén</item>
+    </string-array>
+
+    <!-- Lista estatica del Spinner, SOLO PARA PROBAR -->
+    <string-array name="opciones_spinner_barrios">
+        <item>Balvanera</item>
+        <item>San Telmo</item>
+        <item>Barracas</item>
+        <item>Constitucion</item>
+        <item>Recoleta</item>
+        <item>Palermo</item>
+        <item>Vicente Lopez</item>
+        <item>Microcentro</item>
+        <item>Villa Devoto</item>
+        <item>Caballito</item>
+        <item>Flores</item>
     </string-array>
 
 </resources>

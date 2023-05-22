@@ -1,4 +1,4 @@
-package com.example.casaya.fragments
+package com.example.casaya.viewmodels
 
 import androidx.lifecycle.ViewModel
 

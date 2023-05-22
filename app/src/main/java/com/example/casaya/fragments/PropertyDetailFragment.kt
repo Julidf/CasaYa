@@ -1,6 +1,5 @@
 package com.example.casaya.fragments
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import com.example.casaya.R
 import com.example.casaya.entities.Property
+import com.example.casaya.viewmodels.PropertyDetailViewModel
 
 class PropertyDetailFragment : Fragment() {
 

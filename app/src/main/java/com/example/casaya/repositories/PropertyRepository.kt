@@ -1,14 +1,11 @@
-package com.example.casaya.entities
+package com.example.casaya.repositories
 
-import android.content.ContentValues.TAG
 import android.util.Log
+import com.example.casaya.entities.Property
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
-import java.lang.reflect.TypeVariable
-import java.time.LocalDate
 
 class PropertyRepository(){
 

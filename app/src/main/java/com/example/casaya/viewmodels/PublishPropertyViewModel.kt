@@ -1,4 +1,4 @@
-package com.example.casaya.fragments
+package com.example.casaya.viewmodels
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -6,8 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.casaya.entities.Property
-import com.example.casaya.entities.PropertyRepository
-import com.example.casaya.entities.PropertyType
+import com.example.casaya.repositories.PropertyRepository
 import kotlinx.coroutines.launch
 
 class PublishPropertyViewModel : ViewModel() {
