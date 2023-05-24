@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioGroup
 import android.widget.Spinner
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.casaya.R
@@ -23,8 +24,10 @@ class UserRegisterFragment : Fragment() {
         fun newInstance() = UserRegisterFragment()
     }
 
-    private var viewModelUserRegister: UserRegisterViewModel = UserRegisterViewModel()
+    private val viewModelUserRegister: UserRegisterViewModel by activityViewModels()
     private lateinit var view: View
+    private lateinit var welcomeMessage: String
+
 
     /**
      * Elementos del formulario
@@ -66,6 +69,8 @@ class UserRegisterFragment : Fragment() {
             if (formIsValid()) {
                 //Envio la informacion del formulario al ViewModel
                 submitDataForm()
+
+                viewModelUserRegister.welcomeMessage = welcomeMessage
 
                 val action = UserRegisterFragmentDirections.actionUserRegisterFragmentToUserRegistrationSuccessFragment()
                 findNavController().navigate(action)
@@ -170,6 +175,9 @@ class UserRegisterFragment : Fragment() {
         val height = heightUserEditText.text.toString().toInt()
         val postalCode = postalCodeUserEditText.text.toString()
 
+        //Seteo el mensaje de bienvenida al completarse el registro
+        setWelcomeMessage(name, lastname)
+
         viewModelUserRegister.createNewUser(
             name,
             lastname,
@@ -182,6 +190,13 @@ class UserRegisterFragment : Fragment() {
             height,
             postalCode
         )
+    }
+
+    /**
+     * Metodo que setea el mensaje de bienvenida al completarse el registro
+     */
+    private fun setWelcomeMessage(name: String, lastname: String) {
+        welcomeMessage = "Bienvenido $name $lastname, tu registro se ha realizado exitosamente."
     }
 
     /**

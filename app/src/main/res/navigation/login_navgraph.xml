@@ -8,7 +8,11 @@
         android:id="@+id/userRegistrationSuccessFragment"
         android:name="com.example.casaya.fragments.UserRegistrationSuccessFragment"
         android:label="fragment_user_registration_success"
-        tools:layout="@layout/fragment_user_registration_success" />
+        tools:layout="@layout/fragment_user_registration_success" >
+        <action
+            android:id="@+id/action_userRegistrationSuccessFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
+    </fragment>
     <fragment
         android:id="@+id/userRegisterFragment"
         android:name="com.example.casaya.fragments.UserRegisterFragment"
@@ -17,4 +21,9 @@
             android:id="@+id/action_userRegisterFragment_to_userRegistrationSuccessFragment"
             app:destination="@id/userRegistrationSuccessFragment" />
     </fragment>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.casaya.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
 </navigation>

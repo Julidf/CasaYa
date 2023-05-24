@@ -7,4 +7,24 @@ data class UserAddress(
     private var height: Int,
     private var postalCode: String
 )
-{}
+{
+    fun getProvince() : String {
+        return province
+    }
+
+    fun getDistrict() : String {
+        return district
+    }
+
+    fun getStreet() : String {
+        return street
+    }
+
+    fun getHeight() : Int {
+        return height
+    }
+
+    fun getPostalCode() : String {
+        return postalCode
+    }
+}
