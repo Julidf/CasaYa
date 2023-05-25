@@ -6,6 +6,7 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
+import java.lang.reflect.InvocationTargetException
 
 class PropertyRepository(){
 
@@ -27,8 +28,8 @@ class PropertyRepository(){
                 .await()
 
             Log.d("New Property", "Se agrego exitosamente el documento con ID ${reference.id}")
-        }catch (e: Exception) {
-            Log.e("Error Message", "Exception thrown: ${e.message}")
+        }catch (e: InvocationTargetException) {
+            Log.e("Error Firebase saveProperty", "Exception thrown: ${e.targetException} | ${e.targetException.cause} | ${e.targetException?.cause?.printStackTrace()}")
         }
     }
 
@@ -45,7 +46,7 @@ class PropertyRepository(){
 
             propertiesList = documents.toObjects(Property::class.java)
         }catch (e: Exception) {
-            Log.e("Error Message", "Exception thrown: ${e.message}")
+            Log.e("Error Message Firebase getAllProperties", "Exception thrown: ${e.message}")
         }
 
         return propertiesList

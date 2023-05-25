@@ -7,7 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.casaya.entities.Property
 import com.example.casaya.repositories.PropertyRepository
+import com.google.firebase.Timestamp
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 class PublishPropertyViewModel : ViewModel() {
 
@@ -53,7 +56,8 @@ class PublishPropertyViewModel : ViewModel() {
             street,
             height,
             betweenStreets,
-            postalCode
+            postalCode,
+            Timestamp.now()
         )
         properties.value?.add(newProperty)
         //properties.value = properties.value

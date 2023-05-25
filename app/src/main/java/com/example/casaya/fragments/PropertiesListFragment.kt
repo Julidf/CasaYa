@@ -44,14 +44,13 @@ class PropertiesListFragment : Fragment() {
             onClick = { position ->
                 //Snackbar.make(v, "Click en ${repository.getProperties()[position].getTitle()}", Snackbar.LENGTH_SHORT).show()
 
-                /*
-                val propertyClicked = propertiesList[position]
-                val bundle = Bundle()
-                bundle.putParcelable("propertyClicked", propertyClicked)
-
-                 */
-                viewModelPropertiesList.selectedProperty = viewModelPropertiesList.propertiesList[position]
-                Log.d("Selected Property", "Detalle de la propiedad ${viewModelPropertiesList.selectedProperty}")
+                //Guardo referencia de la Property seleccionada en el ViewModel del Fragment
+                viewModelPropertiesList.selectedProperty =
+                    viewModelPropertiesList.propertiesList[position]
+                Log.d(
+                    "Selected Property",
+                    "Detalle de la propiedad ${viewModelPropertiesList.selectedProperty}"
+                )
                 val action =
                     PropertiesListFragmentDirections.actionPropertiesListFragmentToPropertyDetailFragment()
                 findNavController().navigate(R.id.action_propertiesListFragment_to_propertyDetailFragment)

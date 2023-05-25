@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.casaya.entities.Property
 import com.example.casaya.repositories.PropertyRepository
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 class PropertiesListViewModel : ViewModel() {
     private val repositoryProperty: PropertyRepository = PropertyRepository()

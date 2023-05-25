@@ -29,9 +29,11 @@ class PropertyAdapter(
     }
 
     override fun onBindViewHolder(holder: PropertyHolder, position: Int) {
-        holder.setTitle(properties[position].getTitle())
-        holder.setPrice(properties[position].getPrice())
-        holder.setPublicationDays(15)
+        val property = properties[position]
+        holder.setTitle(property.getTitle())
+        holder.setPrice(property.getPrice())
+        holder.setPublicationDays(property.setStringPublicationDays())
+        holder.setOperationType(property.obtainOperationType())
         holder.getCard().setOnClickListener {
             //Cuando escucha un click, le envia a la funcion 'onClick' el valor de la posicion del item
             onClick(position)
@@ -58,15 +60,20 @@ class PropertyAdapter(
             txtTitleItem.text = title
         }
 
-        fun setPublicationDays(days: Long) {
+        fun setPublicationDays(commentDaysPublication: String) {
             val txtDayPublicationItem: TextView =
                 view.findViewById(R.id.valueTimePublicationListTextView)
-            txtDayPublicationItem.text = days.toString()
+            txtDayPublicationItem.text = commentDaysPublication
         }
 
         fun setPrice(price: Double) {
             val txtPriceItem: TextView = view.findViewById(R.id.priceRentListTextView)
             txtPriceItem.text = "$" + price.toString()
+        }
+
+        fun setOperationType(operationType: String) {
+            val txtOperationType: TextView = view.findViewById(R.id.operationTypeListTextView)
+            txtOperationType.text = operationType
         }
 
         fun getCard(): CardView {

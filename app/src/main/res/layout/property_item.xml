@@ -26,6 +26,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
+        <!-- Titulo de la propiedad -->
         <TextView
             android:id="@+id/titleListTextView"
             android:layout_width="0dp"
@@ -33,63 +34,48 @@
             android:padding="16dp"
             android:text="Excelente 2 ambientes en Belgrano"
             android:textAppearance="?android:textAppearanceLarge"
-            android:textSize="24sp"
+            android:textSize="28sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageListView" />
 
+        <!-- Tipo de Operacion: Alquiler/Venta -->
         <TextView
-            android:id="@+id/tagTimePublicationListTextView"
+            android:id="@+id/operationTypeListTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="Publicado hace"
-            android:textStyle="italic"
+            android:text="Alquiler"
+            android:textSize="25dp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/titleListTextView" />
 
+        <!-- Precio del Alquiler -->
+        <TextView
+            android:id="@+id/priceRentListTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="$120.000"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/operationTypeListTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/operationTypeListTextView" />
+
+        <!-- Detalle del tiempo de la Publicacion -->
         <TextView
             android:id="@+id/valueTimePublicationListTextView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="15"
+            android:text="Publicado hace"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/tagTimePublicationListTextView"
-            app:layout_constraintStart_toEndOf="@id/tagTimePublicationListTextView"
-            app:layout_constraintTop_toTopOf="@id/tagTimePublicationListTextView"
-            app:layout_constraintVertical_bias="0.5" />
-
-        <TextView
-            android:id="@+id/tagDaysTimePublicationListTextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="dias"
-            android:textStyle="italic"
-            app:layout_constraintBottom_toBottomOf="@id/valueTimePublicationListTextView"
-            app:layout_constraintStart_toEndOf="@id/valueTimePublicationListTextView"
-            app:layout_constraintTop_toTopOf="@id/valueTimePublicationListTextView" />
-
-        <TextView
-            android:id="@+id/priceRentListTextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:padding="50dp"
-            android:text="$120.000"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@id/tagDaysTimePublicationListTextView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/tagDaysTimePublicationListTextView"
-            app:layout_constraintTop_toTopOf="@id/tagDaysTimePublicationListTextView" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/priceRentListTextView" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!-- Titulo de la propiedad -->
-
-    <!-- Detalle del tiempo de la Publicacion -->
-
-    <!-- Precio del Alquiler -->
 
 </androidx.cardview.widget.CardView>
