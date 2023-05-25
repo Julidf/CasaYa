@@ -13,9 +13,6 @@
         <action
             android:id="@+id/action_propertiesListFragment_to_propertyDetailFragment"
             app:destination="@id/propertyDetailFragment" />
-        <action
-            android:id="@+id/action_propertiesListFragment_to_publishPropertyFragment"
-            app:destination="@id/publishPropertyFragment" />
 
     </fragment>
 

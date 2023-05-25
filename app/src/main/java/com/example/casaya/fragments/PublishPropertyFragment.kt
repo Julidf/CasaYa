@@ -8,11 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.os.bundleOf
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
+import android.widget.RadioGroup
+import android.widget.Spinner
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.casaya.R
-import com.example.casaya.entities.Property
+import com.example.casaya.viewmodels.PropertiesListViewModel
 
 class PublishPropertyFragment : Fragment() {
 
@@ -53,9 +57,10 @@ class PublishPropertyFragment : Fragment() {
         view = inflater.inflate(R.layout.fragment_publish_property, container, false)
 
         //Inicializa cada una de las referencias de los elementos del formulario
-        initializeView(view)
+        initializeViewElements(view)
         insertImages = view.findViewById(R.id.insertImages)
         propertyImages = view.findViewById(R.id.propertyImages)
+        initializeViewElements(view)
 
         return view
     }
@@ -178,7 +183,7 @@ class PublishPropertyFragment : Fragment() {
         /**
          * Valida el Campo Precio de la publicacion
          */
-        if (priceRent.isEmpty()) {
+        if (priceRent.isEmpty() || priceRent.toDouble() <= 0) {
             priceRentEditText.error = "Por favor, complete el precio de Alquiler/Venta de la propiedad"
             isValid = false
         }
@@ -186,7 +191,7 @@ class PublishPropertyFragment : Fragment() {
         /**
          * Valida el Campo Expensa de la publicacion
          */
-        if (expenses.isEmpty()) {
+        if (expenses.isEmpty() || expenses.toDouble() <= 0) {
             expensesEditText.error = "Por favor, complete el valor de las expensas de Alquiler/Venta de la propiedad"
             isValid = false
         }
@@ -194,7 +199,7 @@ class PublishPropertyFragment : Fragment() {
         /**
          * Valida el Campo Area de la publicacion
          */
-        if (area.isEmpty()) {
+        if (area.isEmpty() || area.toDouble() <= 0) {
             areaEditText.error = "Por favor, complete el valor del area de la propiedad"
             isValid = false
         }
@@ -202,7 +207,7 @@ class PublishPropertyFragment : Fragment() {
         /**
          * Valida el Campo Cantidad de Habitacion de la publicacion
          */
-        if (bedRooms.isEmpty()) {
+        if (bedRooms.isEmpty() || bedRooms.toInt() <= 0) {
             bedRoomsEditText.error = "Por favor, complete el valor de la cantidad de habitaciones de la propiedad"
             isValid = false
         }
@@ -210,7 +215,7 @@ class PublishPropertyFragment : Fragment() {
         /**
          * Valida el Campo Cantidad de Baños de la publicacion
          */
-        if (bathRooms.isEmpty()) {
+        if (bathRooms.isEmpty() || bathRooms.toInt() <= 0) {
             bathRoomsEditText.error = "Por favor, complete el valor de la cantidad de baños de la propiedad"
             isValid = false
         }
@@ -303,7 +308,7 @@ class PublishPropertyFragment : Fragment() {
     /**
      * Se obtienen todas las referencias de los elementos desde la vista
      */
-    private fun initializeView(view: View) {
+    private fun initializeViewElements(view: View) {
         publicationTitleEditText = view.findViewById(R.id.publicationTitleEditText)
         radioGroupOperationType = view.findViewById(R.id.radioGroupOperationType)
         propertyTypeSpinner = view.findViewById(R.id.propertyTypeSpinner)
