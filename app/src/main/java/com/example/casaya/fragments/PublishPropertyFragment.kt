@@ -1,15 +1,12 @@
 package com.example.casaya.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.RadioGroup
-import android.widget.Spinner
+import android.widget.*
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -25,6 +22,9 @@ class PublishPropertyFragment : Fragment() {
 
     private val viewModelPropertiesList: PropertiesListViewModel by activityViewModels()
     private lateinit var view: View
+    lateinit var addImages: Button
+    lateinit var propertyImages: ImageView
+    private val REQUEST_SELECT_PHOTOS = 123
 
     /**
      * Elementos del formulario
@@ -54,6 +54,8 @@ class PublishPropertyFragment : Fragment() {
 
         //Inicializa cada una de las referencias de los elementos del formulario
         initializeView(view)
+        addImages = view.findViewById(R.id.addImages)
+        propertyImages = view.findViewById(R.id.propertyImages)
 
         return view
     }
@@ -132,6 +134,13 @@ class PublishPropertyFragment : Fragment() {
                     PublishPropertyFragmentDirections.actionPublishPropertyFragmentToPropertiesListFragment()
                 findNavController().navigate(action)
             }
+        }
+
+        addImages.setOnClickListener {
+            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            intent.type = "image/*"
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+            startActivityForResult(Intent.createChooser(intent, "Seleccionar Fotos"), REQUEST_SELECT_PHOTOS)
         }
     }
 

@@ -1,10 +1,14 @@
 package com.example.casaya.fragments
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bumptech.glide.Glide
 import com.example.casaya.entities.Property
 import com.example.casaya.entities.PropertyRepository
 import com.example.casaya.entities.PropertyType
@@ -41,25 +45,12 @@ class PublishPropertyViewModel : ViewModel() {
 
     fun publishProperty(title: String, description: String, area: Double, bedRoomsNumber: Int, bathRoomsNumber: Int, price: Double, expense: Double, isRent: Boolean, propertyType: String, province: String, street: String, height: Int, betweenStreets: String, postalCode: String) {
         var newProperty = Property(
-            title,
-            description,
-            area,
-            bedRoomsNumber,
-            bathRoomsNumber,
-            price,
-            expense,
-            isRent,
-            propertyType,
-            province,
-            street,
-            height,
-            betweenStreets,
-            postalCode
+            title, description, area, bedRoomsNumber, bathRoomsNumber, price,
+            expense, isRent, propertyType, province, street, height, betweenStreets, postalCode
         )
         properties.value?.add(newProperty)
         //properties.value = properties.value
         Log.d("Propiedad Agregada", "Datos: ${properties.value?.last()?.getTitle()}")
-
 
         this.property.value = newProperty
         //property.value = property.value
@@ -70,7 +61,17 @@ class PublishPropertyViewModel : ViewModel() {
         viewModelScope.launch {
             repositoryProperty.saveProperty(newProperty)
         }
+    }
 
+    fun selectImagesFromPhone(requestCode: Int, resultCode: Int, data: Intent?) {
+
+            var selectedImages : Uri? = null
+            val clipData = data?.clipData
+
+            val imageUri = data?.data
+            if (imageUri != null) {
+                selectedImages = imageUri
+            }
     }
 
     fun getProperties() : LiveData<MutableList<Property>> {

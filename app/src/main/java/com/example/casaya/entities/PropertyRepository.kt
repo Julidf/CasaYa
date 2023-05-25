@@ -1,15 +1,22 @@
 package com.example.casaya.entities
 
 import android.content.ContentValues.TAG
+import android.graphics.Bitmap
+import android.net.Uri
 import android.util.Log
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.tasks.await
+import java.io.ByteArrayOutputStream
+import java.io.File
 import java.lang.reflect.TypeVariable
+import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.util.*
 
 class PropertyRepository(){
 
@@ -19,6 +26,19 @@ class PropertyRepository(){
     val db = Firebase.firestore
     //Inicializacion de una instancia de Storage
     val storage = Firebase.storage
+
+    suspend fun savePropertyImage(uri: String) {
+        val storageRef = storage.reference
+
+        var file = Uri.fromFile(File(uri))
+        val imageRef = storageRef.child("propertyImages/${file.lastPathSegment}")
+        val uploadTask = imageRef.putFile(file)
+
+        uploadTask.addOnFailureListener {
+            // Handle unsuccessful uploads
+        }.addOnSuccessListener { taskSnapshot ->
+        }
+    }
 
     /**
      * Guarda una Property en la DB
