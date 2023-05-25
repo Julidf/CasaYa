@@ -22,7 +22,7 @@ class PublishPropertyFragment : Fragment() {
 
     private val viewModelPropertiesList: PropertiesListViewModel by activityViewModels()
     private lateinit var view: View
-    lateinit var addImages: Button
+    lateinit var insertImages: Button
     lateinit var propertyImages: ImageView
     private val REQUEST_SELECT_PHOTOS = 123
 
@@ -54,7 +54,7 @@ class PublishPropertyFragment : Fragment() {
 
         //Inicializa cada una de las referencias de los elementos del formulario
         initializeView(view)
-        addImages = view.findViewById(R.id.addImages)
+        insertImages = view.findViewById(R.id.insertImages)
         propertyImages = view.findViewById(R.id.propertyImages)
 
         return view
@@ -136,7 +136,7 @@ class PublishPropertyFragment : Fragment() {
             }
         }
 
-        addImages.setOnClickListener {
+        insertImages.setOnClickListener {
             val intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.type = "image/*"
             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)

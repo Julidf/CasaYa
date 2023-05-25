@@ -24,8 +24,8 @@ class `insertPropertImages_DELETE_LATER` : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        addImages = v.findViewById(R.id.insertImages)
-        propertyImages = v.findViewById(R.id.propertyImages)
+//        addImages = v.findViewById(R.id.insertImages)
+//        propertyImages = v.findViewById(R.id.propertyImages)
 
         return v
     }
