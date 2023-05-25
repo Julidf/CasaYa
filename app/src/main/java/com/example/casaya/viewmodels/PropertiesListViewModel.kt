@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 class PropertiesListViewModel : ViewModel() {
     private val repositoryProperty: PropertyRepository = PropertyRepository()
-
+    var selectedProperty: Property? = null
     private val _myListLiveData: MutableLiveData<List<Property>> = MutableLiveData()
     val myListLiveData: LiveData<List<Property>> = _myListLiveData
 

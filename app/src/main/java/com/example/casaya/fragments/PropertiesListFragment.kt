@@ -1,6 +1,7 @@
 package com.example.casaya.fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -49,7 +50,8 @@ class PropertiesListFragment : Fragment() {
                 bundle.putParcelable("propertyClicked", propertyClicked)
 
                  */
-
+                viewModelPropertiesList.selectedProperty = viewModelPropertiesList.propertiesList[position]
+                Log.d("Selected Property", "Detalle de la propiedad ${viewModelPropertiesList.selectedProperty}")
                 val action =
                     PropertiesListFragmentDirections.actionPropertiesListFragmentToPropertyDetailFragment()
                 findNavController().navigate(R.id.action_propertiesListFragment_to_propertyDetailFragment)
