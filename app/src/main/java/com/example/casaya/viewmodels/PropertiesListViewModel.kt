@@ -69,21 +69,26 @@ class PropertiesListViewModel : ViewModel() {
     fun getProperties() {
         viewModelScope.launch {
             propertiesList = repositoryProperty.getAllProperties()
+            updateMyListLiveData(propertiesList)
+        }
+    }
+
+    /**
+     * Metodo que busca todas las propiedades filtradas por el titulo
+     */
+    fun searchPropertiesByTitle(query: String) {
+        viewModelScope.launch {
+            propertiesList = repositoryProperty.searchPropertiesByTitle(query)
+            updateMyListLiveData(propertiesList)
         }
     }
 
     /**
      * Metodo que actualiza el LiveData '_myListLiveData' con todas las propiedades que hay en la DB y permite actualizar a la variable 'myListLiveData' que esta siendo observada en la clase PropertiesListFragment
      */
-    fun fetchMyList() {
-        viewModelScope.launch {
-            try {
-                val myList = repositoryProperty.getAllProperties()
-                _myListLiveData.postValue(myList)
-            } catch (e: Exception) {
-                Log.e("Error Message", "Exception thrown: ${e.message}")
-            }
-        }
+    private fun updateMyListLiveData(propertiesList: MutableList<Property>) {
+        val myList = propertiesList
+        _myListLiveData.postValue(myList)
     }
 
 }

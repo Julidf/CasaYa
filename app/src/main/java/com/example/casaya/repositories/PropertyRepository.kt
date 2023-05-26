@@ -51,4 +51,28 @@ class PropertyRepository(){
 
         return propertiesList
     }
+
+    suspend fun searchPropertiesByTitle(query: String) : MutableList<Property> {
+        var propertiesListSearched = mutableListOf<Property>()
+        Log.i("Filtered Properties", "Query: $query")
+        try {
+            val documents = db.collection(COLLECTION)
+
+            val found = documents
+                .whereGreaterThanOrEqualTo("title", query)
+                .whereLessThanOrEqualTo("title", query + "\uf8ff")
+                .orderBy("title")
+                .get()
+                .await()
+
+            propertiesListSearched = found.toObjects(Property::class.java)
+            Log.i("Filtered Properties", "Propiedades: $propertiesListSearched")
+        }catch (e: Exception) {
+            Log.e("Filtered Properties", "Exception thrown: ${e.message}")
+        }
+
+        return propertiesListSearched
+
+    }
+
 }

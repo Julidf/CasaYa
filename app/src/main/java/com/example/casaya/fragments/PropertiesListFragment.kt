@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,7 +31,29 @@ class PropertiesListFragment : Fragment() {
         v = inflater.inflate(R.layout.fragment_properties_list, container, false)
         recyclerProperties = v.findViewById(R.id.recyclerProperties)
 
+        //Le indico al Fragment, que el mismo tendra un OptionsMenu
+        setHasOptionsMenu(true)
         return v
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu_action_search_bar, menu)
+
+        val searcher = menu.findItem(R.id.searcher)
+        val searchView = searcher.actionView as SearchView
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                query?.let { viewModelPropertiesList.searchPropertiesByTitle(it) }
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+
+        })
     }
 
     override fun onStart() {
@@ -77,7 +102,7 @@ class PropertiesListFragment : Fragment() {
             adapterProperty.notifyDataSetChanged()
         }
 
-        viewModelPropertiesList.fetchMyList()
+        //viewModelPropertiesList.fetchMyList()
     }
 
 }
