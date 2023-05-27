@@ -52,21 +52,28 @@ class PropertyRepository(){
         return propertiesList
     }
 
-    suspend fun searchPropertiesByTitle(query: String) : MutableList<Property> {
+    /**
+     * Metodo que realiza una busqueda de propiedades de acuerdo al criterio de consulta, y
+     * devuelve una MutableList con el resultado de la busqueda
+     */
+    suspend fun searchPropertiesByProvince(query: String) : MutableList<Property> {
         var propertiesListSearched = mutableListOf<Property>()
         Log.i("Filtered Properties", "Query: $query")
         try {
             val documents = db.collection(COLLECTION)
 
             val found = documents
-                .whereGreaterThanOrEqualTo("title", query)
-                .whereLessThanOrEqualTo("title", query + "\uf8ff")
                 .orderBy("title")
                 .get()
                 .await()
 
-            propertiesListSearched = found.toObjects(Property::class.java)
-            Log.i("Filtered Properties", "Propiedades: $propertiesListSearched")
+            val auxPropertiesList = found.toObjects(Property::class.java)
+
+            propertiesListSearched = auxPropertiesList.filter {
+                it.getProvince().contains(query, true)
+            }.toMutableList()
+
+            Log.i("Filtered Properties", "Cantidad: ${propertiesListSearched.size}, Propiedades: $propertiesListSearched")
         }catch (e: Exception) {
             Log.e("Filtered Properties", "Exception thrown: ${e.message}")
         }

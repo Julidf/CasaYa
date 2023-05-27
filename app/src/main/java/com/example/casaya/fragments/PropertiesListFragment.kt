@@ -6,9 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +25,12 @@ class PropertiesListFragment : Fragment() {
     lateinit var v: View
     lateinit var recyclerProperties: RecyclerView
     lateinit var adapterProperty: PropertyAdapter
+    private lateinit var messageResultSearchTextView: TextView
+    private var isSearchActive: Boolean = false
+    private lateinit var searchView: SearchView
+    private var searchQuery: String? = null
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +38,7 @@ class PropertiesListFragment : Fragment() {
     ): View? {
         v = inflater.inflate(R.layout.fragment_properties_list, container, false)
         recyclerProperties = v.findViewById(R.id.recyclerProperties)
+        messageResultSearchTextView = v.findViewById(R.id.messageResultSearchTextView)
 
         //Le indico al Fragment, que el mismo tendra un OptionsMenu
         setHasOptionsMenu(true)
@@ -41,19 +50,59 @@ class PropertiesListFragment : Fragment() {
         inflater.inflate(R.menu.menu_action_search_bar, menu)
 
         val searcher = menu.findItem(R.id.searcher)
-        val searchView = searcher.actionView as SearchView
+        searchView = searcher.actionView as SearchView
 
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let { viewModelPropertiesList.searchPropertiesByTitle(it) }
+                query?.let {
+                    searchQuery = it
+                    isSearchActive = true
+                    viewModelPropertiesList.searchPropertiesByProvince(it) { properties ->
+                        updateSearchResultTextView(properties.size)
+                        adapterProperty.submitList(properties.toMutableList())
+                    }
+                }
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 return false
             }
-
         })
+
+        searchView.setOnCloseListener {
+            // Lógica para manejar el evento de cierre del SearchView
+            isSearchActive = false
+            searchView.setQuery("", false)
+            viewModelPropertiesList.searchPropertiesByProvince("") { properties ->
+                turnOffSearchResultTextView()
+                adapterProperty.submitList(properties.toMutableList())
+            }
+            false
+        }
+    }
+
+    /**
+     * Metodo que oculta el mensaje del resultado de busqueda
+     */
+    private fun turnOffSearchResultTextView() {
+        messageResultSearchTextView.visibility = View.GONE
+    }
+
+    /**
+     * Metodo que setea un mensaje, cuando el usuario realiza una busqueda
+     */
+    private fun updateSearchResultTextView(results: Int) {
+        if (results > 0) {
+            messageResultSearchTextView.text =
+                "Hemos encontrado $results propiedad(es) para tu busqueda"
+            Log.i("Filtered Properties", "${messageResultSearchTextView.text}")
+
+        } else {
+            messageResultSearchTextView.text =
+                "No hemos encontrado resultados que coincidan con tu busqueda"
+        }
+        messageResultSearchTextView.visibility = View.VISIBLE
     }
 
     override fun onStart() {
@@ -79,14 +128,21 @@ class PropertiesListFragment : Fragment() {
                 val action =
                     PropertiesListFragmentDirections.actionPropertiesListFragmentToPropertyDetailFragment()
                 findNavController().navigate(R.id.action_propertiesListFragment_to_propertyDetailFragment)
-                //findNavController().navigate(action)
-                //view.findNavController().navigate(action)
             }
         )
 
-
-        //Log.d("Properties List", "Detalle de la lista ${propertiesList}")
-
+        // Verificar si hay una búsqueda activa
+        if (!isSearchActive) {
+            adapterProperty.submitList(viewModelPropertiesList.propertiesList.toMutableList())
+        } else {
+            // Hay una búsqueda activa, mostrar los resultados de la búsqueda
+            searchQuery?.let { query ->
+                viewModelPropertiesList.searchPropertiesByProvince(query) { properties ->
+                    adapterProperty.submitList(properties.toMutableList())
+                    updateSearchResultTextView(properties.size)
+                }
+            }
+        }
 
         /**
          * Configuro la forma en que se visualizara el RecyclerView
@@ -101,8 +157,6 @@ class PropertiesListFragment : Fragment() {
             adapterProperty.submitList(myList.toMutableList())
             adapterProperty.notifyDataSetChanged()
         }
-
-        //viewModelPropertiesList.fetchMyList()
     }
 
 }
