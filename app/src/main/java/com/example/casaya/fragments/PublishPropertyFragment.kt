@@ -2,6 +2,7 @@ package com.example.casaya.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,8 +16,10 @@ import android.widget.RadioGroup
 import android.widget.Spinner
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.example.casaya.R
 import com.example.casaya.viewmodels.PropertiesListViewModel
+import gun0912.tedimagepicker.builder.TedImagePicker
 
 class PublishPropertyFragment : Fragment() {
 
@@ -28,7 +31,6 @@ class PublishPropertyFragment : Fragment() {
     private lateinit var view: View
     lateinit var insertImages: Button
     lateinit var propertyImages: ImageView
-    private val REQUEST_SELECT_PHOTOS = 123
 
     /**
      * Elementos del formulario
@@ -60,7 +62,6 @@ class PublishPropertyFragment : Fragment() {
         initializeViewElements(view)
         insertImages = view.findViewById(R.id.insertImages)
         propertyImages = view.findViewById(R.id.propertyImages)
-        initializeViewElements(view)
 
         return view
     }
@@ -72,52 +73,42 @@ class PublishPropertyFragment : Fragment() {
             error = null
             setText("")
         }
-
         descriptionPropEditText.apply {
             error = null
             setText("")
         }
-
         priceRentEditText.apply {
             error = null
             setText("")
         }
-
         expensesEditText.apply {
             error = null
             setText("")
         }
-
         areaEditText.apply {
             error = null
             setText("")
         }
-
         bedRoomsEditText.apply {
             error = null
             setText("")
         }
-
         bathRoomsEditText.apply {
             error = null
             setText("")
         }
-
         streetEditText.apply {
             error = null
             setText("")
         }
-
         heightEditText.apply {
             error = null
             setText("")
         }
-
         betweenStreetsEditText.apply {
             error = null
             setText("")
         }
-
         postalCodeEditText.apply {
             error = null
             setText("")
@@ -142,11 +133,16 @@ class PublishPropertyFragment : Fragment() {
         }
 
         insertImages.setOnClickListener {
-            val intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.type = "image/*"
-            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-            startActivityForResult(Intent.createChooser(intent, "Seleccionar Fotos"), REQUEST_SELECT_PHOTOS)
+            TedImagePicker.with(requireContext())
+                .start { uri ->
+                    viewModelPropertiesList.setPropertyImage(uri, requireContext())
+                    var imageUri = viewModelPropertiesList.getPropertyImage()
+//                    Glide.with(this)
+//                    .load(imageUri)
+//                    .into(propertyImages)
+                }
         }
+
     }
 
     private fun formIsValid(): Boolean {
@@ -164,89 +160,46 @@ class PublishPropertyFragment : Fragment() {
         val betweenStreets = betweenStreetsEditText.text.toString().trim()
         val postalCode = postalCodeEditText.text.toString().trim()
 
-        /**
-         * Valida el Campo Titulo de la publicacion
-         */
         if (publicationTitle.isEmpty()) {
             publicationTitleEditText.error = "Por favor, complete el titulo de la publicacion"
             isValid = false
         }
-
-        /**
-         * Valida el Campo Descripcion de la publicacion
-         */
         if (descriptionProp.isEmpty()) {
             descriptionPropEditText.error = "Por favor, complete la descripcion de la publicacion"
             isValid = false
         }
-
-        /**
-         * Valida el Campo Precio de la publicacion
-         */
         if (priceRent.isEmpty() || priceRent.toDouble() <= 0) {
             priceRentEditText.error = "Por favor, complete el precio de Alquiler/Venta de la propiedad"
             isValid = false
         }
-
-        /**
-         * Valida el Campo Expensa de la publicacion
-         */
         if (expenses.isEmpty() || expenses.toDouble() <= 0) {
             expensesEditText.error = "Por favor, complete el valor de las expensas de Alquiler/Venta de la propiedad"
             isValid = false
         }
-
-        /**
-         * Valida el Campo Area de la publicacion
-         */
         if (area.isEmpty() || area.toDouble() <= 0) {
             areaEditText.error = "Por favor, complete el valor del area de la propiedad"
             isValid = false
         }
-
-        /**
-         * Valida el Campo Cantidad de Habitacion de la publicacion
-         */
         if (bedRooms.isEmpty() || bedRooms.toInt() <= 0) {
             bedRoomsEditText.error = "Por favor, complete el valor de la cantidad de habitaciones de la propiedad"
             isValid = false
         }
-
-        /**
-         * Valida el Campo Cantidad de Baños de la publicacion
-         */
         if (bathRooms.isEmpty() || bathRooms.toInt() <= 0) {
             bathRoomsEditText.error = "Por favor, complete el valor de la cantidad de baños de la propiedad"
             isValid = false
         }
-
-        /**
-         * Valida el Campo Calle de la publicacion
-         */
         if (street.isEmpty()) {
             streetEditText.error = "Por favor, complete el nombre de la calle de la direccion de la propiedad"
             isValid = false
         }
-
-        /**
-         * Valida el Campo Altura de la Calle de la publicacion
-         */
         if (height.isEmpty() || height.toInt() <= 0) {
             heightEditText.error = "Por favor, complete y/o agregue un valor valido para la altura de la calle"
             isValid = false
         }
-
-        /**
-         * Valida el Campo Entre Calles de la publicacion
-         */
         if (betweenStreets.isEmpty()) {
             betweenStreetsEditText.error = "Por favor, complete el nombre de las calles de referencia de la propiedad"
             isValid = false
         }
-
-        /**
-         * Valida el Campo Codigo Postal de la publicacion
-         */
         if (postalCode.isEmpty()) {
             postalCodeEditText.error = "Por favor, complete el codigo postal de la ubicacion de la propiedad"
             isValid = false
@@ -273,6 +226,7 @@ class PublishPropertyFragment : Fragment() {
         val height = heightEditText.text.toString().toInt()
         val betweenStreets = betweenStreetsEditText.text.toString()
         val postalCode = postalCodeEditText.text.toString()
+        val storageImage =
 
         viewModelPropertiesList.publishProperty(
             title,

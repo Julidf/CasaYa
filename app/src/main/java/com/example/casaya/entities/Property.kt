@@ -1,5 +1,6 @@
 package com.example.casaya.entities
 
+import com.google.firebase.storage.StorageReference
 import java.time.LocalDate
 import java.time.temporal.ChronoUnit
 import java.util.Date
@@ -18,7 +19,8 @@ data class Property(
     private var street: String,
     private var height: Int,
     private var betweenStreets: String,
-    private var postalCode: String
+    private var postalCode: String,
+    private var propertyImageRef: String? = null,
 
     //constructor(): this("", "", 0.0, 0, 0, 0.0, 0.0, false, "", "", "", 0, "", "")
 ) {
@@ -29,6 +31,10 @@ data class Property(
 
     init {
         publicationDate = LocalDate.now()
+    }
+
+    fun getPropertyImageRef() : String? {
+        return this.propertyImageRef
     }
 
     fun getTitle() : String {

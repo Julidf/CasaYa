@@ -1,13 +1,21 @@
 package com.example.casaya.viewmodels
 
+import android.content.Context
+import android.net.Uri
+import java.net.URI
 import android.util.Log
+import android.widget.ImageView
 import android.widget.SearchView
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.bumptech.glide.Glide
 import com.example.casaya.entities.Property
 import com.example.casaya.repositories.PropertyRepository
+import com.google.android.gms.tasks.Task
+import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.launch
 
 class PropertiesListViewModel : ViewModel() {
@@ -15,8 +23,7 @@ class PropertiesListViewModel : ViewModel() {
 
     private val _myListLiveData: MutableLiveData<List<Property>> = MutableLiveData()
     val myListLiveData: LiveData<List<Property>> = _myListLiveData
-    lateinit var search: SearchView
-
+    lateinit var propertyImageRef: String
     var propertiesList = mutableListOf<Property>()
 
     fun publishProperty(
@@ -26,7 +33,7 @@ class PropertiesListViewModel : ViewModel() {
     ) {
         val newProperty = Property(
             title, description, area, bedRoomsNumber, bathRoomsNumber, price,
-            expense, isRent, propertyType, province, street, height, betweenStreets, postalCode
+            expense, isRent, propertyType, province, street, height, betweenStreets, postalCode, propertyImageRef
         )
         saveNewProperty(newProperty)
     }
@@ -70,6 +77,23 @@ class PropertiesListViewModel : ViewModel() {
                 Log.e("Error Message", "Exception thrown: ${e.message}")
             }
         }
+    }
+
+    fun setPropertyImage(uri: Uri, context: Context) {
+        viewModelScope.launch {
+            propertyImageRef = repositoryProperty.savePropertyImage(uri, context)
+            Log.d("CCCCCCCCCCCCCCCCCCCCC", propertyImageRef)
+        }
+    }
+
+    fun getPropertyImage(): Uri? {
+        var imageUri: Uri? = null
+        viewModelScope.launch {
+            imageUri = repositoryProperty.getPropertyImage(propertyImageRef)
+            Log.d("DDDDDDDDDDDDDDDDDDD", imageUri.toString())
+            Log.d("EEEEEEEEEEEEEEEEEEE", propertyImageRef)
+        }
+        return imageUri
     }
 
 }

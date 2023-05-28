@@ -332,7 +332,7 @@
 
         <ImageView
             android:id="@+id/propertyImages"
-            android:layout_width="181dp"
+            android:layout_width="190dp"
             android:layout_height="194dp"
             app:srcCompat="@drawable/home"
             tools:layout_editor_absoluteY="791dp"
@@ -344,12 +344,12 @@
 
         <Button
             android:id="@+id/insertImages"
-            android:layout_width="300dp"
+            android:layout_width="190dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:layout_marginBottom="32dp"
             android:background="@drawable/btn_rounded"
-            android:text="Insert images"
+            android:text="Insert image"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
