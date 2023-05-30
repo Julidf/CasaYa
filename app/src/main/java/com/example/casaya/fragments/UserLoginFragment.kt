@@ -1,5 +1,6 @@
 package com.example.casaya.fragments
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,10 +12,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioGroup
 import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.example.casaya.MainActivity
 import com.example.casaya.R
 import com.example.casaya.viewmodels.PropertiesListViewModel
 import com.example.casaya.viewmodels.UserRegisterViewModel
@@ -38,6 +41,7 @@ class UserLoginFragment : Fragment() {
     private lateinit var emailUserEditText: EditText
     private lateinit var passwordUserEditText: EditText
     private lateinit var buttonLogin: Button
+    private lateinit var textViewRegister: TextView
 
     private lateinit var firebaseAuth: FirebaseAuth
 
@@ -67,6 +71,11 @@ class UserLoginFragment : Fragment() {
             signInUser(email, password)
         }
 
+        val textViewRegister = view.findViewById<TextView>(R.id.textViewLogin)
+        textViewRegister.setOnClickListener {
+            findNavController().navigate(R.id.action_userLoginFragment_to_userRegisterFragment)
+        }
+
         return view
     }
 
@@ -77,6 +86,9 @@ class UserLoginFragment : Fragment() {
                     // Login successful
                     val user: FirebaseUser? = firebaseAuth.currentUser
                     // Perform further actions, such as navigating to another fragment or activity
+                    val intent = Intent(requireContext(), MainActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().finish()
                     Toast.makeText(requireContext(), "Login successful", Toast.LENGTH_SHORT).show()
                 } else {
                     // Login failed

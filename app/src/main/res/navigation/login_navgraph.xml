@@ -20,10 +20,21 @@
         <action
             android:id="@+id/action_userRegisterFragment_to_userRegistrationSuccessFragment"
             app:destination="@id/userRegistrationSuccessFragment" />
+        <action
+            android:id="@+id/action_userRegisterFragment_to_userLoginFragment"
+            app:destination="@id/userLoginFragment" />
     </fragment>
     <activity
         android:id="@+id/mainActivity"
         android:name="com.example.casaya.MainActivity"
         android:label="activity_main"
         tools:layout="@layout/activity_main" />
+    <fragment
+        android:id="@+id/userLoginFragment"
+        android:name="com.example.casaya.fragments.UserLoginFragment"
+        android:label="UserLoginFragment" >
+        <action
+            android:id="@+id/action_userLoginFragment_to_userRegisterFragment"
+            app:destination="@id/userRegisterFragment" />
+    </fragment>
 </navigation>

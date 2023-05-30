@@ -8,7 +8,7 @@
     android:layout_height="match_parent">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
 
         android:id="@+id/userRegisterLayout"
         android:layout_width="match_parent"
@@ -236,6 +236,8 @@
             app:layout_constraintTop_toTopOf="@id/streetUserEditText" />
 
         <!-- Campo: Codigo Postal -->
+
+        <!-- Boton para Crear la Cuenta del Usuario -->
         <EditText
             android:id="@+id/postalCodeUserEditText"
             android:layout_width="0dp"
@@ -251,7 +253,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/streetUserEditText" />
 
-        <!-- Boton para Crear la Cuenta del Usuario -->
+        <!-- Boton para Redirigir al Login -->
+
         <Button
             android:id="@+id/createUserButton"
             android:layout_width="300dp"
@@ -264,9 +267,26 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/postalCodeUserEditText" />
+            app:layout_constraintTop_toBottomOf="@id/postalCodeUserEditText"
+            app:layout_constraintVertical_bias="0.25" />
+
+        <TextView
+            android:id="@+id/textViewLogin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Ya tienes cuenta? Inicia sesion."
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/createUserButton"
+            app:layout_constraintVertical_bias="0.384" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
