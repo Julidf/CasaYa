@@ -1,5 +1,6 @@
 package com.example.casaya.viewmodels
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -23,7 +24,7 @@ class UserRegisterViewModel : ViewModel() {
         district: String,
         street: String,
         height: Int,
-        postalCode: String
+        postalCode: String,
     ) {
         var addressUser = UserAddress(province, district, street, height, postalCode)
         var newUser = User(null, name, lastname, email, password, phoneNumber, addressUser)

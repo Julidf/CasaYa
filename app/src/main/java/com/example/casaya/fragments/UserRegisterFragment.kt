@@ -188,7 +188,7 @@ class UserRegisterFragment : Fragment() {
             district,
             street,
             height,
-            postalCode
+            postalCode,
         )
     }
 
