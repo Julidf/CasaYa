@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".fragments.PropertyDetailFragment" >
+
+        <!-- Imagen de la propiedad -->
+        <ImageView
+            android:id="@+id/propertyImageView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            android:contentDescription="Descripción del contenido de la imagen"
+            android:src="@mipmap/img_depto_foreground"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintDimensionRatio="16:9"/>
+
+        <!-- Titulo de la propiedad -->
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:textAppearanceLarge"
+            android:textStyle="bold"
+            android:padding="16dp"
+            android:text="Excelente 2 ambientes en Belgrano"
+            app:layout_constraintTop_toBottomOf="@+id/propertyImageView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!-- Detalle de la publicacion de la propiedad -->
+        <TextView
+            android:id="@+id/tagPublishedTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:text="Publicado hace 5 dias"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleTextView"
+            app:layout_constraintVertical_bias="0.5"/>
+
+        <!-- Caracteristicas de la propiedad -->
+        <TextView
+            android:id="@+id/characteristicsTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:textStyle="normal"
+            android:padding="15dp"
+            android:text="43 m2 · 1 Dorm · 1 Baño · 1 Cochera · Echeverria 2780, Capital Federal, Buenos Aires"
+            app:layout_constraintTop_toBottomOf="@+id/tagPublishedTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <!-- Detalle del valor del alquiler -->
+        <TextView
+            android:id="@+id/tagOperationTypeTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="Alquiler"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/characteristicsTextView"
+            app:layout_constraintVertical_bias="0.5"/>
+
+        <TextView
+            android:id="@+id/valuePriceTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="$120.000"
+            app:layout_constraintStart_toEndOf="@id/tagOperationTypeTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tagOperationTypeTextView"
+            app:layout_constraintBottom_toBottomOf="@id/tagOperationTypeTextView"/>
+
+        <!-- Detalle del valor de la expensa -->
+        <TextView
+            android:id="@+id/tagExpensepriceTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="Expensas"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/valuePriceTextView"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <TextView
+            android:id="@+id/valueExpenseTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="$8.500"
+            app:layout_constraintStart_toEndOf="@id/tagExpensepriceTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tagExpensepriceTextView"
+            app:layout_constraintBottom_toBottomOf="@id/tagExpensepriceTextView"/>
+
+        <!-- Descripcion de la propiedad -->
+        <TextView
+            android:id="@+id/descriptionTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="Hermoso departamento de 3 ambientes muy amplio y luminoso, a un contrafrente abierto. 70 mts propios.Living comedor con salida a un balcón corrido, 2 dormitorios cada uno con su placard, cocina impecable con lavadero incorporado y baño, ambos hechos a nuevo. Pisos de parquet. Impecable estado!!!! A mts de Cabildo y de los medios de transporte. Se alquila como oficina."
+            app:layout_constraintTop_toBottomOf="@+id/tagExpensepriceTextView"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

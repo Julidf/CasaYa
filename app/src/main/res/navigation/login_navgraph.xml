@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login_navgraph"
+    app:startDestination="@id/userRegisterFragment">
+    <fragment
+        android:id="@+id/userRegistrationSuccessFragment"
+        android:name="com.example.casaya.fragments.UserRegistrationSuccessFragment"
+        android:label="fragment_user_registration_success"
+        tools:layout="@layout/fragment_user_registration_success" >
+        <action
+            android:id="@+id/action_userRegistrationSuccessFragment_to_mainActivity"
+            app:destination="@id/mainActivity" />
+    </fragment>
+    <fragment
+        android:id="@+id/userRegisterFragment"
+        android:name="com.example.casaya.fragments.UserRegisterFragment"
+        android:label="UserRegisterFragment" >
+        <action
+            android:id="@+id/action_userRegisterFragment_to_userRegistrationSuccessFragment"
+            app:destination="@id/userRegistrationSuccessFragment" />
+    </fragment>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.casaya.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
+</navigation>
