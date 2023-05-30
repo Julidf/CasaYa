@@ -11,7 +11,10 @@ import androidx.lifecycle.viewModelScope
 import com.bumptech.glide.Glide
 import com.example.casaya.entities.Property
 import com.example.casaya.repositories.PropertyRepository
+import com.google.firebase.Timestamp
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 class PublishPropertyViewModel : ViewModel() {
 
@@ -45,7 +48,8 @@ class PublishPropertyViewModel : ViewModel() {
     fun publishProperty(title: String, description: String, area: Double, bedRoomsNumber: Int, bathRoomsNumber: Int, price: Double, expense: Double, isRent: Boolean, propertyType: String, province: String, street: String, height: Int, betweenStreets: String, postalCode: String) {
         var newProperty = Property(
             title, description, area, bedRoomsNumber, bathRoomsNumber, price,
-            expense, isRent, propertyType, province, street, height, betweenStreets, postalCode, null
+            expense, isRent, propertyType, province, street, height, betweenStreets,
+            postalCode, null, Timestamp.now()
         )
         properties.value?.add(newProperty)
         //properties.value = properties.value

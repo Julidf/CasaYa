@@ -14,6 +14,7 @@ import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.tasks.await
 import java.util.*
+import java.lang.reflect.InvocationTargetException
 
 class PropertyRepository(){
 
@@ -80,8 +81,8 @@ class PropertyRepository(){
                 .await()
 
             Log.d("New Property", "Se agrego exitosamente el documento con ID ${reference.id}")
-        }catch (e: Exception) {
-            Log.e("Error Message", "Exception thrown: ${e.message}")
+        }catch (e: InvocationTargetException) {
+            Log.e("Error Firebase saveProperty", "Exception thrown: ${e.targetException} | ${e.targetException.cause} | ${e.targetException?.cause?.printStackTrace()}")
         }
     }
 
@@ -98,9 +99,40 @@ class PropertyRepository(){
 
             propertiesList = documents.toObjects(Property::class.java)
         }catch (e: Exception) {
-            Log.e("Error Message", "Exception thrown: ${e.message}")
+            Log.e("Error Message Firebase getAllProperties", "Exception thrown: ${e.message}")
         }
 
         return propertiesList
     }
+
+    /**
+     * Metodo que realiza una busqueda de propiedades de acuerdo al criterio de consulta, y
+     * devuelve una MutableList con el resultado de la busqueda
+     */
+    suspend fun searchPropertiesByProvince(query: String) : MutableList<Property> {
+        var propertiesListSearched = mutableListOf<Property>()
+        Log.i("Filtered Properties", "Query: $query")
+        try {
+            val documents = db.collection(COLLECTION)
+
+            val found = documents
+                .orderBy("title")
+                .get()
+                .await()
+
+            val auxPropertiesList = found.toObjects(Property::class.java)
+
+            propertiesListSearched = auxPropertiesList.filter {
+                it.getProvince().contains(query, true)
+            }.toMutableList()
+
+            Log.i("Filtered Properties", "Cantidad: ${propertiesListSearched.size}, Propiedades: $propertiesListSearched")
+        }catch (e: Exception) {
+            Log.e("Filtered Properties", "Exception thrown: ${e.message}")
+        }
+
+        return propertiesListSearched
+
+    }
+
 }

@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 
 class PropertiesListViewModel : ViewModel() {
     private val repositoryProperty: PropertyRepository = PropertyRepository()
-
+    var selectedProperty: Property? = null
     private val _myListLiveData: MutableLiveData<List<Property>> = MutableLiveData()
     val myListLiveData: LiveData<List<Property>> = _myListLiveData
     lateinit var propertyImageRef: String
@@ -38,15 +38,6 @@ class PropertiesListViewModel : ViewModel() {
         saveNewProperty(newProperty)
     }
 
-    fun filterPropertiesByName(query: String) {
-        val filteredProperties = _myListLiveData.value?.filter { property ->
-            property.getTitle().contains(query, ignoreCase = true)
-        }
-        filteredProperties?.let {
-            _myListLiveData.value = it
-        }
-    }
-
     /**
      * Metodo para guardar Property en la DB a traves de Repository
      */
@@ -62,21 +53,27 @@ class PropertiesListViewModel : ViewModel() {
     fun getProperties() {
         viewModelScope.launch {
             propertiesList = repositoryProperty.getAllProperties()
+            updateMyListLiveData(propertiesList)
+        }
+    }
+
+    /**
+     * Metodo que busca todas las propiedades filtradas por el titulo
+     */
+    fun searchPropertiesByProvince(query: String, callback: (List<Property>) -> Unit) {
+        viewModelScope.launch {
+            propertiesList = repositoryProperty.searchPropertiesByProvince(query)
+            updateMyListLiveData(propertiesList)
+            callback(propertiesList)
         }
     }
 
     /**
      * Metodo que actualiza el LiveData '_myListLiveData' con todas las propiedades que hay en la DB y permite actualizar a la variable 'myListLiveData' que esta siendo observada en la clase PropertiesListFragment
      */
-    fun fetchMyList() {
-        viewModelScope.launch {
-            try {
-                val myList = repositoryProperty.getAllProperties()
-                _myListLiveData.postValue(myList)
-            } catch (e: Exception) {
-                Log.e("Error Message", "Exception thrown: ${e.message}")
-            }
-        }
+    private fun updateMyListLiveData(propertiesList: MutableList<Property>) {
+        val myList = propertiesList
+        _myListLiveData.postValue(myList)
     }
 
     fun setPropertyImage(uri: Uri, context: Context) {

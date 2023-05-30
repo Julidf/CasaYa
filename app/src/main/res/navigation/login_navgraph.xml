@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/login_navgraph"
-    app:startDestination="@id/userRegistrationSuccessFragment">
+    app:startDestination="@id/userRegisterFragment">
     <fragment
         android:id="@+id/userRegistrationSuccessFragment"
         android:name="com.example.casaya.fragments.UserRegistrationSuccessFragment"

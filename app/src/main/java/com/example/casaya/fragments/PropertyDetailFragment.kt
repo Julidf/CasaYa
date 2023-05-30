@@ -6,15 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.activityViewModels
 import com.example.casaya.R
 import com.example.casaya.entities.Property
-import com.example.casaya.viewmodels.PropertyDetailViewModel
+import com.example.casaya.viewmodels.PropertiesListViewModel
 
 class PropertyDetailFragment : Fragment() {
 
-    private lateinit var viewModel: PropertyDetailViewModel
+    private val viewModelPropertiesList: PropertiesListViewModel by activityViewModels()
     private lateinit var view: View
-    private lateinit var property: Property
+    private var selectedProperty: Property? = null
 
     /**
      * Elementos de la pantalla
@@ -42,17 +43,49 @@ class PropertyDetailFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        /*
-        val bundle = arguments
-        val property = bundle?.getParcelable<Property>("propertyClicked")
+        //Obtengo la referencia de la Property que ha sido seleccionada desde el RecyclerView
+        selectedProperty = viewModelPropertiesList.selectedProperty
 
+        //Muestro en cada campo, el valor de cada atributo de la Property seleccionada
+        loadDataIntoView(selectedProperty)
+    }
+
+    /**
+     * Metodo que setea el texto que se debe mostrar en cada TextView de la vista
+     */
+    private fun loadDataIntoView(property: Property?) {
         if (property != null) {
             titleTextView.text = property.getTitle()
+            tagPublishedTextView.text = property.setStringPublicationDays()
+            descriptionTextView.text = property.getDescription()
+            characteristicsTextView.text = setPropertyCharacteristics(property)
+            tagOperationTypeTextView.text = property.obtainOperationType()
+            valuePriceTextView.text = "$ ${property.getPrice()}"
+            valueExpenseTextView.text = "$ ${property.getExpense()}"
         }
+    }
 
-         */
+    /**
+     * Metodo que arma el String de las caracteristicas de la propiedad
+     */
+    private fun setPropertyCharacteristics(property: Property): String {
+        val area = property.getArea()
+        val bedRooms = property.getBedRoomsNumber()
+        val bathRooms = property.getBathRoomsNumber()
+        val address = setStringAddressProperty(property)
 
-        //property = PropertyDetailFragmentArgs.fromBundle(requireArguments()).propertyClicked
+        return "$area m² · $bedRooms Dorm. · $bathRooms Baño(s) · $address"
+    }
+
+    /**
+     * Metodo que arma el String de la Direccion de la propiedad
+     */
+    private fun setStringAddressProperty(property: Property): String {
+        val street = property.getStreet()
+        val height = property.getHeight()
+        val province = property.getProvince()
+
+        return "$street $height, $province"
     }
 
     private fun initializeView(view: View) {
@@ -62,7 +95,6 @@ class PropertyDetailFragment : Fragment() {
         tagOperationTypeTextView = view.findViewById(R.id.tagOperationTypeTextView)
         valuePriceTextView = view.findViewById(R.id.valuePriceTextView)
         valueExpenseTextView = view.findViewById(R.id.valueExpenseTextView)
-        titleTextView = view.findViewById(R.id.titleTextView)
         descriptionTextView = view.findViewById(R.id.descriptionTextView)
 
     }
