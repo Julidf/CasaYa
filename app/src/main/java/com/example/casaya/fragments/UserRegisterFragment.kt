@@ -1,5 +1,6 @@
 package com.example.casaya.fragments
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,9 +12,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioGroup
 import android.widget.Spinner
+import android.widget.TextView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.example.casaya.LoginActivity
 import com.example.casaya.R
 import com.example.casaya.viewmodels.PropertiesListViewModel
 import com.example.casaya.viewmodels.UserRegisterViewModel
@@ -45,6 +48,7 @@ class UserRegisterFragment : Fragment() {
     private lateinit var streetUserEditText: EditText
     private lateinit var heightUserEditText: EditText
     private lateinit var postalCodeUserEditText: EditText
+    private lateinit var textViewLogin: TextView
     private lateinit var createUserButton: Button
 
     override fun onCreateView(
@@ -75,6 +79,11 @@ class UserRegisterFragment : Fragment() {
                 val action = UserRegisterFragmentDirections.actionUserRegisterFragmentToUserRegistrationSuccessFragment()
                 findNavController().navigate(action)
             }
+        }
+
+        val textViewLogin = view.findViewById<TextView>(R.id.textViewLogin)
+        textViewLogin.setOnClickListener {
+            findNavController().navigate(R.id.action_userRegisterFragment_to_userLoginFragment)
         }
     }
 
