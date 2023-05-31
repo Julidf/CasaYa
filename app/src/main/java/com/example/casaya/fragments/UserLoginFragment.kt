@@ -3,6 +3,7 @@ package com.example.casaya.fragments
 import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -20,6 +21,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.casaya.MainActivity
 import com.example.casaya.R
 import com.example.casaya.viewmodels.PropertiesListViewModel
+import com.example.casaya.viewmodels.UserLoginViewModel
 import com.example.casaya.viewmodels.UserRegisterViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -30,9 +32,10 @@ class UserLoginFragment : Fragment() {
         fun newInstance() = UserLoginFragment()
     }
 
-    private val viewModelUserRegister: UserRegisterViewModel by activityViewModels()
+    private val viewModelUserLogin: UserLoginViewModel = UserLoginViewModel()
     private lateinit var view: View
-    private lateinit var welcomeMessage: String
+    private var MSG_SUCCESS_LOGIN: String = "Inicio de sesion exitoso"
+    private var MSG_FAILURE_LOGIN: String = "Inicio de sesion fallido, revisa tu email o contraseña"
 
 
     /**
@@ -50,31 +53,14 @@ class UserLoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         view = inflater.inflate(R.layout.fragment_user_login, container, false)
-
-        //Inicializa cada una de las referencias de los elementos del formulario
-        /*
-        initializeViewElements(view)
-         */
-
         val view = inflater.inflate(R.layout.fragment_user_login, container, false)
 
+        textViewRegister = view.findViewById(R.id.textViewLogin)
         emailUserEditText = view.findViewById(R.id.emailUserEditText)
         passwordUserEditText = view.findViewById(R.id.passwordUserEditText)
         buttonLogin = view.findViewById(R.id.buttonLogin)
 
         firebaseAuth = FirebaseAuth.getInstance()
-
-        buttonLogin.setOnClickListener {
-            val email = emailUserEditText.text.toString()
-            val password = passwordUserEditText.text.toString()
-
-            signInUser(email, password)
-        }
-
-        val textViewRegister = view.findViewById<TextView>(R.id.textViewLogin)
-        textViewRegister.setOnClickListener {
-            findNavController().navigate(R.id.action_userLoginFragment_to_userRegisterFragment)
-        }
 
         return view
     }
@@ -85,39 +71,42 @@ class UserLoginFragment : Fragment() {
                 if (task.isSuccessful) {
                     // Login successful
                     val user: FirebaseUser? = firebaseAuth.currentUser
+                    if (user != null) {
+                        //viewModelUserLogin.currentUser = user
+                        Log.d("Login1 User", "Usuario logeado: ID ${user.uid} / ${user.email}")
+                    }
                     // Perform further actions, such as navigating to another fragment or activity
                     val intent = Intent(requireContext(), MainActivity::class.java)
                     startActivity(intent)
                     requireActivity().finish()
-                    Toast.makeText(requireContext(), "Login successful", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), MSG_SUCCESS_LOGIN, Toast.LENGTH_SHORT).show()
                 } else {
                     // Login failed
-                    Toast.makeText(requireContext(), "Login failed", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), MSG_FAILURE_LOGIN, Toast.LENGTH_SHORT).show()
                 }
             }
     }
 
-    /*
     override fun onStart() {
         super.onStart()
 
         //capturo el evento del boton "CREAR MI CUENTA"
-        createUserButton.setOnClickListener {
+        buttonLogin.setOnClickListener {
 
             //Verifico si los datos cargados en el form son validos
             if (formIsValid()) {
-                //Envio la informacion del formulario al ViewModel
-                submitDataForm()
+                val email = emailUserEditText.text.toString()
+                val password = passwordUserEditText.text.toString()
 
-                viewModelUserRegister.welcomeMessage = welcomeMessage
+                signInUser(email, password)
+            }
 
-                val action = UserRegisterFragmentDirections.actionUserRegisterFragmentToUserRegistrationSuccessFragment()
-                findNavController().navigate(action)
+            //Accion para navegar al form de User Register
+            textViewRegister.setOnClickListener {
+                findNavController().navigate(R.id.action_userLoginFragment_to_userRegisterFragment)
             }
         }
     }
-
-     */
 
     /**
      * Valida si los campos del fomrulario han sido completados correctamente
@@ -140,66 +129,11 @@ class UserLoginFragment : Fragment() {
          * Valida el Campo Contraseña
          */
         if (passwordUser.isEmpty() || passwordUser.length < 5) {
-            passwordUserEditText.error = "Por favor, ingrese una contraseña valida, de al menos 5 caracteres"
+            passwordUserEditText.error = "Por favor, ingrese su contraseña"
             isValid = false
         }
 
         return isValid
     }
-
-    /**
-     * Enviar los datos del formulario al ViewModel de la clase UserRegisterViewModel
-     */
-    /*
-    private fun submitDataForm() {
-        val email = emailUserEditText.text.toString()
-        val password = passwordUserEditText.text.toString()
-
-        viewModelUserRegister.createNewUser(
-            email,
-            password
-        )
-    }
-     */
-
-    /**
-     * Se obtienen todas las referencias de los elementos desde la vista
-     */
-
-    /*
-    private fun initializeViewElements(view: View) {
-        emailUserEditText = view.findViewById(R.id.emailUserEditText)
-        passwordUserEditText = view.findViewById(R.id.passwordUserEditText)
-
-        initializeSpinnersElements()
-    }
-     */
-
-    /**
-     * Se inicializan todos los elementos de la clase Spinner con los valores seleccionados
-     * desde el formulario
-     */
-
-    /*
-    private fun initializeSpinnersElements() {
-        // Configura el adapter para el spinner de Provincias
-        val provinceAdapter = ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.opciones_spinner_province,
-            android.R.layout.simple_spinner_item
-        )
-        provinceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        provinceUserSpinner.adapter = provinceAdapter
-
-        // Configura el adapter para el spinner de Barrios
-        val districtAdapter = ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.opciones_spinner_barrios,
-            android.R.layout.simple_spinner_item
-        )
-        districtAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        districtUserSpinner.adapter = districtAdapter
-    }
-     */
 
 }

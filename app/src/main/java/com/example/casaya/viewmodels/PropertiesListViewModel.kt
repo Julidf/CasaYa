@@ -2,20 +2,14 @@ package com.example.casaya.viewmodels
 
 import android.content.Context
 import android.net.Uri
-import java.net.URI
 import android.util.Log
-import android.widget.ImageView
-import android.widget.SearchView
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.bumptech.glide.Glide
 import com.example.casaya.entities.Property
 import com.example.casaya.repositories.PropertyRepository
-import com.google.android.gms.tasks.Task
-import com.google.firebase.storage.StorageReference
+import com.google.firebase.Timestamp
 import kotlinx.coroutines.launch
 
 class PropertiesListViewModel : ViewModel() {
@@ -25,15 +19,18 @@ class PropertiesListViewModel : ViewModel() {
     val myListLiveData: LiveData<List<Property>> = _myListLiveData
     lateinit var propertyImageRef: String
     var propertiesList = mutableListOf<Property>()
+    private val viewModelUserLogin: UserLoginViewModel = UserLoginViewModel()
 
     fun publishProperty(
         title: String, description: String, area: Double, bedRoomsNumber: Int,
         bathRoomsNumber: Int, price: Double, expense: Double, isRent: Boolean, propertyType: String,
         province: String, street: String, height: Int, betweenStreets: String, postalCode: String
     ) {
+        //Seteo el ID del usuario logeado, al la nueva Property
+        var userId = viewModelUserLogin.getUserUid()
         val newProperty = Property(
-            title, description, area, bedRoomsNumber, bathRoomsNumber, price,
-            expense, isRent, propertyType, province, street, height, betweenStreets, postalCode, propertyImageRef
+            null, title, description, area, bedRoomsNumber, bathRoomsNumber, price,
+            expense, isRent, propertyType, province, street, height, betweenStreets, postalCode, propertyImageRef, Timestamp.now(), userId
         )
         saveNewProperty(newProperty)
     }

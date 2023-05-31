@@ -1,14 +1,13 @@
 package com.example.casaya.entities
 
-import com.google.firebase.storage.StorageReference
 import com.google.firebase.Timestamp
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
-import java.time.temporal.ChronoUnit
 
 data class Property(
+    private var id: String?,
     private var title: String = "",
     private var description: String = "",
     private var area: Double = 0.0,
@@ -25,12 +24,28 @@ data class Property(
     private var postalCode: String = "",
     private var propertyImageRef: String? = null,
     private var publicationDate: Timestamp = Timestamp.now(),
+    private var userId: String = ""
 ) {
+
+    // Constructor sin argumentos
+    constructor() : this(null)
 
     private val today = Timestamp.now()
 
     fun getPropertyImageRef() : String? {
         return this.propertyImageRef
+    }
+
+    fun getUserId() : String {
+        return this.userId
+    }
+
+    fun getId() : String? {
+        return this.id
+    }
+
+    fun setId(id: String) {
+        this.id = id
     }
 
     fun getTitle() : String {
