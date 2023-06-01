@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.casaya.R
 import com.example.casaya.adapters.PropertyAdapter
 import androidx.navigation.fragment.findNavController
+import com.example.casaya.entities.Property
 import com.example.casaya.viewmodels.PropertiesListViewModel
 
 class PropertiesListFragment : Fragment() {
@@ -58,7 +59,7 @@ class PropertiesListFragment : Fragment() {
                     searchQuery = it
                     isSearchActive = true
                     viewModelPropertiesList.searchPropertiesByProvince(it) { properties ->
-                        updateSearchResultTextView(properties.size)
+                        updateSearchResultTextView(properties)
                         adapterProperty.submitList(properties.toMutableList())
                     }
                 }
@@ -92,10 +93,10 @@ class PropertiesListFragment : Fragment() {
     /**
      * Metodo que setea un mensaje, cuando el usuario realiza una busqueda
      */
-    private fun updateSearchResultTextView(results: Int) {
-        if (results > 0) {
+    private fun updateSearchResultTextView(properties: List<Property>) {
+        if (properties.isNotEmpty()) {
             messageResultSearchTextView.text =
-                "Hemos encontrado $results propiedad(es) para tu busqueda"
+                "Hemos encontrado ${properties.size} propiedad(es) para tu busqueda, en la provincia de ${properties[0].getProvince()}"
             Log.i("Filtered Properties", "${messageResultSearchTextView.text}")
 
         } else {
@@ -139,7 +140,7 @@ class PropertiesListFragment : Fragment() {
             searchQuery?.let { query ->
                 viewModelPropertiesList.searchPropertiesByProvince(query) { properties ->
                     adapterProperty.submitList(properties.toMutableList())
-                    updateSearchResultTextView(properties.size)
+                    updateSearchResultTextView(properties)
                 }
             }
         }

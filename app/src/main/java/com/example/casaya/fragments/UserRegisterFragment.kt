@@ -129,8 +129,8 @@ class UserRegisterFragment : Fragment() {
         /**
          * Valida el Campo Contraseña
          */
-        if (passwordUser.isEmpty() || passwordUser.length < 5) {
-            passwordUserEditText.error = "Por favor, ingrese una contraseña valida, de al menos 5 caracteres"
+        if (passwordUser.isEmpty() || passwordUser.length < 6) {
+            passwordUserEditText.error = "Por favor, ingrese una contraseña valida, de al menos 6 caracteres"
             isValid = false
         }
 

@@ -4,13 +4,10 @@ import android.app.AlertDialog
 import android.content.Context
 import android.net.Uri
 import android.util.Log
-import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.casaya.entities.Property
-import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.tasks.await
 import java.util.*
@@ -75,6 +72,7 @@ class PropertyRepository(){
         try {
             val reference = db.collection(COLLECTION).document()
 
+             newProperty.setId(reference.id)
             db.collection(COLLECTION)
                 .document(reference.id)
                 .set(newProperty)
@@ -93,7 +91,7 @@ class PropertyRepository(){
         var propertiesList = mutableListOf<Property>()
         try {
             val documents = db.collection(COLLECTION)
-                .orderBy("title", Query.Direction.ASCENDING)
+                .orderBy("publicationDate", Query.Direction.DESCENDING)
                 .get()
                 .await()
 
@@ -115,12 +113,12 @@ class PropertyRepository(){
         try {
             val documents = db.collection(COLLECTION)
 
-            val found = documents
-                .orderBy("title")
+            val allProperties = documents
+                .orderBy("publicationDate", Query.Direction.DESCENDING)
                 .get()
                 .await()
 
-            val auxPropertiesList = found.toObjects(Property::class.java)
+            val auxPropertiesList = allProperties.toObjects(Property::class.java)
 
             propertiesListSearched = auxPropertiesList.filter {
                 it.getProvince().contains(query, true)
