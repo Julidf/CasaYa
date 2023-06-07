@@ -17,7 +17,7 @@ class PropertiesListViewModel : ViewModel() {
     var selectedProperty: Property? = null
     private val _myListLiveData: MutableLiveData<List<Property>> = MutableLiveData()
     val myListLiveData: LiveData<List<Property>> = _myListLiveData
-    lateinit var propertyImageRef: String
+    var propertyImageRef: String = ""
     var propertiesList = mutableListOf<Property>()
     private val viewModelUserLogin: UserLoginViewModel = UserLoginViewModel()
 
@@ -74,20 +74,19 @@ class PropertiesListViewModel : ViewModel() {
     }
 
     fun setPropertyImage(uri: Uri, context: Context) {
-        viewModelScope.launch {
-            propertyImageRef = repositoryProperty.savePropertyImage(uri, context)
-            Log.d("CCCCCCCCCCCCCCCCCCCCC", propertyImageRef)
-        }
+        repositoryProperty.savePropertyImage(uri, this, context)
     }
 
     fun getPropertyImage(): Uri? {
         var imageUri: Uri? = null
         viewModelScope.launch {
-            imageUri = repositoryProperty.getPropertyImage(propertyImageRef)
-            Log.d("DDDDDDDDDDDDDDDDDDD", imageUri.toString())
-            Log.d("EEEEEEEEEEEEEEEEEEE", propertyImageRef)
+//            imageUri = repositoryProperty.getPropertyImage(propertyImageRef)
         }
         return imageUri
+    }
+
+    fun setPropertyImageRef(uri: Uri) {
+        propertyImageRef = uri.toString()
     }
 
 }

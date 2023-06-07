@@ -129,7 +129,8 @@ class PropertiesListFragment : Fragment() {
                 val action =
                     PropertiesListFragmentDirections.actionPropertiesListFragmentToPropertyDetailFragment()
                 findNavController().navigate(R.id.action_propertiesListFragment_to_propertyDetailFragment)
-            }
+            },
+            requireContext(),
         )
 
         // Verificar si hay una búsqueda activa
