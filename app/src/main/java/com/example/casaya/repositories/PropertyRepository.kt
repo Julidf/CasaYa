@@ -4,7 +4,9 @@ import android.app.AlertDialog
 import android.content.Context
 import android.net.Uri
 import android.util.Log
+import androidx.fragment.app.activityViewModels
 import com.example.casaya.entities.Property
+import com.example.casaya.viewmodels.PropertiesListViewModel
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -12,6 +14,7 @@ import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.tasks.await
 import java.util.*
 import java.lang.reflect.InvocationTargetException
+import androidx.fragment.app.activityViewModels
 
 class PropertyRepository(){
 
@@ -22,37 +25,16 @@ class PropertyRepository(){
     //Inicializacion de una instancia de Storage
     private val storage = Firebase.storage
 
-    suspend fun savePropertyImage(uri: Uri, context: Context): String {
+    fun savePropertyImage(uri: Uri, viewModel: PropertiesListViewModel, context: Context) {
         val storageRef = storage.reference
         val imageRef = storageRef.child(UUID.randomUUID().toString())
-        try {
-            imageRef.putFile(uri).addOnSuccessListener { taskSnapshot ->
-                taskSnapshot.metadata?.reference?.downloadUrl
-            }.addOnFailureListener { exception ->
-                // Manejar el error en caso de que no se pueda subir la imagen
+        imageRef.putFile(uri).addOnSuccessListener { taskSnapshot ->
+            taskSnapshot.metadata?.reference?.downloadUrl?.addOnSuccessListener {
+                viewModel.setPropertyImageRef(it);
             }
-        } catch (err: Exception) {
-            showErrorDialog(err.toString(), context)
+        }.addOnFailureListener { exception ->
+            showErrorDialog("SE ROMPIO", context)
         }
-        Log.d("AAAAAAAAAAAAAAAAAAAAAAAA", imageRef.toString())
-        return imageRef.toString()
-    }
-
-    suspend fun getPropertyImage(propertyImageRef: String): Uri? {
-        Log.d("ASDASDASDASDASDASD", propertyImageRef)
-        val storageImageRef = storage.getReferenceFromUrl(propertyImageRef)
-        Log.d("ZZZZZZZZZZZZZZZZZZZZZZZZZ", storageImageRef.toString())
-        var storageUri: Uri? = null
-        try {
-            storageImageRef.downloadUrl.addOnSuccessListener { uri ->
-                storageUri = uri
-            }.addOnFailureListener { exception ->
-                Log.e("ERRORERRORERRORERRORERROR1", "${exception.message}")
-            }
-        } catch (err: Exception){
-            Log.e("ERRORERRORERRORERRORERROR2", "${err.message}")
-        }
-        return storageUri
     }
 
     private fun showErrorDialog(message: String, context: Context) {

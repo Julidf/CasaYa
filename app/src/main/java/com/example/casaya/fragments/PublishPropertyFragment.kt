@@ -69,50 +69,50 @@ class PublishPropertyFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        publicationTitleEditText.apply {
-            error = null
-            setText("")
-        }
-        descriptionPropEditText.apply {
-            error = null
-            setText("")
-        }
-        priceRentEditText.apply {
-            error = null
-            setText("")
-        }
-        expensesEditText.apply {
-            error = null
-            setText("")
-        }
-        areaEditText.apply {
-            error = null
-            setText("")
-        }
-        bedRoomsEditText.apply {
-            error = null
-            setText("")
-        }
-        bathRoomsEditText.apply {
-            error = null
-            setText("")
-        }
-        streetEditText.apply {
-            error = null
-            setText("")
-        }
-        heightEditText.apply {
-            error = null
-            setText("")
-        }
-        betweenStreetsEditText.apply {
-            error = null
-            setText("")
-        }
-        postalCodeEditText.apply {
-            error = null
-            setText("")
-        }
+//        publicationTitleEditText.apply {
+//            error = null
+//            setText("")
+//        }
+//        descriptionPropEditText.apply {
+//            error = null
+//            setText("")
+//        }
+//        priceRentEditText.apply {
+//            error = null
+//            setText("")
+//        }
+//        expensesEditText.apply {
+//            error = null
+//            setText("")
+//        }
+//        areaEditText.apply {
+//            error = null
+//            setText("")
+//        }
+//        bedRoomsEditText.apply {
+//            error = null
+//            setText("")
+//        }
+//        bathRoomsEditText.apply {
+//            error = null
+//            setText("")
+//        }
+//        streetEditText.apply {
+//            error = null
+//            setText("")
+//        }
+//        heightEditText.apply {
+//            error = null
+//            setText("")
+//        }
+//        betweenStreetsEditText.apply {
+//            error = null
+//            setText("")
+//        }
+//        postalCodeEditText.apply {
+//            error = null
+//            setText("")
+//        }
     }
 
     override fun onStart() {
@@ -136,10 +136,9 @@ class PublishPropertyFragment : Fragment() {
             TedImagePicker.with(requireContext())
                 .start { uri ->
                     viewModelPropertiesList.setPropertyImage(uri, requireContext())
-                    var imageUri = viewModelPropertiesList.getPropertyImage()
-//                    Glide.with(this)
-//                    .load(imageUri)
-//                    .into(propertyImages)
+                    Glide.with(this)
+                    .load(uri)
+                    .into(propertyImages)
                 }
         }
 

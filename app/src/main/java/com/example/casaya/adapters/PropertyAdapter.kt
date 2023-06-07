@@ -1,20 +1,30 @@
 package com.example.casaya.adapters
 
+import android.content.Context
+import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Recycler
+import com.bumptech.glide.Glide
 import com.example.casaya.R
 import com.example.casaya.entities.Property
+import com.example.casaya.repositories.PropertyRepository
+import kotlinx.coroutines.launch
 
 class PropertyAdapter(
 
     var properties: MutableList<Property>,
-    var onClick: (Int) -> Unit
+    var onClick: (Int) -> Unit,
+    val context: Context,
+    private val repositoryProperty: PropertyRepository = PropertyRepository()
+
 
 ) : RecyclerView.Adapter<PropertyAdapter.PropertyHolder>() {
 
@@ -38,10 +48,22 @@ class PropertyAdapter(
             //Cuando escucha un click, le envia a la funcion 'onClick' el valor de la posicion del item
             onClick(position)
         }
+        Glide
+            .with(context)
+            .load(property.getPropertyImageRef())
+            .into(holder.getImageView());
     }
 
     fun submitList(properties: MutableList<Property>) {
         this.properties = properties
+    }
+
+    private fun getImage(imageRef: String): Uri? {
+        var imageUri: Uri? = null
+        if (imageRef !== null) {
+//            imageUri = repositoryProperty.getPropertyImage(imageRef)
+        }
+        return imageUri;
     }
 
     class PropertyHolder(v: View) : RecyclerView.ViewHolder(v) {
@@ -51,9 +73,10 @@ class PropertyAdapter(
             this.view = v
         }
 
-        fun setImage() {
-
+        fun getImageView () : ImageView {
+            return view.findViewById(R.id.imageListView)
         }
+
 
         fun setTitle(title: String?) {
             val txtTitleItem: TextView = view.findViewById(R.id.titleListTextView)

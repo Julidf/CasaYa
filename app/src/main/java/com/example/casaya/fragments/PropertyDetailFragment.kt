@@ -5,8 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
+import com.bumptech.glide.Glide
 import com.example.casaya.R
 import com.example.casaya.entities.Property
 import com.example.casaya.viewmodels.PropertiesListViewModel
@@ -27,6 +29,7 @@ class PropertyDetailFragment : Fragment() {
     private lateinit var valuePriceTextView: TextView
     private lateinit var valueExpenseTextView: TextView
     private lateinit var descriptionTextView: TextView
+    private lateinit var propertyImageView: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +51,7 @@ class PropertyDetailFragment : Fragment() {
 
         //Muestro en cada campo, el valor de cada atributo de la Property seleccionada
         loadDataIntoView(selectedProperty)
+
     }
 
     /**
@@ -62,6 +66,10 @@ class PropertyDetailFragment : Fragment() {
             tagOperationTypeTextView.text = property.obtainOperationType()
             valuePriceTextView.text = "$ ${property.getPrice()}"
             valueExpenseTextView.text = "$ ${property.getExpense()}"
+            Glide
+                .with(this)
+                .load(property.getPropertyImageRef())
+                .into(propertyImageView);
         }
     }
 
@@ -96,7 +104,7 @@ class PropertyDetailFragment : Fragment() {
         valuePriceTextView = view.findViewById(R.id.valuePriceTextView)
         valueExpenseTextView = view.findViewById(R.id.valueExpenseTextView)
         descriptionTextView = view.findViewById(R.id.descriptionTextView)
-
+        propertyImageView = view.findViewById(R.id.propertyImageView)
     }
 
 }
