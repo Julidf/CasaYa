@@ -40,5 +40,10 @@
         android:name="com.example.casaya.fragments.UserProfileFragment"
         android:label="fragment_user_profile"
         tools:layout="@layout/fragment_user_profile" />
+    <fragment
+        android:id="@+id/containerProfileFragment"
+        android:name="com.example.casaya.fragments.ContainerProfileFragment"
+        android:label="fragment_container_profile"
+        tools:layout="@layout/fragment_container_profile" />
 
 </navigation>
