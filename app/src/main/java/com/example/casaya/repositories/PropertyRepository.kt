@@ -140,4 +140,31 @@ class PropertyRepository(){
         return myPropertiesList
     }
 
+    suspend fun updateProperty(propertyData: Property) {
+        try {
+            val documentId = propertyData.getId()
+            if (documentId != null) {
+                val reference = db.collection(COLLECTION).document(documentId)
+
+                reference
+                    .set(propertyData)
+                    .await()
+
+                //propertyData.setId(reference.id)
+                /*
+                db.collection(COLLECTION)
+                    .document(reference.id)
+                    .set(propertyData)
+                    .await()
+
+                 */
+
+                Log.d("Update Property", "Se actualizo exitosamente el documento con ID ${reference.id}")
+            }
+
+        }catch (e: InvocationTargetException) {
+            Log.e("Error Firebase saveProperty", "Exception thrown: ${e.targetException} | ${e.targetException.cause} | ${e.targetException?.cause?.printStackTrace()}")
+        }
+    }
+
 }

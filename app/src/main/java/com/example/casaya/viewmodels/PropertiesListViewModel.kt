@@ -35,6 +35,29 @@ class PropertiesListViewModel : ViewModel() {
         saveNewProperty(newProperty)
     }
 
+    fun updatePropertyData(
+        propertySelected: Property, title: String, description: String, area: Double, bedRoomsNumber: Int,
+        bathRoomsNumber: Int, price: Double, expense: Double, isRent: Boolean, propertyType: String,
+        province: String, street: String, height: Int, betweenStreets: String, postalCode: String
+    ) {
+        var imageRef: String = if (propertyImageRef == null) {
+            propertySelected.getPropertyImageRef()
+        }else
+            propertyImageRef
+        val propertyData = Property(
+            propertySelected.getId(), title, description, area, bedRoomsNumber, bathRoomsNumber, price,
+            expense, isRent, propertyType, province, street, height, betweenStreets, postalCode, imageRef, Timestamp.now(), propertySelected.getUserId()
+        )
+
+        updateProperty(propertyData)
+    }
+
+    private fun updateProperty(propertyData: Property) {
+        viewModelScope.launch {
+            repositoryProperty.updateProperty(propertyData)
+        }
+    }
+
     /**
      * Metodo para guardar Property en la DB a traves de Repository
      */

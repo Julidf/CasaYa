@@ -34,6 +34,12 @@
             app:destination="@id/propertiesListFragment">
 
         </action>
+        <action
+            android:id="@+id/action_publishPropertyFragment_to_userPropertiesFragment"
+            app:destination="@id/userPropertiesFragment" />
+        <action
+            android:id="@+id/action_publishPropertyFragment_to_containerProfileFragment"
+            app:destination="@id/containerProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/userProfileFragment"
@@ -44,6 +50,19 @@
         android:id="@+id/containerProfileFragment"
         android:name="com.example.casaya.fragments.ContainerProfileFragment"
         android:label="fragment_container_profile"
-        tools:layout="@layout/fragment_container_profile" />
+        tools:layout="@layout/fragment_container_profile" >
+        <action
+            android:id="@+id/action_containerProfileFragment_to_publishPropertyFragment"
+            app:destination="@id/publishPropertyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userPropertiesFragment"
+        android:name="com.example.casaya.fragments.UserPropertiesFragment"
+        android:label="fragment_user_properties"
+        tools:layout="@layout/fragment_user_properties" >
+        <action
+            android:id="@+id/action_userPropertiesFragment_to_publishPropertyFragment"
+            app:destination="@id/publishPropertyFragment" />
+    </fragment>
 
 </navigation>

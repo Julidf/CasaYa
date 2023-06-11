@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,7 +26,7 @@ import kotlinx.coroutines.launch
 
 class UserPropertiesFragment : Fragment() {
 
-    private var viewModelUserProperties: UserPropertiesViewModel = UserPropertiesViewModel()
+    private val viewModelUserProperties: UserPropertiesViewModel by activityViewModels()
     lateinit var v: View
     lateinit var recyclerUserProperties: RecyclerView
     private lateinit var adapterUserProperty: UserPropertyAdapter
@@ -70,6 +72,24 @@ class UserPropertiesFragment : Fragment() {
                 //val action =
                 //PropertiesListFragmentDirections.actionPropertiesListFragmentToPropertyDetailFragment()
                 //findNavController().navigate(R.id.action_propertiesListFragment_to_propertyDetailFragment)
+            },
+            onClickEdit = { position ->
+                viewModelUserProperties.selectedProperty =
+                    viewModelUserProperties.myPropertiesList[position]
+                val action = ContainerProfileFragmentDirections.actionContainerProfileFragmentToPublishPropertyFragment()
+                findNavController().navigate(action)
+                Log.d(
+                    "Edit Property",
+                    "Editar propiedad ${viewModelUserProperties.selectedProperty}"
+                )
+            },
+            onClickDelete = { position ->
+                viewModelUserProperties.selectedProperty =
+                    viewModelUserProperties.myPropertiesList[position]
+                Log.d(
+                    "Delete Property",
+                    "Eliminar propiedad ${viewModelUserProperties.myPropertiesList[position]}"
+                )
             },
             requireContext(),
         )

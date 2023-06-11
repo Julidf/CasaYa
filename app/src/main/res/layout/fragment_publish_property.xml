@@ -204,16 +204,16 @@
             android:id="@+id/bathRoomsEditText"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="10dp"
             android:hint="Cant. Baños"
             android:inputType="number"
             android:textSize="14sp"
             android:textStyle="italic"
-            app:layout_constraintBottom_toBottomOf="@id/bedRoomsEditText"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/bedRoomsEditText"
-            app:layout_constraintTop_toTopOf="@id/bedRoomsEditText" />
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/areaEditText" />
 
         <!-- Campo: Ubicacion de la Propiedad -->
         <TextView
@@ -226,7 +226,7 @@
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/areaEditText" />
+            app:layout_constraintTop_toBottomOf="@id/bathRoomsEditText" />
 
         <!-- Campo: lista desplegable para Provincia -->
         <Spinner
@@ -312,6 +312,31 @@
             app:layout_constraintStart_toEndOf="@id/betweenStreetsEditText"
             app:layout_constraintTop_toTopOf="@id/betweenStreetsEditText" />
 
+        <ImageView
+            android:id="@+id/propertyImages"
+            android:layout_width="190dp"
+            android:layout_height="194dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/postalCodeEditText"
+            app:srcCompat="@drawable/ic_img_load"
+            tools:layout_editor_absoluteY="791dp" />
+
+        <Button
+            android:id="@+id/insertImages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:background="@drawable/btn_secondary"
+            android:text="Agregar imagen"
+            android:textColor="@android:color/white"
+            android:textSize="13sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/propertyImages" />
+
         <!-- Boton para publicar la propiedad -->
         <Button
             android:id="@+id/publishButton"
@@ -320,43 +345,16 @@
             android:layout_marginTop="25dp"
             android:layout_marginBottom="32dp"
             android:background="@drawable/btn_rounded"
-            android:text="Publicar"
             android:textColor="@android:color/white"
             android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/betweenStreetsEditText"
-            app:layout_constraintVertical_bias="0.235" />
+            app:layout_constraintTop_toBottomOf="@id/insertImages"
+            app:layout_constraintVertical_bias="0.235"
+            tools:text="Publicar" />
 
-
-        <ImageView
-            android:id="@+id/propertyImages"
-            android:layout_width="190dp"
-            android:layout_height="194dp"
-            app:srcCompat="@drawable/home"
-            tools:layout_editor_absoluteY="791dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/publishButton"/>
-
-        <Button
-            android:id="@+id/insertImages"
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="32dp"
-            android:background="@drawable/btn_rounded"
-            android:text="Insert image"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/propertyImages" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,6 +1,6 @@
 package com.example.casaya.fragments
 
-import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,17 +8,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.os.bundleOf
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.RadioGroup
 import android.widget.Spinner
+import androidx.core.net.toUri
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.casaya.R
+import com.example.casaya.entities.Property
 import com.example.casaya.viewmodels.PropertiesListViewModel
+import com.example.casaya.viewmodels.UserPropertiesViewModel
 import gun0912.tedimagepicker.builder.TedImagePicker
 
 class PublishPropertyFragment : Fragment() {
@@ -28,9 +30,15 @@ class PublishPropertyFragment : Fragment() {
     }
 
     private val viewModelPropertiesList: PropertiesListViewModel by activityViewModels()
+    private val viewModelUserProperties: UserPropertiesViewModel by activityViewModels()
     private lateinit var view: View
-    lateinit var insertImages: Button
-    lateinit var propertyImages: ImageView
+    private var propertySelected: Property? = null
+
+    //Arrays de los Spinners
+    private lateinit var provincesArray: Array<String>
+    private lateinit var barriosArray: Array<String>
+    private lateinit var propertyTypeArray: Array<String>
+
 
     /**
      * Elementos del formulario
@@ -50,6 +58,8 @@ class PublishPropertyFragment : Fragment() {
     private lateinit var betweenStreetsEditText: EditText
     private lateinit var postalCodeEditText: EditText
     private lateinit var publishButton: Button
+    private lateinit var insertImages: Button
+    private lateinit var propertyImages: ImageView
 
 
     override fun onCreateView(
@@ -60,63 +70,43 @@ class PublishPropertyFragment : Fragment() {
 
         //Inicializa cada una de las referencias de los elementos del formulario
         initializeViewElements(view)
-        insertImages = view.findViewById(R.id.insertImages)
-        propertyImages = view.findViewById(R.id.propertyImages)
+
+        //Inicializa los Arrays de los Spinners
+        provincesArray = resources.getStringArray(R.array.opciones_spinner_province)
+        barriosArray = resources.getStringArray(R.array.opciones_spinner_barrios)
+        propertyTypeArray = resources.getStringArray(R.array.opciones_spinner_typeProperty)
+
+        //Inicializa la propiedad seleccionada
+        propertySelected = viewModelUserProperties.selectedProperty
+
+        //insertImages = view.findViewById(R.id.insertImages)
+        //propertyImages = view.findViewById(R.id.propertyImages)
 
         return view
     }
 
-    override fun onResume() {
-        super.onResume()
-
-//        publicationTitleEditText.apply {
-//            error = null
-//            setText("")
-//        }
-//        descriptionPropEditText.apply {
-//            error = null
-//            setText("")
-//        }
-//        priceRentEditText.apply {
-//            error = null
-//            setText("")
-//        }
-//        expensesEditText.apply {
-//            error = null
-//            setText("")
-//        }
-//        areaEditText.apply {
-//            error = null
-//            setText("")
-//        }
-//        bedRoomsEditText.apply {
-//            error = null
-//            setText("")
-//        }
-//        bathRoomsEditText.apply {
-//            error = null
-//            setText("")
-//        }
-//        streetEditText.apply {
-//            error = null
-//            setText("")
-//        }
-//        heightEditText.apply {
-//            error = null
-//            setText("")
-//        }
-//        betweenStreetsEditText.apply {
-//            error = null
-//            setText("")
-//        }
-//        postalCodeEditText.apply {
-//            error = null
-//            setText("")
-//        }
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModelUserProperties.selectedProperty = null
     }
 
     override fun onStart() {
         super.onStart()
+
+        //Limpia los campos del formulario, cada vez que el fragment es visible
+        clearForm()
+
+        Log.d(
+            "Publish Property",
+            "Editar propiedad ${viewModelUserProperties.selectedProperty}"
+        )
+
+        if (propertySelected != null) {
+            loadPropertyData(propertySelected)
+            publishButton.text = "GUARDAR"
+        } else {
+            publishButton.text = "PUBLICAR"
+        }
 
         //capturo el evento del boton
         publishButton.setOnClickListener {
@@ -126,9 +116,15 @@ class PublishPropertyFragment : Fragment() {
                 //Envio la informacion del formulario al ViewModel
                 submitDataForm()
 
-                val action =
-                    PublishPropertyFragmentDirections.actionPublishPropertyFragmentToPropertiesListFragment()
-                findNavController().navigate(action)
+                if (propertySelected != null) {
+                    findNavController().navigate(R.id.action_publishPropertyFragment_to_containerProfileFragment)
+                } else {
+                    val action =
+                        PublishPropertyFragmentDirections.actionPublishPropertyFragmentToPropertiesListFragment()
+                    findNavController().navigate(action)
+                }
+
+
             }
         }
 
@@ -137,11 +133,106 @@ class PublishPropertyFragment : Fragment() {
                 .start { uri ->
                     viewModelPropertiesList.setPropertyImage(uri, requireContext())
                     Glide.with(this)
-                    .load(uri)
-                    .into(propertyImages)
+                        .load(uri)
+                        .into(propertyImages)
                 }
         }
 
+    }
+
+    private fun loadImage(uri: Uri, fragment: Fragment, reference: ImageView) {
+        Glide.with(fragment)
+            .load(uri)
+            .into(reference)
+    }
+
+    private fun loadPropertyData(property: Property?) {
+        if (property != null) {
+            //Campos de Texto
+            publicationTitleEditText.setText(property.getTitle())
+            descriptionPropEditText.setText(property.getDescription())
+            priceRentEditText.setText(property.getPrice().toString())
+            expensesEditText.setText(property.getExpense().toString())
+            areaEditText.setText(property.getArea().toString())
+            bedRoomsEditText.setText(property.getBedRoomsNumber().toString())
+            bathRoomsEditText.setText(property.getBathRoomsNumber().toString())
+            streetEditText.setText(property.getStreet())
+            heightEditText.setText(property.getHeight().toString())
+            betweenStreetsEditText.setText(property.getBetweenStreets())
+            postalCodeEditText.setText(property.getPostalCode())
+
+            //Campo ImageView
+            loadImage(property.getPropertyImageRef().toUri(), this, propertyImages)
+
+            //Campo Boolean
+            setOperationType(property.getIsRent())
+
+            //Campos Spinners
+            provinceSpinner.setSelection(getProvinceSelected(property.getProvince()))
+            propertyTypeSpinner.setSelection(getPropertyTypeSelected(property.getPropertyType()))
+        }
+    }
+
+    private fun setOperationType(isRent: Boolean) {
+        if (isRent) {
+            radioGroupOperationType.check(R.id.rentRadioButton)
+        } else {
+            radioGroupOperationType.check(R.id.saleRadioButton)
+        }
+    }
+
+    private fun getProvinceSelected(province: String): Int {
+        return provincesArray.indexOf(province)
+    }
+
+    private fun getPropertyTypeSelected(propertyType: String): Int {
+        return propertyTypeArray.indexOf(propertyType)
+    }
+
+    private fun clearForm() {
+        publicationTitleEditText.apply {
+            error = null
+            setText("")
+        }
+        descriptionPropEditText.apply {
+            error = null
+            setText("")
+        }
+        priceRentEditText.apply {
+            error = null
+            setText("")
+        }
+        expensesEditText.apply {
+            error = null
+            setText("")
+        }
+        areaEditText.apply {
+            error = null
+            setText("")
+        }
+        bedRoomsEditText.apply {
+            error = null
+            setText("")
+        }
+        bathRoomsEditText.apply {
+            error = null
+            setText("")
+        }
+        streetEditText.apply {
+            error = null
+            setText("")
+        }
+        heightEditText.apply {
+            error = null
+        }
+        betweenStreetsEditText.apply {
+            error = null
+            setText("")
+        }
+        postalCodeEditText.apply {
+            error = null
+            setText("")
+        }
     }
 
     private fun formIsValid(): Boolean {
@@ -168,11 +259,13 @@ class PublishPropertyFragment : Fragment() {
             isValid = false
         }
         if (priceRent.isEmpty() || priceRent.toDouble() <= 0) {
-            priceRentEditText.error = "Por favor, complete el precio de Alquiler/Venta de la propiedad"
+            priceRentEditText.error =
+                "Por favor, complete el precio de Alquiler/Venta de la propiedad"
             isValid = false
         }
         if (expenses.isEmpty() || expenses.toDouble() <= 0) {
-            expensesEditText.error = "Por favor, complete el valor de las expensas de Alquiler/Venta de la propiedad"
+            expensesEditText.error =
+                "Por favor, complete el valor de las expensas de Alquiler/Venta de la propiedad"
             isValid = false
         }
         if (area.isEmpty() || area.toDouble() <= 0) {
@@ -180,27 +273,33 @@ class PublishPropertyFragment : Fragment() {
             isValid = false
         }
         if (bedRooms.isEmpty() || bedRooms.toInt() <= 0) {
-            bedRoomsEditText.error = "Por favor, complete el valor de la cantidad de habitaciones de la propiedad"
+            bedRoomsEditText.error =
+                "Por favor, complete el valor de la cantidad de habitaciones de la propiedad"
             isValid = false
         }
         if (bathRooms.isEmpty() || bathRooms.toInt() <= 0) {
-            bathRoomsEditText.error = "Por favor, complete el valor de la cantidad de baños de la propiedad"
+            bathRoomsEditText.error =
+                "Por favor, complete el valor de la cantidad de baños de la propiedad"
             isValid = false
         }
         if (street.isEmpty()) {
-            streetEditText.error = "Por favor, complete el nombre de la calle de la direccion de la propiedad"
+            streetEditText.error =
+                "Por favor, complete el nombre de la calle de la direccion de la propiedad"
             isValid = false
         }
         if (height.isEmpty() || height.toInt() <= 0) {
-            heightEditText.error = "Por favor, complete y/o agregue un valor valido para la altura de la calle"
+            heightEditText.error =
+                "Por favor, complete y/o agregue un valor valido para la altura de la calle"
             isValid = false
         }
         if (betweenStreets.isEmpty()) {
-            betweenStreetsEditText.error = "Por favor, complete el nombre de las calles de referencia de la propiedad"
+            betweenStreetsEditText.error =
+                "Por favor, complete el nombre de las calles de referencia de la propiedad"
             isValid = false
         }
         if (postalCode.isEmpty()) {
-            postalCodeEditText.error = "Por favor, complete el codigo postal de la ubicacion de la propiedad"
+            postalCodeEditText.error =
+                "Por favor, complete el codigo postal de la ubicacion de la propiedad"
             isValid = false
         }
 
@@ -225,24 +324,44 @@ class PublishPropertyFragment : Fragment() {
         val height = heightEditText.text.toString().toInt()
         val betweenStreets = betweenStreetsEditText.text.toString()
         val postalCode = postalCodeEditText.text.toString()
-        val storageImage =
 
-        viewModelPropertiesList.publishProperty(
-            title,
-            description,
-            area,
-            bedRoomsNumber,
-            bathRoomsNumber,
-            price,
-            expense,
-            isRent,
-            propertyType,
-            province,
-            street,
-            height,
-            betweenStreets,
-            postalCode
-        )
+        if (propertySelected == null) {
+            viewModelPropertiesList.publishProperty(
+                title,
+                description,
+                area,
+                bedRoomsNumber,
+                bathRoomsNumber,
+                price,
+                expense,
+                isRent,
+                propertyType,
+                province,
+                street,
+                height,
+                betweenStreets,
+                postalCode
+            )
+        }else {
+            viewModelPropertiesList.updatePropertyData(
+                propertySelected!!,
+                title,
+                description,
+                area,
+                bedRoomsNumber,
+                bathRoomsNumber,
+                price,
+                expense,
+                isRent,
+                propertyType,
+                province,
+                street,
+                height,
+                betweenStreets,
+                postalCode
+            )
+        }
+
 
     }
 
@@ -277,6 +396,8 @@ class PublishPropertyFragment : Fragment() {
         betweenStreetsEditText = view.findViewById(R.id.betweenStreetsEditText)
         postalCodeEditText = view.findViewById(R.id.postalCodeEditText)
         publishButton = view.findViewById(R.id.publishButton)
+        insertImages = view.findViewById(R.id.insertImages)
+        propertyImages = view.findViewById(R.id.propertyImages)
 
         initializeSpinners()
     }
