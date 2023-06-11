@@ -109,6 +109,10 @@ data class Property(
         return this.publicationDate
     }
 
+    fun setStringAddressProperty(): String {
+        return "$street $height, $province"
+    }
+
     /**
      * Obtiene un String para el tipo de operacion de la Propiedad, segun el valor de "isRent"
      */

@@ -25,6 +25,7 @@ class PropertyRepository(){
     //Inicializacion de una instancia de Storage
     private val storage = Firebase.storage
 
+
     fun savePropertyImage(uri: Uri, viewModel: PropertiesListViewModel, context: Context) {
         val storageRef = storage.reference
         val imageRef = storageRef.child(UUID.randomUUID().toString())
@@ -113,6 +114,30 @@ class PropertyRepository(){
 
         return propertiesListSearched
 
+    }
+
+    suspend fun getMyProperties(userId: String): MutableList<Property> {
+        var myPropertiesList = mutableListOf<Property>()
+        Log.i("Find my Properties", "Query: $userId")
+        try {
+            val documents = db.collection(COLLECTION)
+
+            val allProperties = documents
+                .orderBy("publicationDate", Query.Direction.DESCENDING)
+                .get()
+                .await()
+
+            val auxPropertiesList = allProperties.toObjects(Property::class.java)
+
+            myPropertiesList = auxPropertiesList.filter {
+                it.getUserId().contains(userId, false)
+            }.toMutableList()
+
+            Log.i("Repository - My Properties", "Cantidad: ${myPropertiesList.size}, Propiedades: $myPropertiesList")
+        }catch (e: Exception) {
+            Log.e("Filtered Properties", "Exception thrown: ${e.message}")
+        }
+        return myPropertiesList
     }
 
 }

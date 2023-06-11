@@ -80,20 +80,9 @@ class PropertyDetailFragment : Fragment() {
         val area = property.getArea()
         val bedRooms = property.getBedRoomsNumber()
         val bathRooms = property.getBathRoomsNumber()
-        val address = setStringAddressProperty(property)
+        val address = property.setStringAddressProperty()
 
         return "$area m² · $bedRooms Dorm. · $bathRooms Baño(s) · $address"
-    }
-
-    /**
-     * Metodo que arma el String de la Direccion de la propiedad
-     */
-    private fun setStringAddressProperty(property: Property): String {
-        val street = property.getStreet()
-        val height = property.getHeight()
-        val province = property.getProvince()
-
-        return "$street $height, $province"
     }
 
     private fun initializeView(view: View) {

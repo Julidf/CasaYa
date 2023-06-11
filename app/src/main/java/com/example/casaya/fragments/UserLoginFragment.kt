@@ -101,11 +101,11 @@ class UserLoginFragment : Fragment() {
 
                 signInUser(email, password)
             }
+        }
 
-            //Accion para navegar al form de User Register
-            textViewRegister.setOnClickListener {
-                findNavController().navigate(R.id.action_userLoginFragment_to_userRegisterFragment)
-            }
+        //Accion para navegar al form de User Register
+        textViewRegister.setOnClickListener {
+            findNavController().navigate(R.id.action_userLoginFragment_to_userRegisterFragment)
         }
     }
 
