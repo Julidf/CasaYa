@@ -38,4 +38,11 @@ class UserPropertiesViewModel : ViewModel() {
     private fun updateMyListLiveData(propertiesList: MutableList<Property>) {
         _myListLiveData.postValue(propertiesList)
     }
+
+    fun deleteProperty(propertyToDelete: Property) {
+        viewModelScope.launch {
+            repositoryProperty.deleteProperty(propertyToDelete)
+            getMyProperties()
+        }
+    }
 }

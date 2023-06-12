@@ -82,6 +82,8 @@ class PublishPropertyFragment : Fragment() {
         //insertImages = view.findViewById(R.id.insertImages)
         //propertyImages = view.findViewById(R.id.propertyImages)
 
+        clearForm()
+
         return view
     }
 
@@ -94,7 +96,7 @@ class PublishPropertyFragment : Fragment() {
         super.onStart()
 
         //Limpia los campos del formulario, cada vez que el fragment es visible
-        clearForm()
+        //clearForm()
 
         Log.d(
             "Publish Property",
