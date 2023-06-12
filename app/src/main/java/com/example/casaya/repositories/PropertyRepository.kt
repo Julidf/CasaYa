@@ -4,7 +4,6 @@ import android.app.AlertDialog
 import android.content.Context
 import android.net.Uri
 import android.util.Log
-import androidx.fragment.app.activityViewModels
 import com.example.casaya.entities.Property
 import com.example.casaya.viewmodels.PropertiesListViewModel
 import com.google.firebase.firestore.Query
@@ -14,7 +13,6 @@ import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.tasks.await
 import java.util.*
 import java.lang.reflect.InvocationTargetException
-import androidx.fragment.app.activityViewModels
 
 class PropertyRepository(){
 
@@ -160,6 +158,24 @@ class PropertyRepository(){
                  */
 
                 Log.d("Update Property", "Se actualizo exitosamente el documento con ID ${reference.id}")
+            }
+
+        }catch (e: InvocationTargetException) {
+            Log.e("Error Firebase saveProperty", "Exception thrown: ${e.targetException} | ${e.targetException.cause} | ${e.targetException?.cause?.printStackTrace()}")
+        }
+    }
+
+    suspend fun deleteProperty(property: Property) {
+        try {
+            val documentId = property.getId()
+            if (documentId != null) {
+                val reference = db.collection(COLLECTION).document(documentId)
+
+                reference
+                    .delete()
+                    .await()
+
+                Log.d("Delete Property", "Se elimino exitosamente el documento con ID ${reference.id}")
             }
 
         }catch (e: InvocationTargetException) {
