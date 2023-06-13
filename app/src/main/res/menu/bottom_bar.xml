@@ -21,6 +21,6 @@
         android:id="@+id/menu_dashboard"
         android:icon="@drawable/ic_dashboard"
         android:title="Dashboard"
-        android:visible="true"/>
+        android:visible="false"/>
 
 </menu>

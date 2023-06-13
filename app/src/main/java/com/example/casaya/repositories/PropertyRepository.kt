@@ -148,16 +148,7 @@ class PropertyRepository(){
                     .set(propertyData)
                     .await()
 
-                //propertyData.setId(reference.id)
-                /*
-                db.collection(COLLECTION)
-                    .document(reference.id)
-                    .set(propertyData)
-                    .await()
-
-                 */
-
-                Log.d("Update Property", "Se actualizo exitosamente el documento con ID ${reference.id}")
+               Log.d("Update Property", "Se actualizo exitosamente el documento con ID ${reference.id}")
             }
 
         }catch (e: InvocationTargetException) {

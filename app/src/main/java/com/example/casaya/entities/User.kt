@@ -7,9 +7,13 @@ data class User(
     private var email: String,
     private var password: String,
     private var phone: String,
-    private var address: UserAddress
+    private var address: UserAddress?,
+    private var userRol: String?
 )
 {
+
+    constructor() : this(null, "", "", "", "", "", null, null)
+
     fun getId() : String? {
         return id
     }
@@ -34,8 +38,12 @@ data class User(
         return phone
     }
 
-    fun getAddress() : UserAddress {
+    fun getAddress() : UserAddress? {
         return address
+    }
+
+    fun getUserRol() : String? {
+        return userRol
     }
 
     fun setId(id: String) {

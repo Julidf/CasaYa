@@ -15,4 +15,8 @@ class UserLoginViewModel : ViewModel() {
         return currentUser?.uid ?: ""
     }
 
+    fun getUser(id: String) {
+
+    }
+
 }

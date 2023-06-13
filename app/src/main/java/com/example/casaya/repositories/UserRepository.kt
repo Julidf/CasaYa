@@ -3,9 +3,11 @@ package com.example.casaya.repositories
 import android.util.Log
 import android.widget.Toast
 import com.example.casaya.entities.User
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import gun0912.tedimagepicker.util.ToastUtil.context
@@ -52,8 +54,9 @@ class UserRepository {
         }
     }
 
-    fun getUser(): FirebaseUser? {
-        return auth.currentUser;
+    fun getUser(id: String): Task<DocumentSnapshot> {
+        val document = db.collection(COLLECTION).document(id)
+        return document.get()
     }
 
 }

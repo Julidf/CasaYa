@@ -8,6 +8,7 @@ data class UserAddress(
     private var postalCode: String
 )
 {
+    constructor() : this("", "", "", 0, "")
     fun getProvince() : String {
         return province
     }

@@ -1,6 +1,5 @@
 package com.example.casaya.viewmodels
 
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -27,7 +26,7 @@ class UserRegisterViewModel : ViewModel() {
         postalCode: String,
     ) {
         var addressUser = UserAddress(province, district, street, height, postalCode)
-        var newUser = User(null, name, lastname, email, password, phoneNumber, addressUser)
+        var newUser = User(null, name, lastname, email, password, phoneNumber, addressUser, null)
 
         saveNewUser(newUser)
         Log.d("User ViewModel", "Se ha dado de alta nuevo usuario ${newUser}")
