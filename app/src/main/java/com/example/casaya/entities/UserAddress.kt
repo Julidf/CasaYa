@@ -1,30 +1,32 @@
 package com.example.casaya.entities
 
 data class UserAddress(
-    private var province: String,
-    private var district: String,
-    private var street: String,
-    private var height: Int,
-    private var postalCode: String
+    private var province: String?,
+    private var district: String?,
+    private var street: String?,
+    private var height: Int?,
+    private var postalCode: String?
 )
 {
-    fun getProvince() : String {
+    // Constructor sin argumentos
+    constructor() : this (null, null, null, null, null,)
+    fun getProvince() : String? {
         return province
     }
 
-    fun getDistrict() : String {
+    fun getDistrict() : String? {
         return district
     }
 
-    fun getStreet() : String {
+    fun getStreet() : String? {
         return street
     }
 
-    fun getHeight() : Int {
+    fun getHeight() : Int? {
         return height
     }
 
-    fun getPostalCode() : String {
+    fun getPostalCode() : String? {
         return postalCode
     }
 }

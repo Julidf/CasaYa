@@ -2,39 +2,43 @@ package com.example.casaya.entities
 
 data class User(
     private var id: String?,
-    private var name: String,
-    private var lastName: String,
-    private var email: String,
-    private var password: String,
-    private var phone: String,
-    private var address: UserAddress
-)
-{
+    private var name: String?,
+    private var lastName: String?,
+    private var email: String?,
+    private var password: String?,
+    private var phone: String?,
+    private var address: UserAddress?
+) {
+
+
+    // Constructor sin argumentos
+    constructor() : this (null, null, null, null, null, null, null)
+
     fun getId() : String? {
         return id
     }
 
-    fun getName() : String {
+    fun getName() : String? {
         return name
     }
 
-    fun getLastname() : String {
+    fun getLastname() : String? {
         return lastName
     }
 
-    fun getEmail() : String {
+    fun getEmail() : String? {
         return email
     }
 
-    fun getPassword() : String {
+    fun getPassword() : String? {
         return password
     }
 
-    fun getPhone() : String {
+    fun getPhone() : String? {
         return phone
     }
 
-    fun getAddress() : UserAddress {
+    fun getAddress() : UserAddress? {
         return address
     }
 
