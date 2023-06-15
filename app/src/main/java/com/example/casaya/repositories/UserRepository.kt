@@ -41,11 +41,14 @@ class UserRepository {
 
                     } else {
                         Log.w("FAILURE !!!!!!!!!!!!!!!!!!!", "createUserWithEmail:failure", task.exception)
-                        Toast.makeText(
+                        /*
+                         Toast.makeText(
                             context,
                             "Authentication failed.",
                             Toast.LENGTH_SHORT,
                         ).show()
+
+                         */
                     }
                 }
             Log.d("New User", "Se agrego exitosamente el documento")

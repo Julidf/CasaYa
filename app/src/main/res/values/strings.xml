@@ -8,6 +8,12 @@
 
     <!-- Representa el valor inicial que se mostrara en la lista desplegable -->
     <string name="prompt_address">Seleccione una opcion</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="clientes">Total Clientes</string>
+    <string name="propiedades">Total Propiedades</string>
+    <string name="_395">395</string>
+    <string name="_147">147</string>
+    <string name="cantidad_de_departamentos">Cantidad de departamentos</string>
 
     <!-- Lista estatica del Spinner, SOLO PARA PROBAR -->
     <string-array name="opciones_spinner_typeProperty">

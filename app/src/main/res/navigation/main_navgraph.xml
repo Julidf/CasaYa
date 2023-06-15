@@ -64,5 +64,10 @@
             android:id="@+id/action_userPropertiesFragment_to_publishPropertyFragment"
             app:destination="@id/publishPropertyFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/menu_dashboard"
+        android:name="com.example.casaya.fragments.DashboardFragment"
+        android:label="fragment_dashboard"
+        tools:layout="@layout/fragment_dashboard" />
 
 </navigation>

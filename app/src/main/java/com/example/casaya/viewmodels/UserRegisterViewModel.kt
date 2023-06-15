@@ -29,7 +29,7 @@ class UserRegisterViewModel : ViewModel() {
         var newUser = User(null, name, lastname, email, password, phoneNumber, addressUser, null)
 
         saveNewUser(newUser)
-        Log.d("User ViewModel", "Se ha dado de alta nuevo usuario ${newUser}")
+        Log.d("New User ViewModel", "Se ha dado de alta nuevo usuario $newUser")
     }
 
     /**
