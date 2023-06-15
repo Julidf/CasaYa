@@ -5,7 +5,7 @@ import android.content.Context
 import android.net.Uri
 import android.util.Log
 import androidx.core.content.ContentProviderCompat.requireContext
-import com.example.casaya.entities.Property
+import com.example.casaya.adapters.entities.Property
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore

@@ -12,11 +12,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bumptech.glide.Glide
-import com.example.casaya.entities.Property
+import com.example.casaya.adapters.entities.Property
+import com.example.casaya.adapters.entities.User
 import com.example.casaya.repositories.PropertyRepository
 import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.StorageReference
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 class PropertiesListViewModel : ViewModel() {
     private val repositoryProperty: PropertyRepository = PropertyRepository()
@@ -91,6 +96,20 @@ class PropertiesListViewModel : ViewModel() {
             Log.d("EEEEEEEEEEEEEEEEEEE", propertyImageRef)
         }
         return imageUri
+    }
+
+    suspend fun getOwner(): User? = withContext(Dispatchers.IO) {
+        val db = FirebaseFirestore.getInstance()
+        val usersCollection = db.collection("users")
+        val documentSnapshot =
+            selectedProperty?.let { usersCollection.document(it.getUserId()).get().await() }
+
+        if (documentSnapshot?.exists() == true) {
+            val usuario = documentSnapshot.toObject(User::class.java)
+            usuario
+        } else {
+            null
+        }
     }
 
 }

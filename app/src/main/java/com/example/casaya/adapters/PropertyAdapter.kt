@@ -9,7 +9,7 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Recycler
 import com.example.casaya.R
-import com.example.casaya.entities.Property
+import com.example.casaya.adapters.entities.Property
 
 class PropertyAdapter(
 

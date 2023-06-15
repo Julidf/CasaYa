@@ -1,4 +1,4 @@
-package com.example.casaya.entities
+package com.example.casaya.adapters.entities
 
 data class User(
     private var id: String?,
@@ -9,6 +9,7 @@ data class User(
     private var phone: String,
     private var address: UserAddress
 )
+
 {
     fun getId() : String? {
         return id

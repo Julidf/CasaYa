@@ -1,19 +1,39 @@
 package com.example.casaya.fragments
 
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.PopupWindow
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.example.casaya.R
-import com.example.casaya.entities.Property
+import com.example.casaya.adapters.entities.Property
 import com.example.casaya.viewmodels.PropertiesListViewModel
+import com.example.casaya.viewmodels.PropertyDetailViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.net.URLEncoder
+import kotlin.math.log
 
 class PropertyDetailFragment : Fragment() {
-
-    private val viewModelPropertiesList: PropertiesListViewModel by activityViewModels()
+    private lateinit var viewModelPropertiesList: PropertiesListViewModel
     private lateinit var view: View
     private var selectedProperty: Property? = null
 
@@ -28,17 +48,91 @@ class PropertyDetailFragment : Fragment() {
     private lateinit var valueExpenseTextView: TextView
     private lateinit var descriptionTextView: TextView
 
+    private lateinit var whatsappButton: ImageButton
+    private lateinit var btnClose: ImageView
+    private lateinit var btnSend: Button
+    private lateinit var whatsappMessage: EditText
+
+    private lateinit var userId: String
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         view = inflater.inflate(R.layout.fragment_property_detail, container, false)
-
+        viewModelPropertiesList = ViewModelProvider(this).get(PropertiesListViewModel::class.java)
         //Inicializa cada una de las referencias de los elementos del formulario
         initializeView(view)
+        whatsappButton = view.findViewById(R.id.whatsappButton)
 
         return view
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        whatsappButton.setOnClickListener {
+            val inflater = layoutInflater
+            val popupView = inflater.inflate(R.layout.whatsapp_popup, null)
+
+            btnSend = popupView.findViewById(R.id.btnSend)
+            btnClose = popupView.findViewById(R.id.btnClose)
+
+            val popupWindow = PopupWindow(
+                popupView,
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT
+            )
+
+            // Set dismiss behavior when touching outside the popup window
+            popupWindow.isTouchable = true
+            popupWindow.isFocusable = true
+            popupWindow.isOutsideTouchable = false
+            val backgroundDrawable = ColorDrawable(Color.BLACK)
+            backgroundDrawable.alpha = 160
+            popupWindow.setBackgroundDrawable(backgroundDrawable)
+            popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0)
+
+            // Pop-up buttons
+            whatsappMessage = popupView.findViewById(R.id.whatsappMessage)
+            btnSend.setOnClickListener {
+                if (whatsappMessage.text.isNotEmpty()) {
+                    var userPhone: String = ""
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        withContext(Dispatchers.Main) {
+                            val user = viewModelPropertiesList.getOwner()
+                            Log.d("----------", user.toString())
+                            if (user != null) {
+                                userPhone = user.getPhone();
+                                val intent = Intent(Intent.ACTION_VIEW)
+                                val url =
+                                    "https://api.whatsapp.com/send?phone=" + userPhone.toString() + "&text=" + URLEncoder.encode(
+                                        whatsappMessage.text.toString(),
+                                        "UTF-8"
+                                    )
+                                intent.setPackage("com.whatsapp")
+                                intent.data = Uri.parse(url)
+                                startActivity(intent)
+                            } else {
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Error al obtener el usuario",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    }
+                } else {
+                    Toast.makeText(activity, "Please Enter Msg Or Number !!", Toast.LENGTH_LONG)
+                        .show()
+                }
+            }
+
+            btnClose.setOnClickListener {
+                popupWindow.dismiss()
+            }
+        }
+    }
+
 
     override fun onStart() {
         super.onStart()
@@ -62,6 +156,7 @@ class PropertyDetailFragment : Fragment() {
             tagOperationTypeTextView.text = property.obtainOperationType()
             valuePriceTextView.text = "$ ${property.getPrice()}"
             valueExpenseTextView.text = "$ ${property.getExpense()}"
+            userId = "$ ${property.getUserId()}"
         }
     }
 

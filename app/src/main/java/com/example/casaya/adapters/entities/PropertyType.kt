@@ -1,4 +1,4 @@
-package com.example.casaya.entities
+package com.example.casaya.adapters.entities
 
 enum class PropertyType {
     CASA,

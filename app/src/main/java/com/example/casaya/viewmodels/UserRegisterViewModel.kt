@@ -4,8 +4,8 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.casaya.entities.User
-import com.example.casaya.entities.UserAddress
+import com.example.casaya.adapters.entities.User
+import com.example.casaya.adapters.entities.UserAddress
 import com.example.casaya.repositories.UserRepository
 import kotlinx.coroutines.launch
 

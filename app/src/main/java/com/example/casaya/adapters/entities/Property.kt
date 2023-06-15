@@ -1,4 +1,4 @@
-package com.example.casaya.entities
+package com.example.casaya.adapters.entities
 
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.Timestamp
@@ -25,6 +25,7 @@ data class Property(
     private var postalCode: String = "",
     private var propertyImageRef: String? = null,
     private var publicationDate: Timestamp = Timestamp.now(),
+    private var userId: String = "",
 ) {
 
     private val today = Timestamp.now()
@@ -91,6 +92,10 @@ data class Property(
 
     fun getPublicationDate(): Timestamp {
         return this.publicationDate
+    }
+
+    fun getUserId(): String {
+        return this.userId
     }
 
     /**

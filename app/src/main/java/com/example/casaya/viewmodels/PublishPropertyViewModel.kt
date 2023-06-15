@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.bumptech.glide.Glide
-import com.example.casaya.entities.Property
+import com.example.casaya.adapters.entities.Property
 import com.example.casaya.repositories.PropertyRepository
 import com.google.firebase.Timestamp
 import kotlinx.coroutines.launch
