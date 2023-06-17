@@ -92,9 +92,9 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <TextView
+                    android:id="@+id/clientsQuantityTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/_395"
                     android:textColor="@color/design_default_color_primary"
                     android:textSize="@dimen/_16ssp"
                     android:textStyle="bold" />
@@ -127,9 +127,9 @@
                     android:textSize="@dimen/_10sdp" />
 
                 <TextView
+                    android:id="@+id/propertiesQuantityTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/_147"
                     android:textColor="@color/design_default_color_primary"
                     android:textSize="@dimen/_16ssp"
                     android:textStyle="bold" />

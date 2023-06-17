@@ -174,4 +174,71 @@ class PropertyRepository(){
         }
     }
 
+    suspend fun getPropertiesQuantity() : Int {
+        var quantity: Int = 0
+        try {
+            val documents = db.collection(COLLECTION)
+                .get()
+                .await()
+
+            val propertiesList = documents.toObjects(Property::class.java)
+            quantity = propertiesList.size
+        }catch (e: Exception) {
+            Log.e("Error Message Firebase getAllProperties", "Exception thrown: ${e.message}")
+        }
+
+        return quantity
+    }
+
+    suspend fun getApartmentQuantity() : Int {
+        var quantity = 0
+        try {
+            val documents = db.collection(COLLECTION)
+                .whereEqualTo("propertyType", "Departamento")
+                .get()
+                .await()
+
+            val propertiesList = documents.toObjects(Property::class.java)
+            quantity = propertiesList.size
+        }catch (e: Exception) {
+            Log.e("Error Message Firebase getApartmentQuantity", "Exception thrown: ${e.message}")
+        }
+
+        return quantity
+    }
+
+    suspend fun getHousesQuantity() : Int {
+        var quantity = 0
+        try {
+            val documents = db.collection(COLLECTION)
+                .whereEqualTo("propertyType", "Casa")
+                .get()
+                .await()
+
+            val propertiesList = documents.toObjects(Property::class.java)
+            quantity = propertiesList.size
+        }catch (e: Exception) {
+            Log.e("Error Message Firebase getHousesQuantity", "Exception thrown: ${e.message}")
+        }
+
+        return quantity
+    }
+
+    suspend fun getPhQuantity() : Int {
+        var quantity = 0
+        try {
+            val documents = db.collection(COLLECTION)
+                .whereEqualTo("propertyType", "PH")
+                .get()
+                .await()
+
+            val propertiesList = documents.toObjects(Property::class.java)
+            quantity = propertiesList.size
+        }catch (e: Exception) {
+            Log.e("Error Message Firebase getPhQuantity", "Exception thrown: ${e.message}")
+        }
+
+        return quantity
+    }
+
 }
