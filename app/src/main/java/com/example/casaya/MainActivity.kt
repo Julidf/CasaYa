@@ -12,10 +12,12 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
+    private var MSG_SUCCESS_LOGIN: String = "Inicio de sesion exitoso"
     private lateinit var bottomNavView: BottomNavigationView
     private lateinit var navHostFragment: NavHostFragment
     private val viewModelUserLogin: UserLoginViewModel = UserLoginViewModel()
     private val repositoryUser: UserRepository = UserRepository()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -29,7 +31,7 @@ class MainActivity : AppCompatActivity() {
             if (userRol != null) {
                 Log.i("Main Activity Menu_2", "Rol del usuario $userRol")
 
-                // Mostrar u ocultar el elemento "Dashboard" según el rol de usuario
+                // Mostrar el elemento "Dashboard" cuando el rol de usuario es "ADMIN"
                 if (userRol == "ADMIN") {
                     menu.findItem(R.id.menu_dashboard).isVisible = true
                 }
@@ -37,6 +39,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         NavigationUI.setupWithNavController(bottomNavView, navHostFragment.navController)
+
+        //Se muestra el Toast para el inicio se sesion exitoso
+        if (intent?.getBooleanExtra("login_success", false) == true) {
+            val customToast = CustomToast(this)
+            customToast.show(MSG_SUCCESS_LOGIN, R.drawable.ic_toast_inf)
+        }
     }
 
     private fun getUserRol(callback: (String?) -> Unit) {

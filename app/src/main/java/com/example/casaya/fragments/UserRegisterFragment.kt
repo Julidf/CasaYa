@@ -3,6 +3,7 @@ package com.example.casaya.fragments
 import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,15 +14,19 @@ import android.widget.EditText
 import android.widget.RadioGroup
 import android.widget.Spinner
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.example.casaya.CustomToast
 import com.example.casaya.LoginActivity
 import com.example.casaya.R
+import com.example.casaya.interfaces.SaveUserCallback
 import com.example.casaya.viewmodels.PropertiesListViewModel
 import com.example.casaya.viewmodels.UserRegisterViewModel
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 
-class UserRegisterFragment : Fragment() {
+class UserRegisterFragment : Fragment(), SaveUserCallback {
 
     companion object {
         fun newInstance() = UserRegisterFragment()
@@ -30,6 +35,7 @@ class UserRegisterFragment : Fragment() {
     private val viewModelUserRegister: UserRegisterViewModel by activityViewModels()
     private lateinit var view: View
     private lateinit var welcomeMessage: String
+    private lateinit var customToast: CustomToast
 
 
     /**
@@ -57,6 +63,8 @@ class UserRegisterFragment : Fragment() {
     ): View? {
         view = inflater.inflate(R.layout.fragment_user_register, container, false)
 
+        customToast = CustomToast(requireContext())
+
         //Inicializa cada una de las referencias de los elementos del formulario
         initializeViewElements(view)
 
@@ -71,13 +79,16 @@ class UserRegisterFragment : Fragment() {
 
             //Verifico si los datos cargados en el form son validos
             if (formIsValid()) {
-                //Envio la informacion del formulario al ViewModel
-                submitDataForm()
+                if (emailFormatIsValid(emailUserEditText.text.toString().trim())) {
+                    //Inicio con el Alta del Usuario
+                    submitDataForm()
+                } else {
+                    customToast.show(
+                        "La dirección de correo electrónico NO es valida",
+                        R.drawable.ic_toast_inf
+                    )
+                }
 
-                viewModelUserRegister.welcomeMessage = welcomeMessage
-
-                val action = UserRegisterFragmentDirections.actionUserRegisterFragmentToUserRegistrationSuccessFragment()
-                findNavController().navigate(action)
             }
         }
 
@@ -85,6 +96,14 @@ class UserRegisterFragment : Fragment() {
         textViewLogin.setOnClickListener {
             findNavController().navigate(R.id.action_userRegisterFragment_to_userLoginFragment)
         }
+    }
+
+    /**
+     * Valida si un correo electrónico cumple con el formato estándar
+     */
+    private fun emailFormatIsValid(email: String): Boolean {
+        val emailRegex = Regex("^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,})+$")
+        return email.matches(emailRegex)
     }
 
     /**
@@ -130,7 +149,8 @@ class UserRegisterFragment : Fragment() {
          * Valida el Campo Contraseña
          */
         if (passwordUser.isEmpty() || passwordUser.length < 6) {
-            passwordUserEditText.error = "Por favor, ingrese una contraseña valida, de al menos 6 caracteres"
+            passwordUserEditText.error =
+                "Por favor, ingrese una contraseña valida, de al menos 6 caracteres"
             isValid = false
         }
 
@@ -146,7 +166,8 @@ class UserRegisterFragment : Fragment() {
          * Valida el Campo Nombre de la calle
          */
         if (streetUser.isEmpty()) {
-            streetUserEditText.error = "r favor, complete el nombre de la calle de la direccion de la propiedad"
+            streetUserEditText.error =
+                "r favor, complete el nombre de la calle de la direccion de la propiedad"
             isValid = false
         }
 
@@ -154,7 +175,8 @@ class UserRegisterFragment : Fragment() {
          * Valida el Campo Altura de la calle
          */
         if (heightUser.isEmpty() || heightUser.toInt() <= 0) {
-            heightUserEditText.error = "Por favor, complete y/o agregue un valor valido para la altura de la calle"
+            heightUserEditText.error =
+                "Por favor, complete y/o agregue un valor valido para la altura de la calle"
             isValid = false
         }
 
@@ -162,7 +184,8 @@ class UserRegisterFragment : Fragment() {
          * Valida el Campo Codigo Postal
          */
         if (postalCodeUser.isEmpty()) {
-            postalCodeUserEditText.error = "Por favor, complete el codigo postal de la ubicacion de la propiedad"
+            postalCodeUserEditText.error =
+                "Por favor, complete el codigo postal de la ubicacion de la propiedad"
             isValid = false
         }
 
@@ -198,7 +221,31 @@ class UserRegisterFragment : Fragment() {
             street,
             height,
             postalCode,
+            this
         )
+    }
+
+    override fun onSuccess() {
+        activity?.runOnUiThread {
+            viewModelUserRegister.welcomeMessage = welcomeMessage
+            val action =
+                UserRegisterFragmentDirections.actionUserRegisterFragmentToUserRegistrationSuccessFragment()
+            findNavController().navigate(action)
+        }
+    }
+
+    override fun onEmailCollision() {
+        activity?.runOnUiThread {
+            Toast.makeText(
+                requireContext(),
+                "La dirección de correo electrónico ya está en uso",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+    override fun onError(errorMessage: String) {
+        Toast.makeText(requireContext(), "Error: $errorMessage", Toast.LENGTH_SHORT).show()
     }
 
     /**

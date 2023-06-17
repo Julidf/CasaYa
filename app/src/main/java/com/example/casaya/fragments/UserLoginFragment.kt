@@ -18,6 +18,7 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.example.casaya.CustomToast
 import com.example.casaya.MainActivity
 import com.example.casaya.R
 import com.example.casaya.viewmodels.PropertiesListViewModel
@@ -34,8 +35,8 @@ class UserLoginFragment : Fragment() {
 
     private val viewModelUserLogin: UserLoginViewModel = UserLoginViewModel()
     private lateinit var view: View
-    private var MSG_SUCCESS_LOGIN: String = "Inicio de sesion exitoso"
     private var MSG_FAILURE_LOGIN: String = "Inicio de sesion fallido, revisa tu email o contraseña"
+    private lateinit var customToast: CustomToast
 
 
 
@@ -55,6 +56,8 @@ class UserLoginFragment : Fragment() {
     ): View? {
         view = inflater.inflate(R.layout.fragment_user_login, container, false)
         val view = inflater.inflate(R.layout.fragment_user_login, container, false)
+
+        customToast = CustomToast(requireContext())
 
         textViewRegister = view.findViewById(R.id.textViewLogin)
         emailUserEditText = view.findViewById(R.id.emailUserEditText)
@@ -78,12 +81,17 @@ class UserLoginFragment : Fragment() {
                     }
                     // Perform further actions, such as navigating to another fragment or activity
                     val intent = Intent(requireContext(), MainActivity::class.java)
+                    intent.putExtra("login_success", true)
                     startActivity(intent)
                     requireActivity().finish()
-                    Toast.makeText(requireContext(), MSG_SUCCESS_LOGIN, Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(requireContext(), MSG_SUCCESS_LOGIN, Toast.LENGTH_SHORT).show()
                 } else {
                     // Login failed
-                    Toast.makeText(requireContext(), MSG_FAILURE_LOGIN, Toast.LENGTH_SHORT).show()
+                    customToast.show(
+                        MSG_FAILURE_LOGIN,
+                        R.drawable.ic_toast_inf
+                    )
+                    //Toast.makeText(requireContext(), MSG_FAILURE_LOGIN, Toast.LENGTH_SHORT).show()
                 }
             }
     }
@@ -91,7 +99,6 @@ class UserLoginFragment : Fragment() {
     override fun onStart() {
         super.onStart()
 
-        //capturo el evento del boton "CREAR MI CUENTA"
         buttonLogin.setOnClickListener {
 
             //Verifico si los datos cargados en el form son validos

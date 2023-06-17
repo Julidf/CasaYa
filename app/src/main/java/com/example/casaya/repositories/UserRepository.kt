@@ -4,8 +4,10 @@ import android.util.Log
 import android.widget.Toast
 import com.example.casaya.entities.Property
 import com.example.casaya.entities.User
+import com.example.casaya.interfaces.SaveUserCallback
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
@@ -25,32 +27,36 @@ class UserRepository {
     /**
      * Guarda un User en la DB
      */
-    suspend fun saveUser(newUser: User) {
-        try {
-            auth.createUserWithEmailAndPassword(newUser.getEmail(), newUser.getPassword())
-                .addOnCompleteListener(Executors.newSingleThreadExecutor()) { task ->
-                    if (task.isSuccessful) {
-                        Log.d("SUCCESS !!!!!!!!!!!!!!!!!!", "createUserWithEmail:success")
-                        val user = auth.currentUser
-                        val uid = user?.uid
+    fun saveUser(newUser: User, callback: SaveUserCallback) {
+        auth.createUserWithEmailAndPassword(newUser.getEmail(), newUser.getPassword())
+            .addOnCompleteListener(Executors.newSingleThreadExecutor()) { task ->
+                if (task.isSuccessful) {
+                    Log.d("SUCCESS !!!!!!!!!!!!!!!!!!", "createUserWithEmail:success")
+                    val user = auth.currentUser
+                    val uid = user?.uid
 
-                        if (uid === null) {
-                            throw NullPointerException("el uuid es nulo, no se creó correctamente el usuario o algo se rompió :S")
-                        }
+                    if (uid == null) {
+                        callback.onError("el uuid es nulo, no se creó correctamente el usuario o algo se rompió :S")
+                    } else {
                         newUser.setId(uid)
                         db.collection(COLLECTION)
                             .document(uid)
                             .set(newUser)
-
+                        Log.d("New User", "Se agregó exitosamente el documento")
+                        callback.onSuccess()
+                    }
+                } else {
+                    Log.w("FAILURE !!!!!!!!!!!!!!!!!!!", "createUserWithEmail:failure", task.exception)
+                    val exception = task.exception
+                    if (exception is FirebaseAuthUserCollisionException) {
+                        Log.e("Error Message", "La dirección de correo electrónico ya está en uso: ${exception.message}")
+                        callback.onEmailCollision()
                     } else {
-                        Log.w("FAILURE !!!!!!!!!!!!!!!!!!!", "createUserWithEmail:failure", task.exception)
-
+                        Log.e("Error Message", "Excepción lanzada: ${exception?.message}")
+                        callback.onError(exception?.message ?: "Error desconocido")
                     }
                 }
-            Log.d("New User", "Se agrego exitosamente el documento")
-        }catch (e: Exception) {
-            Log.e("Error Message", "Exception thrown: ${e.message}")
-        }
+            }
     }
 
     fun getUser(id: String): Task<DocumentSnapshot> {

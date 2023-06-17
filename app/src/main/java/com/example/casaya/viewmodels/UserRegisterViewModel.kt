@@ -5,7 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.casaya.entities.User
 import com.example.casaya.entities.UserAddress
+import com.example.casaya.interfaces.SaveUserCallback
 import com.example.casaya.repositories.UserRepository
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import kotlinx.coroutines.launch
 
 class UserRegisterViewModel : ViewModel() {
@@ -24,20 +26,49 @@ class UserRegisterViewModel : ViewModel() {
         street: String,
         height: Int,
         postalCode: String,
+        saveUserCallback: SaveUserCallback
     ) {
         var addressUser = UserAddress(province, district, street, height, postalCode)
         var newUser = User(null, name, lastname, email, password, phoneNumber, addressUser, null)
 
-        saveNewUser(newUser)
-        Log.d("New User ViewModel", "Se ha dado de alta nuevo usuario $newUser")
+        repositoryUser.saveUser(newUser, saveUserCallback)
+        /*
+        return try {
+            var addressUser = UserAddress(province, district, street, height, postalCode)
+            var newUser = User(null, name, lastname, email, password, phoneNumber, addressUser, null)
+
+            //saveNewUser(newUser)
+            repositoryUser.saveUser(newUser)
+            Log.d("New User ViewModel", "Se ha dado de alta nuevo usuario $newUser")
+        }catch (e: FirebaseAuthUserCollisionException) {
+            false
+            Log.e("ViewModel Error Message FirebaseAuthUserCollisionException", "La dirección de correo electrónico ya está en uso: ${e.message}")
+            throw e
+        } catch (e: Exception) {
+            false
+            Log.e("Error Message", "Exception thrown: ${e.message}")
+            throw e
+        }
+
+         */
+
     }
 
     /**
      * Metodo para guardar un nuevo User en la DB a traves de Repository
      */
+    /*
     private fun saveNewUser(newUser: User) {
-        viewModelScope.launch {
-            repositoryUser.saveUser(newUser)
-        }
+        try {
+                repositoryUser.saveUser(newUser)
+            }catch (e: FirebaseAuthUserCollisionException) {
+                Log.e("ViewModel Error Message FirebaseAuthUserCollisionException", "La dirección de correo electrónico ya está en uso: ${e.message}")
+                throw e
+            } catch (e: Exception) {
+                Log.e("Error Message", "Exception thrown: ${e.message}")
+                throw e
+            }
     }
+
+     */
 }
