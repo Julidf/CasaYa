@@ -28,7 +28,7 @@ class UserRepository {
      * Guarda un User en la DB
      */
     fun saveUser(newUser: User, callback: SaveUserCallback) {
-        auth.createUserWithEmailAndPassword(newUser.getEmail(), newUser.getPassword())
+        auth.createUserWithEmailAndPassword(newUser.getEmail()!!, newUser.getPassword()!!)
             .addOnCompleteListener(Executors.newSingleThreadExecutor()) { task ->
                 if (task.isSuccessful) {
                     Log.d("SUCCESS !!!!!!!!!!!!!!!!!!", "createUserWithEmail:success")
@@ -46,10 +46,17 @@ class UserRepository {
                         callback.onSuccess()
                     }
                 } else {
-                    Log.w("FAILURE !!!!!!!!!!!!!!!!!!!", "createUserWithEmail:failure", task.exception)
+                    Log.w(
+                        "FAILURE !!!!!!!!!!!!!!!!!!!",
+                        "createUserWithEmail:failure",
+                        task.exception
+                    )
                     val exception = task.exception
                     if (exception is FirebaseAuthUserCollisionException) {
-                        Log.e("Error Message", "La dirección de correo electrónico ya está en uso: ${exception.message}")
+                        Log.e(
+                            "Error Message",
+                            "La dirección de correo electrónico ya está en uso: ${exception.message}"
+                        )
                         callback.onEmailCollision()
                     } else {
                         Log.e("Error Message", "Excepción lanzada: ${exception?.message}")
@@ -64,7 +71,7 @@ class UserRepository {
         return document.get()
     }
 
-    suspend fun getUsersQuantity() : Int {
+    suspend fun getUsersQuantity(): Int {
         var quantity: Int = 0
         try {
             val documents = db.collection(COLLECTION)
@@ -73,7 +80,7 @@ class UserRepository {
 
             val list = documents.toObjects(User::class.java)
             quantity = list.size
-        }catch (e: Exception) {
+        } catch (e: Exception) {
             Log.e("Error Message Firebase getUsersQuantity", "Exception thrown: ${e.message}")
         }
 

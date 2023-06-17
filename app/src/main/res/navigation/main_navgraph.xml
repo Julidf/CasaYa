@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_propertiesListFragment_to_propertyDetailFragment"
             app:destination="@id/propertyDetailFragment" />
+        <action
+            android:id="@+id/action_propertiesListFragment_to_userProfileFragment"
+            app:destination="@id/userProfileFragment" />
 
     </fragment>
 
