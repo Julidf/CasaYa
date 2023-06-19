@@ -4,18 +4,20 @@
     <item
         android:id="@+id/publishPropertyFragment"
         android:icon="@drawable/property"
-        android:title="Property" />
+        android:title="Property"
+        android:visible="false" />
 
     <item
         android:id="@+id/propertiesListFragment"
         android:icon="@drawable/home"
         android:title="Home"
-        />
+        android:visible="false" />
 
     <item
         android:id="@+id/containerProfileFragment"
         android:icon="@drawable/profile"
-        android:title="Profile" />
+        android:title="Profile"
+        android:visible="false"/>
 
     <item
         android:id="@+id/menu_dashboard"

@@ -9,8 +9,10 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.SearchView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -27,6 +29,7 @@ class PropertiesListFragment : Fragment() {
     lateinit var recyclerProperties: RecyclerView
     lateinit var adapterProperty: PropertyAdapter
     private lateinit var messageResultSearchTextView: TextView
+    //private lateinit var signInImageButton: ImageButton
     private var isSearchActive: Boolean = false
     private lateinit var searchView: SearchView
     private var searchQuery: String? = null
@@ -40,6 +43,7 @@ class PropertiesListFragment : Fragment() {
         v = inflater.inflate(R.layout.fragment_properties_list, container, false)
         recyclerProperties = v.findViewById(R.id.recyclerProperties)
         messageResultSearchTextView = v.findViewById(R.id.messageResultSearchTextView)
+        //signInImageButton = v.findViewById(R.id.signInImageButton)
 
         //Le indico al Fragment, que el mismo tendra un OptionsMenu
         setHasOptionsMenu(true)
@@ -159,6 +163,11 @@ class PropertiesListFragment : Fragment() {
             adapterProperty.submitList(myList.toMutableList())
             adapterProperty.notifyDataSetChanged()
         }
+
+       //signInImageButton.setOnClickListener {
+        //    Toast.makeText(requireContext(), "Iniciando sesion", Toast.LENGTH_SHORT).show()
+        //}
+
     }
 
 }

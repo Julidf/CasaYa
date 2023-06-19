@@ -12,11 +12,12 @@ class UserLoginViewModel : ViewModel() {
 
     fun getUserUid() : String {
         Log.d("Login2 User", "Usuario logeado: ID ${currentUser?.uid} / ${currentUser?.email}")
+        Log.d("Login2 User", "Usuario logeado: $currentUser")
         return currentUser?.uid ?: ""
     }
 
-    fun getUser(id: String) {
-
+    fun userIsLoggedIn() : Boolean {
+        return currentUser != null
     }
 
 }
