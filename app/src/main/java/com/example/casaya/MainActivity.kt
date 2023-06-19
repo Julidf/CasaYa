@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
         NavigationUI.setupWithNavController(bottomNavView, navHostFragment.navController)
 
-        //Se muestra el Toast para el inicio se sesion exitoso
+        //Se muestra el CustomToast para el inicio se sesion exitoso
         if (intent?.getBooleanExtra("login_success", false) == true) {
             val customToast = CustomToast(this)
             customToast.show(MSG_SUCCESS_LOGIN, R.drawable.ic_toast_inf)

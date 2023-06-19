@@ -98,7 +98,6 @@ class UserProfileFragment : Fragment() {
 
         //Boton para Cerrar Sesion
         signOutButton.setOnClickListener {
-            Toast.makeText(requireContext(), "Sign Out", Toast.LENGTH_SHORT).show()
             Log.i("Sign Out Fragment", "Iniciando el cierre de sesion: boton presionado")
             userViewModel.signOutUser()
             findNavController().navigate(R.id.action_containerProfileFragment_to_loginActivity)
@@ -120,15 +119,22 @@ class UserProfileFragment : Fragment() {
                             ?: "Direccion no encontrada"
                     userMail.text = usuario.getEmail()
 
-                    Glide.with(this@UserProfileFragment)
-                        .load(usuario.getUserImageRef().toUri())
-                        .into(circleImageView)
+                    val userImageRef = usuario.getUserImageRef()
+                    if (userImageRef.isNotEmpty()) {
+                        loadImageFromDB(userImageRef)
+                    }
 
                 } else {
                     Log.d("UserProfileFragment", "El usuario no existe")
                 }
             }
         }
+    }
+
+    private fun loadImageFromDB(userImageRef: String) {
+        Glide.with(this@UserProfileFragment)
+            .load(userImageRef.toUri())
+            .into(circleImageView)
     }
 
 
