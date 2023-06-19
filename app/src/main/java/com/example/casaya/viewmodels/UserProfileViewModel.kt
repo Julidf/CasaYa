@@ -1,24 +1,28 @@
 package com.example.casaya.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import android.content.Context
+import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.example.casaya.entities.User
-import com.google.android.gms.tasks.Task
+import com.example.casaya.repositories.UserRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
 
 class UserProfileViewModel : ViewModel() {
 
+    private val auth: FirebaseAuth = Firebase.auth
+    var currentUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
+    private val viewModelUserLogin: UserLoginViewModel = UserLoginViewModel()
+    private val repositoryUser: UserRepository = UserRepository()
+    var userImageRef: String = ""
 
     suspend fun obtenerUsuarioPorId(userId: String): User? = withContext(Dispatchers.IO) {
         val db = FirebaseFirestore.getInstance()
@@ -33,4 +37,25 @@ class UserProfileViewModel : ViewModel() {
         }
     }
 
+    fun setUserImage(uri: Uri, context: Context) {
+        repositoryUser.storeUserImage(uri, this, context)
+    }
+
+    fun setUserImageRef(uri: Uri) {
+        Log.i("ViewModel User Image", "Recibi la URL de la imagen: $uri")
+        userImageRef = uri.toString()
+        Log.i("ViewModel User Image", "Guarde la URL de la imagen: $uri")
+        saveUserImageToDb()
+    }
+
+    private fun saveUserImageToDb() {
+        var userId = viewModelUserLogin.getUserUid()
+        repositoryUser.saveUserImage(userId, userImageRef)
+        Log.i("ViewModel User Image", "Enviando la userImage a la DB $userImageRef")
+    }
+
+    fun signOutUser() {
+        Log.i("Sign Out ViewModel", "Iniciando metodo singOut de FirebaseAuth")
+        auth.signOut()
+    }
 }

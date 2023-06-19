@@ -36,9 +36,23 @@ class ContainerProfileFragment : Fragment() {
         return v
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewPager.adapter = ViewPagerAdapter(requireActivity())
+
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            when (position) {
+                0 -> tab.text = "Mi Perfil"
+                1 -> tab.text = "Mis Propiedades"
+            }
+        }.attach()
+    }
+
+
     override fun onStart() {
         super.onStart()
-
+        /*
         viewPager.adapter = ViewPagerAdapter(requireActivity())
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
@@ -48,5 +62,7 @@ class ContainerProfileFragment : Fragment() {
                 //else -> tab.text = "undefined"
             }
         }.attach()
+
+         */
     }
 }
