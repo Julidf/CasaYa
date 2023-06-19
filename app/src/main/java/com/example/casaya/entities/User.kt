@@ -8,7 +8,8 @@ data class User(
     private var password: String?,
     private var phone: String?,
     private var address: UserAddress?,
-    private var userRol: String?
+    private var userRol: String?,
+    private var userImageRef: String = ""
 ) {
 
 
@@ -45,6 +46,10 @@ data class User(
 
     fun getUserRol(): String? {
         return userRol
+    }
+
+    fun getUserImageRef() : String {
+        return userImageRef
     }
 
     fun setId(id: String) {

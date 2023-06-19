@@ -1,21 +1,23 @@
 package com.example.casaya.repositories
 
+import android.content.ContentValues.TAG
+import android.content.Context
+import android.net.Uri
 import android.util.Log
-import android.widget.Toast
-import com.example.casaya.entities.Property
 import com.example.casaya.entities.User
 import com.example.casaya.interfaces.SaveUserCallback
+import com.example.casaya.viewmodels.UserProfileViewModel
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import gun0912.tedimagepicker.util.ToastUtil.context
+import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.tasks.await
+import java.lang.reflect.InvocationTargetException
+import java.util.UUID
 import java.util.concurrent.Executors
 
 class UserRepository {
@@ -23,6 +25,9 @@ class UserRepository {
     private val COLLECTION: String = "users"
     private val auth: FirebaseAuth = Firebase.auth
     private val db = Firebase.firestore
+
+    //Inicializacion de una instancia de Storage
+    private val storage = Firebase.storage
 
     /**
      * Guarda un User en la DB
@@ -83,8 +88,47 @@ class UserRepository {
         } catch (e: Exception) {
             Log.e("Error Message Firebase getUsersQuantity", "Exception thrown: ${e.message}")
         }
-
         return quantity
     }
 
+    fun storeUserImage(uri: Uri, viewModel: UserProfileViewModel, context: Context) {
+        val storageRef = storage.reference
+        val imageRef = storageRef.child(UUID.randomUUID().toString())
+        imageRef.putFile(uri).addOnSuccessListener { taskSnapshot ->
+            taskSnapshot.metadata?.reference?.downloadUrl?.addOnSuccessListener {
+                viewModel.setUserImageRef(it);
+                Log.i("User Image", "Se ha cargado la imagen del user en el Storage $it")
+            }
+        }.addOnFailureListener { exception ->
+            Log.e(
+                "Error User Image",
+                "Error al cargar la imagen del user en la DB ${exception.message}"
+            )
+        }
+    }
+
+    fun saveUserImage(userId: String, userImageRef: String) {
+        try {
+            val reference = db.collection(COLLECTION).document(userId)
+
+            reference
+                .update("userImageRef", userImageRef)
+                .addOnSuccessListener {
+                    Log.d(
+                        "Update User Image",
+                        "Se actualizo exitosamente la imagen del User con ID ${reference.id}"
+                    )
+                    Log.d(
+                        "Update User Image",
+                        "Se actualizo exitosamente la imagen del User con ID $userImageRef"
+                    )
+                }
+                .addOnFailureListener { e -> Log.w("Failure Update User Image", "Error updating document", e) }
+        } catch (e: InvocationTargetException) {
+            Log.e(
+                "Error Firebase saveProperty",
+                "Exception thrown: ${e.targetException} | ${e.targetException.cause} | ${e.targetException?.cause?.printStackTrace()}"
+            )
+        }
+    }
 }
