@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
 
         val menu = bottomNavView.menu
 
+        //Manejo la activacion del botn Dashboard del BottonNavigationBar
         getUserRol { userRol ->
             if (userRol != null) {
                 Log.i("Main Activity Menu_2", "Rol del usuario $userRol")
