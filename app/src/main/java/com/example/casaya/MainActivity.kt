@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Button
 import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.view.isVisible
@@ -23,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     private var MSG_SUCCESS_LOGIN: String = "Inicio de sesion exitoso"
     private lateinit var bottomNavView: BottomNavigationView
     private lateinit var navHostFragment: NavHostFragment
-    private lateinit var signInImageButton: ImageButton
+    private lateinit var signInButton: TextView
     private val viewModelUserLogin: UserLoginViewModel = UserLoginViewModel()
     private val repositoryUser: UserRepository = UserRepository()
 
@@ -34,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         bottomNavView = findViewById<BottomNavigationView>(R.id.bottom_bar)
 
-        signInImageButton = findViewById<ImageButton>(R.id.signInImageButton)
+        signInButton = findViewById<TextView>(R.id.signInExploreButton)
 
         bottomNavView.isVisible = false
 
@@ -42,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
         //Si el usuario se ha loggeado, visibilizo todos los botones de BootmNavigationBar
         if (viewModelUserLogin.userIsLoggedIn()) {
-            signInImageButton.visibility = View.GONE
+            signInButton.visibility = View.GONE
             bottomNavView.isVisible = true
             menu.findItem(R.id.publishPropertyFragment).isVisible = true
             menu.findItem(R.id.propertiesListFragment).isVisible = true
@@ -73,7 +75,7 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
-        signInImageButton.setOnClickListener {
+        signInButton.setOnClickListener {
             //Toast.makeText(this, "Iniciando sesion", Toast.LENGTH_SHORT).show()
             val intent = Intent(this, LoginActivity::class.java)
             intent.putExtra("login_success", true)

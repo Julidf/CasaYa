@@ -30,26 +30,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_bar" />
 
-    <androidx.cardview.widget.CardView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="@color/toast_background"
-        app:cardCornerRadius="3dp"
-        app:cardElevation="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="1">
+        android:layout_margin="16dp">
 
-        <ImageButton
-            android:id="@+id/signInImageButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/ic_log_in"
-            app:layout_constraintTop_toTopOf="parent"
+        <TextView
+            android:id="@+id/signInExploreButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="Ingresar "
+            android:drawableEnd="@drawable/ic_log_in"
+            android:background="@drawable/btn_rounded"
+            android:textColor="@color/white"
+            android:textAllCaps="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
