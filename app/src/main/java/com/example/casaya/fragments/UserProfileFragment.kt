@@ -36,11 +36,13 @@ class UserProfileFragment : Fragment() {
     lateinit var v: View
     private lateinit var userName: TextView
     private lateinit var userPhone: TextView
-    private lateinit var userDireccion: TextView
+    private lateinit var userStreet: TextView
+    private lateinit var userHeight: TextView
     private lateinit var userMail: TextView
     private lateinit var buttonSelectImage: ImageView
     private lateinit var circleImageView: CircleImageView
     private lateinit var signOutButton: Button
+    private lateinit var btnUpdateDatos: Button
     private val firebaseAuth = FirebaseAuth.getInstance()
     var firebaseUser = firebaseAuth.currentUser
     val userRef = firebaseUser?.uid
@@ -60,17 +62,22 @@ class UserProfileFragment : Fragment() {
 
         initializeView(v)
         userViewModel = ViewModelProvider(this).get(UserProfileViewModel::class.java)
+        userMail.isClickable = false
+        userMail.isLongClickable = false
+
         return v
     }
 
     private fun initializeView(view: View) {
         userName = view.findViewById(R.id.userNameTextView)
         userPhone = view.findViewById(R.id.userPhoneTextView)
-        userDireccion = view.findViewById(R.id.userDireccionTextView)
+        userStreet = view.findViewById(R.id.userDireccionTextView)
+        userHeight = view.findViewById(R.id.userDireccionTextView2)
         userMail = view.findViewById(R.id.userEmailTextView)
         buttonSelectImage = view.findViewById(R.id.buttonSelectImage)
         circleImageView = view.findViewById(R.id.circleImageView)
         signOutButton = view.findViewById(R.id.signOutButton)
+        btnUpdateDatos = view.findViewById(R.id.btnUpdateDatos)
     }
 
     override fun onStart() {
@@ -102,6 +109,26 @@ class UserProfileFragment : Fragment() {
             userViewModel.signOutUser()
             findNavController().navigate(R.id.action_containerProfileFragment_to_loginActivity)
         }
+        btnUpdateDatos.setOnClickListener {
+            val newPhone = userPhone.text.toString()
+            val newStreet = userStreet.text.toString()
+            val newHeight = userHeight.text.toString()
+            if (newPhone.isEmpty() || newStreet.isEmpty() ||  newHeight.isEmpty()){
+                customToast.show(
+                    "Los datos no pueden estar vacios",
+                    R.drawable.ic_toast_inf
+                )
+            }else{
+                userViewModel.setUserPhone(newPhone)
+                userViewModel.setUserDireccion(newStreet, newHeight.toInt())
+                customToast.show(
+                    "Datos actualizados correctamente",
+                    R.drawable.ic_toast_inf
+                )
+            }
+
+
+        }
     }
 
 
@@ -114,9 +141,8 @@ class UserProfileFragment : Fragment() {
                     // usuario.displayName, usuario.email, etc.
                     userName.text = usuario.getName()
                     userPhone.text = usuario.getPhone()
-                    userDireccion.text =
-                        usuario.getAddress()?.getStreet() + " " + usuario.getAddress()?.getHeight()
-                            ?: "Direccion no encontrada"
+                    userStreet.text = usuario.getAddress()?.getStreet()
+                    userHeight.text = usuario.getAddress()?.getHeight().toString()
                     userMail.text = usuario.getEmail()
 
                     val userImageRef = usuario.getUserImageRef()

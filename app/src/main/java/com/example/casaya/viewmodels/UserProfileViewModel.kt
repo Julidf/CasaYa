@@ -23,6 +23,7 @@ class UserProfileViewModel : ViewModel() {
     private val viewModelUserLogin: UserLoginViewModel = UserLoginViewModel()
     private val repositoryUser: UserRepository = UserRepository()
     var userImageRef: String = ""
+    val userPhone: String = ""
 
     suspend fun obtenerUsuarioPorId(userId: String): User? = withContext(Dispatchers.IO) {
         val db = FirebaseFirestore.getInstance()
@@ -52,6 +53,25 @@ class UserProfileViewModel : ViewModel() {
         var userId = viewModelUserLogin.getUserUid()
         repositoryUser.saveUserImage(userId, userImageRef)
         Log.i("ViewModel User Image", "Enviando la userImage a la DB $userImageRef")
+    }
+
+    private fun updateUserPhone(userPhone: String) {
+        var userId = viewModelUserLogin.getUserUid()
+        repositoryUser.updatePhone(userId, userPhone)
+        Log.i("ViewModel User Image", "Enviando la userImage a la DB $userImageRef")
+    }
+    fun setUserPhone(phone: String) {
+        Log.i("ViewModel User Phone", "Recibi el telefono: $phone")
+        Log.i("ViewModel User Phone", "Guarde el telefono: $phone")
+        updateUserPhone(phone)
+    }
+
+    fun updateUserDireccion(street: String, height: Int){
+        var userId = viewModelUserLogin.getUserUid()
+        repositoryUser.updateDireccion(userId, street, height)
+    }
+    fun setUserDireccion(street: String, height: Int){
+        updateUserDireccion(street, height)
     }
 
     fun signOutUser() {

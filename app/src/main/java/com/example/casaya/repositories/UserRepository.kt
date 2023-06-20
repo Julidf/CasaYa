@@ -4,6 +4,7 @@ import android.content.ContentValues.TAG
 import android.content.Context
 import android.net.Uri
 import android.util.Log
+import com.example.casaya.entities.Property
 import com.example.casaya.entities.User
 import com.example.casaya.interfaces.SaveUserCallback
 import com.example.casaya.viewmodels.UserProfileViewModel
@@ -124,6 +125,51 @@ class UserRepository {
                     )
                 }
                 .addOnFailureListener { e -> Log.w("Failure Update User Image", "Error updating document", e) }
+        } catch (e: InvocationTargetException) {
+            Log.e(
+                "Error Firebase saveProperty",
+                "Exception thrown: ${e.targetException} | ${e.targetException.cause} | ${e.targetException?.cause?.printStackTrace()}"
+            )
+        }
+    }
+
+    fun updatePhone(userId: String, phone: String) {
+        try {
+            val reference = db.collection(COLLECTION).document(userId)
+
+            reference
+                .update("phone",  phone)
+                .addOnSuccessListener {
+                    Log.d(
+                        "Update User Phone",
+                        "Se actualizo exitosamente el telefono del User con ID ${reference.id}"
+                    )
+                }
+                .addOnFailureListener { e -> Log.w("Failure Update User Phone", "Error updating document", e) }
+        } catch (e: InvocationTargetException) {
+            Log.e(
+                "Error Firebase saveProperty",
+                "Exception thrown: ${e.targetException} | ${e.targetException.cause} | ${e.targetException?.cause?.printStackTrace()}"
+            )
+        }
+    }
+
+    fun updateDireccion(userId: String, street: String, height: Int){
+        try {
+            val reference = db.collection(COLLECTION).document(userId)
+
+            reference
+                .update(
+                    mapOf("address.street" to street,
+                    "address.height" to height)
+                )
+                .addOnSuccessListener {
+                    Log.d(
+                        "Update User Phone",
+                        "Se actualizo exitosamente el telefono del User con ID ${reference.id}"
+                    )
+                }
+                .addOnFailureListener { e -> Log.w("Failure Update User Phone", "Error updating document", e) }
         } catch (e: InvocationTargetException) {
             Log.e(
                 "Error Firebase saveProperty",
