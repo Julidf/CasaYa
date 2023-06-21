@@ -74,6 +74,15 @@ class UserProfileViewModel : ViewModel() {
         updateUserDireccion(street, height)
     }
 
+    fun updateUserName(name: String){
+        var userId = viewModelUserLogin.getUserUid()
+        repositoryUser.updateName(userId, name)
+    }
+
+    fun setUserName(name: String){
+        updateUserName(name)
+    }
+
     fun signOutUser() {
         Log.i("Sign Out ViewModel", "Iniciando metodo singOut de FirebaseAuth")
         auth.signOut()

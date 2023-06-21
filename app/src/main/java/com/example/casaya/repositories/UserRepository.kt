@@ -177,4 +177,26 @@ class UserRepository {
             )
         }
     }
+    fun updateName(userId: String, name: String){
+        try {
+            val reference = db.collection(COLLECTION).document(userId)
+
+            reference
+                .update(
+                    mapOf("name" to name)
+                )
+                .addOnSuccessListener {
+                    Log.d(
+                        "Update User Phone",
+                        "Se actualizo exitosamente el telefono del User con ID ${reference.id}"
+                    )
+                }
+                .addOnFailureListener { e -> Log.w("Failure Update User Phone", "Error updating document", e) }
+        } catch (e: InvocationTargetException) {
+            Log.e(
+                "Error Firebase saveProperty",
+                "Exception thrown: ${e.targetException} | ${e.targetException.cause} | ${e.targetException?.cause?.printStackTrace()}"
+            )
+        }
+    }
 }

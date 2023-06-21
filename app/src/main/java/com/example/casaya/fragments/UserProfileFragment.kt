@@ -113,7 +113,8 @@ class UserProfileFragment : Fragment() {
             val newPhone = userPhone.text.toString()
             val newStreet = userStreet.text.toString()
             val newHeight = userHeight.text.toString()
-            if (newPhone.isEmpty() || newStreet.isEmpty() ||  newHeight.isEmpty()){
+            val newName   = userName.text.toString()
+            if (newPhone.isEmpty() || newStreet.isEmpty() ||  newHeight.isEmpty() || newName.isEmpty()){
                 customToast.show(
                     "Los datos no pueden estar vacios",
                     R.drawable.ic_toast_inf
@@ -121,6 +122,7 @@ class UserProfileFragment : Fragment() {
             }else{
                 userViewModel.setUserPhone(newPhone)
                 userViewModel.setUserDireccion(newStreet, newHeight.toInt())
+                userViewModel.setUserName(newName)
                 customToast.show(
                     "Datos actualizados correctamente",
                     R.drawable.ic_toast_inf
